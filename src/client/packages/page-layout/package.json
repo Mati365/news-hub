@@ -1,0 +1,5 @@
+{
+  "name": "@page/layout",
+  "main": "src/index.js",
+  "version": "1.0.0"
+}

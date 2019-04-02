@@ -2,12 +2,7 @@ import express from 'express';
 import path from 'path';
 import consola from 'consola';
 
-import format from '@page/utils/src/helpers/format';
-
 import * as Services from './services';
-
-console.log(format('test %{a} replace', {a: 2}));
-console.log(format('%{} %{}', [1, 2]));
 
 const app = express();
 

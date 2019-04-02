@@ -14,12 +14,16 @@ require('dotenv').config({
 
 const OUTPUT_FOLDER = resolve(__dirname, '../dist');
 
+console.log(resolve(__dirname, '../../src/client/packages/page-layout/src/'));
+
 const GLOBAL_ALIASES = {
   '@i18n': resolve(__dirname, '../src/shared/page-i18n/src/'),
   '@jss': resolve(__dirname, '../src/shared/page-jss/src/'),
   '@utils': resolve(__dirname, '../src/shared/page-utils/src/'),
 
-  '@client/core': resolve(__dirname, '../client/packages/page-core/src/'),
+  '@client/core': resolve(__dirname, '../src/client/packages/page-core/src/'),
+  '@client/layout': resolve(__dirname, '../src/client/packages/page-layout/src/'),
+
   '@client': resolve(__dirname, '../src/client/'),
 
   '@server': resolve(__dirname, '../src/server/'),

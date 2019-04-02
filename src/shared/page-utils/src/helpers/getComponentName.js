@@ -5,6 +5,6 @@ const getComponentName = Component => (
     || 'Component'
 );
 
-export const getHOCName = (hocName, Component, attrs = null) => `${hocName}(${attrs || ''})(${getComponentName(Component)})`;
+export const getHOCName = (hocName, Component, attrs = null) => `${hocName}${attrs ? `(${attrs})` : ''}(${getComponentName(Component)})`;
 
 export default getComponentName;

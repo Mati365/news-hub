@@ -9,7 +9,7 @@ const DEFAULT_JSS_INJECTOR_CONFIG = {
   inject: ['classes'],
 };
 
-const styledTag = (TagComponent, styles, {omitProps, classSelector, ...predefinedProps}) => {
+const styled = (TagComponent, styles, {omitProps, classSelector, ...predefinedProps} = {}) => {
   const omitPropsFn = omitProps && R.omit(omitProps);
 
   const Component = ({classes, className, ...props}) => {
@@ -34,7 +34,7 @@ const styledTag = (TagComponent, styles, {omitProps, classSelector, ...predefine
     );
   };
 
-  Component.displayName = getHOCName('styledTag', Component);
+  Component.displayName = getHOCName('styled', Component);
 
   return injectSheet(
     styles.base
@@ -44,4 +44,15 @@ const styledTag = (TagComponent, styles, {omitProps, classSelector, ...predefine
   )(Component);
 };
 
-export default styledTag;
+R.forEach(
+  (element) => {
+    styled[element] = (...args) => styled(element, ...args);
+  },
+  [
+    'div', 'span', 'li', 'ul', 'ol',
+    'table', 'tr', 'td',
+    'img',
+  ],
+);
+
+export default styled;
