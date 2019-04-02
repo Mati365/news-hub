@@ -14,6 +14,12 @@
   "bugs": {
     "url": "https://github.com/Mati365/news-hub/issues"
   },
+  "workspaces": [
+    "src/client/",
+    "src/server/",
+    "src/client/packages/*",
+    "src/shared/*"
+  ],
   "homepage": "https://github.com/Mati365/news-hub#readme",
   "devDependencies": {
     "@babel/core": "^7.1.2",
@@ -32,6 +38,8 @@
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
     "clean-webpack-plugin": "^2.0.1",
+    "consola": "^2.5.8",
+    "dotenv": "^7.0.0",
     "eslint": "^5.7.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-loader": "^2.1.1",
@@ -44,7 +52,13 @@
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.9",
     "webpack-manifest-plugin": "^2.0.4",
-    "webpack-node-externals": "^1.7.2",
-    "dotenv": "^7.0.0"
+    "webpack-node-externals": "^1.7.2"
+  },
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "prop-types": "^15.7.2",
+    "ramda": "^0.26.1",
+    "react": "^16.8.6",
+    "react-jss": "^8.6.1"
   }
 }

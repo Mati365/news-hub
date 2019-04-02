@@ -1,0 +1,5 @@
+{
+  "name": "@page/client",
+  "main": "src/index.js",
+  "version": "1.0.0"
+}
