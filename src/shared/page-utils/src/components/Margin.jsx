@@ -1,22 +1,26 @@
 import PropTypes from 'prop-types';
 
 import styled from '@jss';
+import generateNthStyles from './utils/generateNthStyles';
+
 import format from '../helpers/format';
 
 const MARGIN_LEVELS = 7;
 const MARGIN_STEP = 5;
 
-const generateDirectionStyles = (classNameFormat, style, step, levels) => {
-  const styles = {};
+const generateDirectionStyles = (classNameFormat, style, step, levels) => ({
+  [format(classNameFormat, ['auto'])]: {
+    [style]: 'auto',
+  },
 
-  for (let i = levels - 1; i >= 0; --i) {
-    styles[format(classNameFormat, [i + 1])] = {
-      [style]: (i + 1) * step,
-    };
-  }
-
-  return styles;
-};
+  ...generateNthStyles(
+    classNameFormat,
+    levels,
+    index => ({
+      [style]: (index + 1) * step,
+    }),
+  ),
+});
 
 const Margin = styled.div(
   {

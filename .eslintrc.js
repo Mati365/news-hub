@@ -35,7 +35,8 @@ module.exports = {
     'no-param-reassign': 0,
     'global-require': 0,
     curly: 0,
-    'new-parens': 0
+    'new-parens': 0,
+    'no-restricted-syntax': ['error', 'FunctionExpression', 'WithStatement', 'BinaryExpression[operator="in"]'],
   },
   settings: {
     'import/resolver': {
