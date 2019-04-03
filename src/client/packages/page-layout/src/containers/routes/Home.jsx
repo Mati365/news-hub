@@ -1,7 +1,10 @@
 import React from 'react';
 
 import styled from '@jss';
-import Container from '@utils/components/Container';
+import {
+  Container,
+  Margin,
+} from '@utils/components';
 
 const TestTitle = styled.div(
   {
@@ -11,9 +14,11 @@ const TestTitle = styled.div(
 
 const HomeRoute = () => (
   <Container>
-    <TestTitle>
-      Home route
-    </TestTitle>
+    <Margin top={2}>
+      <TestTitle>
+        Home route
+      </TestTitle>
+    </Margin>
   </Container>
 );
 

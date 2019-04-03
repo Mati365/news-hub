@@ -27,7 +27,9 @@ const styled = (TagComponent, styles, {omitProps, classSelector, ...predefinedPr
         {...mergedProps}
         className={c(
           classes.base,
-          classSelector && classSelector(classes, props),
+          classSelector && c(
+            classSelector(classes, props),
+          ),
           className,
         )}
       />
