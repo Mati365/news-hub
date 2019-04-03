@@ -1,27 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import styled from '@jss';
 import MagicJSSHeadTag from '@jss/components/MagicJSSHeadTag';
 
 import HTMLSkeleton from '../components/HTMLSkeleton';
-
-const TestTitle = styled.div(
-  {
-    fontWeight: 'bold',
-  },
-);
+import RouterContent from './RouterContent';
 
 const RootContainer = ({
   head, children, withSkeleton,
+  ssrRouteMeta,
   ...props
 }) => {
   const content = (
     <>
-      <TestTitle>
-        Hello world 2
-      </TestTitle>
-
+      <RouterContent ssrRouteMeta={ssrRouteMeta} />
       {children}
     </>
   );
@@ -49,11 +41,13 @@ RootContainer.displayName = 'RootContainer';
 RootContainer.propTypes = {
   withSkeleton: PropTypes.bool,
   hydrationData: PropTypes.object, // HTMLSkeleton
+  ssrRouteMeta: PropTypes.bool,
 };
 
 RootContainer.defaultProps = {
   withSkeleton: true,
   hydrationData: null,
+  ssrRouteMeta: null,
 };
 
 export default RootContainer;
