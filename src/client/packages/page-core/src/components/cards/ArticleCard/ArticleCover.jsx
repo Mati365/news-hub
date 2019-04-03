@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {LIGHT_GRAY} from '@constants/colorSchema';
+
 import styled from '@jss';
 import {
   Text,
@@ -18,7 +20,7 @@ const ArticleImageWrapper = styled.figure(
 
     rectangle: {
       paddingBottom: '50%',
-      background: 'gray',
+      background: LIGHT_GRAY,
     },
   },
   {

@@ -7,6 +7,8 @@ export const SAND_YELLOW = '#f3ffbd';
 export const HANSA_YELLOW = '#e9c46a';
 export const PINK_RED = '#ff1654';
 export const MUTED_RED = '#dc3545';
+
+export const LIGHT_GRAY = '#e2e1e1';
 export const MUTED_GRAY = '#9c9b9b';
 
 export const DARK_ORANGE = '#e76f51';
