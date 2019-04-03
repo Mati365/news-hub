@@ -1,17 +1,11 @@
 import React from 'react';
 
-import styled from '@jss';
 import {
   Container,
   Margin,
   Grid,
+  Text,
 } from '@utils/components';
-
-const TestTitle = styled.div(
-  {
-    fontWeight: 'bold',
-  },
-);
 
 const HomeRoute = () => (
   <Container>
@@ -21,15 +15,15 @@ const HomeRoute = () => (
     >
       <Grid>
         <Grid.Column xs={6}>
-          <TestTitle>
+          <Text weight={700}>
             Home route
-          </TestTitle>
+          </Text>
         </Grid.Column>
 
         <Grid.Column xs={6}>
-          <TestTitle>
+          <Text.Danger weight={600}>
             Home route
-          </TestTitle>
+          </Text.Danger>
         </Grid.Column>
       </Grid>
     </Margin>

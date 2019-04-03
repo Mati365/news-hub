@@ -5,6 +5,7 @@ import MagicJSSHeadTag from '@jss/components/MagicJSSHeadTag';
 
 import HTMLSkeleton from '../components/HTMLSkeleton';
 import RouterContent from './RouterContent';
+import PageContentContainer from './PageContentContainer';
 
 const RootContainer = ({
   head, children, withSkeleton,
@@ -12,10 +13,10 @@ const RootContainer = ({
   ...props
 }) => {
   const content = (
-    <>
+    <PageContentContainer>
       <RouterContent ssrRouteMeta={ssrRouteMeta} />
       {children}
-    </>
+    </PageContentContainer>
   );
 
   if (!withSkeleton)

@@ -53,7 +53,8 @@ R.forEach(
   [
     'div', 'span', 'li', 'ul', 'ol',
     'table', 'tr', 'td',
-    'img',
+    'img', 'main', 'input', 'header',
+    'form',
   ],
 );
 

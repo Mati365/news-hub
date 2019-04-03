@@ -20,9 +20,9 @@ const HTMLSkeleton = ({head, children, hydrationData: {data, scripts}}) => (
     </head>
 
     <body>
-      <div id={ROOT_HYDRATION_CONTAINER}>
+      <main id={ROOT_HYDRATION_CONTAINER}>
         {children}
-      </div>
+      </main>
 
       {data && (
         <JSONGlobalVariable
