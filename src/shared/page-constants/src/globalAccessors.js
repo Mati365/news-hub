@@ -1,0 +1,3 @@
+export const ROOT_HYDRATION_CONTAINER = 'ROOT_HYDRATION_CONTAINER';
+
+export const GLOBAL_HYDRATION_VARIABLE = '__hydrate';

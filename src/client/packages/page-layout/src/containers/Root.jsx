@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import styled from '@jss';
 import MagicJSSHeadTag from '@jss/components/MagicJSSHeadTag';
@@ -11,24 +12,48 @@ const TestTitle = styled.div(
   },
 );
 
-const RootContainer = ({head, children, ...props}) => (
-  <HTMLSkeleton
-    {...props}
-    head={(
-      <>
-        <MagicJSSHeadTag />
-        {head}
-      </>
-    )}
-  >
-    <TestTitle>
-      Hello world
-    </TestTitle>
+const RootContainer = ({
+  head, children, withSkeleton,
+  ...props
+}) => {
+  const content = (
+    <>
+      <TestTitle>
+        Hello world 2
+      </TestTitle>
 
-    {children}
-  </HTMLSkeleton>
-);
+      {children}
+    </>
+  );
+
+  if (!withSkeleton)
+    return content;
+
+  return (
+    <HTMLSkeleton
+      {...props}
+      head={(
+        <>
+          <MagicJSSHeadTag />
+          {head}
+        </>
+      )}
+    >
+      {content}
+    </HTMLSkeleton>
+  );
+};
 
 RootContainer.displayName = 'RootContainer';
+
+RootContainer.propTypes = {
+  withSkeleton: PropTypes.bool,
+  hydrationData: PropTypes.object, // HTMLSkeleton
+};
+
+RootContainer.defaultProps = {
+  withSkeleton: true,
+  hydrationData: null,
+};
 
 export default RootContainer;

@@ -20,10 +20,10 @@ const GLOBAL_ALIASES = {
   '@i18n': resolve(__dirname, '../src/shared/page-i18n/src/'),
   '@jss': resolve(__dirname, '../src/shared/page-jss/src/'),
   '@utils': resolve(__dirname, '../src/shared/page-utils/src/'),
+  '@constants': resolve(__dirname, '../src/shared/page-constants/src/'),
 
   '@client/core': resolve(__dirname, '../src/client/packages/page-core/src/'),
   '@client/layout': resolve(__dirname, '../src/client/packages/page-layout/src/'),
-
   '@client': resolve(__dirname, '../src/client/'),
 
   '@server': resolve(__dirname, '../src/server/'),

@@ -1,14 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import * as R from 'ramda';
 
-const HTMLSkeleton = ({head, children}) => (
+import {
+  ROOT_HYDRATION_CONTAINER,
+  GLOBAL_HYDRATION_VARIABLE,
+} from '@constants/globalAccessors';
+
+import JSONGlobalVariable from './JSONGlobalVariable';
+
+const renderScripts = R.map(
+  scriptUrl => <script key={scriptUrl} src={scriptUrl} />,
+);
+
+const HTMLSkeleton = ({head, children, hydrationData: {data, scripts}}) => (
   <html lang='pl'>
     <head>
       {head}
     </head>
 
     <body>
-      {children}
+      <div id={ROOT_HYDRATION_CONTAINER}>
+        {children}
+      </div>
+
+      {data && (
+        <JSONGlobalVariable
+          globalVariableName={GLOBAL_HYDRATION_VARIABLE}
+          data={data}
+        />
+      )}
+
+      {scripts && renderScripts(scripts)}
     </body>
   </html>
 );
@@ -17,10 +40,20 @@ HTMLSkeleton.displayName = 'HTMLSkeleton';
 
 HTMLSkeleton.propTypes = {
   head: PropTypes.node,
+  hydrationData: PropTypes.shape(
+    {
+      scripts: PropTypes.arrayOf(PropTypes.string),
+      data: PropTypes.any,
+    },
+  ),
 };
 
 HTMLSkeleton.defaultProps = {
   head: null,
+  hydrationData: {
+    scripts: [],
+    data: {},
+  },
 };
 
 export default HTMLSkeleton;
