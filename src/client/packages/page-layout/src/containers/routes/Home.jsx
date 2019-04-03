@@ -5,6 +5,7 @@ import {
   Margin,
   Grid,
   Text,
+  Header,
 } from '@utils/components';
 
 const HomeRoute = () => (
@@ -13,6 +14,10 @@ const HomeRoute = () => (
       top={3}
       block
     >
+      <Header.H3>
+        TEST
+      </Header.H3>
+
       <Grid>
         <Grid.Column xs={6}>
           <Text weight={700}>
