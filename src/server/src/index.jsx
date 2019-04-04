@@ -3,7 +3,6 @@ import path from 'path';
 import consola from 'consola';
 
 import * as Services from './services';
-import appAssetsManifestMiddleware from './middlewares/appAssetsManifestMiddleware';
 
 const app = express();
 
@@ -16,13 +15,8 @@ const app = express();
       express.static(path.join(__dirname, 'public')),
     );
 
-  app
-
-    // mount middlewares shared by services
-    .use(appAssetsManifestMiddleware)
-
-    // mount services
-    .use('/', Services.react);
+  // mount services
+  app.use('/', Services.react);
 
   // start whole server
   const port = process.env.APP_PORT || 3000;

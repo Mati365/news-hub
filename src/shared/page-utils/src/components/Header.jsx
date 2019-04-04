@@ -9,18 +9,18 @@ const HEADER_TAGS = ['H1', 'H2', 'H3', 'H4', 'H5'];
 const Header = styled.div(
   {
     base: {
-      marginBottom: '.5rem',
+      marginBottom: '.5em',
       fontFamily: 'inherit',
       fontWeight: 500,
       lineHeight: 1.2,
       color: 'inherit',
     },
 
-    H1: {fontSize: '2.0rem'},
-    H2: {fontSize: '1.75rem'},
-    H3: {fontSize: '1.5rem'},
-    H4: {fontSize: '1.3rem'},
-    H5: {fontSize: '1.2rem'},
+    H1: {fontSize: '2.0em'},
+    H2: {fontSize: '1.75em'},
+    H3: {fontSize: '1.5em'},
+    H4: {fontSize: '1.3em'},
+    H5: {fontSize: '1.2em'},
   },
   {
     omitProps: ['tag'],

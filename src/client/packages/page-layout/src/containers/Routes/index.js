@@ -1,6 +1,6 @@
-import {HOME_URL_SCHEMA} from '../links/HomeLink';
-import {TAG_URL_SCHEMA} from '../links/TagLink';
-import {ARTICLE_URL_SCHEMA} from '../links/ArticleLink';
+import {HOME_URL_SCHEMA} from '../Links/HomeLink';
+import {TAG_URL_SCHEMA} from '../Links/TagLink';
+import {ARTICLE_URL_SCHEMA} from '../Links/ArticleLink';
 
 import HomeRoute from './Home';
 import TagRoute from './Tag';

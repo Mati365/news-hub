@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import SSRRouter from '../components/SSRRouter';
 import RouteMapper from '../components/RouteMapper';
 
-import APP_ROUTES from './routes';
+import APP_ROUTES from './Routes';
 
 const RouterContent = ({routes, ssrRouterProps}) => (
   <SSRRouter {...ssrRouterProps}>

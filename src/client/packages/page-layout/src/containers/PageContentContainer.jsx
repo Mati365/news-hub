@@ -7,6 +7,7 @@ const PageContentContainer = styled.div(
     '@global': {
       body: {
         fontFamily: 'Arial',
+        fontSize: '13px',
       },
     },
   },

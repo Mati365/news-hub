@@ -35,9 +35,9 @@ const HomeRoute = () => (
       top={3}
       block
     >
-      <Header.H3>
+      <Header.H1>
         Daily News
-      </Header.H3>
+      </Header.H1>
 
       <Grid>
         <Grid.Column xs={4}>

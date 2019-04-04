@@ -7,6 +7,11 @@ import memoizeOne from '@utils/helpers/cache/memoizeOne';
 
 import AppRoot from '@client/layout';
 
+import {
+  appAssetsManifestMiddleware,
+  assignI18nPackMiddleware,
+} from './middlewares';
+
 /**
  * Cached pick array of script from dynamic loaded manifest,
  * in PRODUCTION env it is the same
@@ -27,20 +32,12 @@ const pickMainScripts = pickManifestScripts(
 );
 
 const rootRoute = (req, res) => {
-  if (!req.accepts('html')) {
-    res
-      .status(404)
-      .json(
-        {
-          code: 404,
-        },
-      );
-    return;
-  }
-
   const {manifest} = res.locals;
   const hydrationData = {
     scripts: pickMainScripts(manifest),
+    data: {
+      i18n: res.locals.i18n,
+    },
   };
 
   const context = {};
@@ -60,10 +57,31 @@ const rootRoute = (req, res) => {
     res.send(`<!doctype html>${prerendered}`);
 };
 
-export default (
-  express
-    .Router({
-      strict: true,
-    })
-    .get('*', rootRoute)
-);
+// Configure router
+const router = express.Router();
+
+router
+  .use(
+    (req, res, next) => {
+      if (
+        !req.accepts('text/html')
+        // todo: /favicon.ico
+          || req.originalUrl === '/favicon.ico'
+      ) {
+        res
+          .status(404)
+          .json(
+            {
+              code: 404,
+            },
+          );
+      } else
+        next();
+    },
+    appAssetsManifestMiddleware,
+    assignI18nPackMiddleware,
+  )
+
+  .get('*', rootRoute);
+
+export default router;

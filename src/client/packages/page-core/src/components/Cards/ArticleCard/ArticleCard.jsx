@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {SeeMoreLink} from '@client/links/Predefined';
 import {
   Margin,
   Text,
@@ -36,6 +37,15 @@ const ArticleCard = ({
     <Text align='justify'>
       {article.content}
     </Text>
+
+    <Margin top={2}>
+      <Text.Muted
+        block
+        align='right'
+      >
+        <SeeMoreLink to='/' />
+      </Text.Muted>
+    </Margin>
   </ArticleHolder>
 );
 

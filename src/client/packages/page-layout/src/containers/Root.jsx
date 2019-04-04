@@ -1,22 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import ProvideI18n from '@i18n/components/ProvideI18n';
 import MagicJSSHeadTag from '@jss/components/MagicJSSHeadTag';
 
 import HTMLSkeleton from '../components/HTMLSkeleton';
 import RouterContent from './RouterContent';
 import PageContentContainer from './PageContentContainer';
 
+const PageProviders = ({hydrationData, children}) => {
+  const {
+    data: {
+      i18n,
+    },
+  } = hydrationData;
+
+  return (
+    <ProvideI18n {...i18n}>
+      {children}
+    </ProvideI18n>
+  );
+};
+
 const RootContainer = ({
   head, children, withSkeleton,
   ssrRouterProps,
+  hydrationData,
   ...props
 }) => {
   const content = (
-    <PageContentContainer>
-      <RouterContent ssrRouterProps={ssrRouterProps} />
-      {children}
-    </PageContentContainer>
+    <PageProviders hydrationData={hydrationData}>
+      <PageContentContainer>
+        <RouterContent ssrRouterProps={ssrRouterProps} />
+        {children}
+      </PageContentContainer>
+    </PageProviders>
   );
 
   if (!withSkeleton)
@@ -25,6 +43,7 @@ const RootContainer = ({
   return (
     <HTMLSkeleton
       {...props}
+      hydrationData={hydrationData}
       head={(
         <>
           <MagicJSSHeadTag />
@@ -41,7 +60,21 @@ RootContainer.displayName = 'RootContainer';
 
 RootContainer.propTypes = {
   withSkeleton: PropTypes.bool,
-  hydrationData: PropTypes.object, // HTMLSkeleton
+  hydrationData: PropTypes.shape(
+    {
+      scripts: PropTypes.arrayOf(PropTypes.string),
+      data: PropTypes.shape(
+        {
+          i18n: PropTypes.shape(
+            {
+              lang: PropTypes.string,
+              pack: PropTypes.object,
+            },
+          ),
+        },
+      ),
+    },
+  ),
   ssrRouterProps: PropTypes.object,
 };
 
