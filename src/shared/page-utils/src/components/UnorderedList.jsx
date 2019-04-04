@@ -19,6 +19,7 @@ const UnorderedList = styled.ul(
     inline: {
       '& > li': {
         display: 'inline-block',
+        margin: [0, 5],
 
         '&:first-child': {
           marginLeft: 0,

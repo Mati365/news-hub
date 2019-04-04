@@ -30,7 +30,11 @@ const createLangPack = (pack) => {
 
     // translator behaves as same as format()
     createTranslator: (lang) => {
-      const {[lang]: langPack} = pack;
+      // try to load fallback if current language is not present
+      let {[lang]: langPack} = pack;
+      if (!langPack)
+        langPack = pack.eng;
+
       if (!langPack)
         throw new Error('Cannot find lang!');
 
@@ -50,7 +54,10 @@ const createLangPack = (pack) => {
 
         // cache template
         templateStr = R.view(lens, langPack);
-        resolvedKeys[templateStr] = templateStr;
+        if (templateStr !== undefined)
+          resolvedKeys[templateStr] = templateStr;
+        else
+          templateStr = '';
 
         if (!params)
           return templateStr;

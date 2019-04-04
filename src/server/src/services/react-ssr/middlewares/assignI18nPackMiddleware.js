@@ -1,16 +1,10 @@
-import * as R from 'ramda';
-
-const assignI18nPackMiddleware = (pack) => {
-  const defaultLang = R.keys(pack)[0];
-
-  return (req, res, next) => {
-    res.locals.i18n = {
-      lang: req.acceptsLanguages('pl', 'en') || defaultLang,
-      pack,
-    };
-
-    next();
+const assignI18nPackMiddleware = pack => (req, res, next) => {
+  res.locals.i18n = {
+    lang: req.acceptsLanguages('pl', 'en') || 'eng',
+    pack,
   };
+
+  next();
 };
 
 export default assignI18nPackMiddleware(

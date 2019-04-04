@@ -8,6 +8,13 @@ import format from '../helpers/format';
 const MARGIN_LEVELS = 7;
 const MARGIN_STEP = 5;
 
+const MARGIN_DIRECTION_STYLE = PropTypes.oneOfType(
+  [
+    PropTypes.number,
+    PropTypes.string,
+  ],
+);
+
 const generateDirectionStyles = (classNameFormat, style, step, levels) => ({
   [format(classNameFormat, ['auto'])]: {
     [style]: 'auto',
@@ -63,10 +70,10 @@ const Margin = styled.div(
 Margin.displayName = 'Margin';
 
 Margin.propTypes = {
-  top: PropTypes.number,
-  bottom: PropTypes.number,
-  left: PropTypes.number,
-  right: PropTypes.number,
+  top: MARGIN_DIRECTION_STYLE,
+  bottom: MARGIN_DIRECTION_STYLE,
+  left: MARGIN_DIRECTION_STYLE,
+  right: MARGIN_DIRECTION_STYLE,
 };
 
 export default Margin;

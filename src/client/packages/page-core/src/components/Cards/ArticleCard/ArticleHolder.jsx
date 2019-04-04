@@ -3,6 +3,7 @@ import styled from '@jss';
 const ArticleHolder = styled.article(
   {
     base: {
+      position: 'relative',
       display: 'flex',
       flexDirection: 'row',
       padding: [10, 0],

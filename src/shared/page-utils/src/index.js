@@ -6,3 +6,4 @@ export {default as capitalize} from './helpers/capitalize';
 export {default as parameterize} from './helpers/parameterize';
 export {default as isAbsoluteURL} from './helpers/isAbsoluteURL';
 export {default as isBlankValue} from './helpers/isBlankValue';
+export {default as truncateString} from './helpers/truncateString';

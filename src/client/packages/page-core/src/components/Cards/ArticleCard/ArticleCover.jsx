@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 
 import {LIGHT_GRAY} from '@constants/colorSchema';
 
+import {useI18n} from '@i18n';
 import styled from '@jss';
+
 import {
   Text,
   LayerImage,
@@ -29,26 +31,30 @@ const ArticleImageWrapper = styled.figure(
   },
 );
 
-const ArticleCover = ({orientation, title, ...props}) => (
-  <>
-    <ArticleImageWrapper orientation={orientation}>
-      <LayerImage
-        {...props}
-        title={title}
-      />
-    </ArticleImageWrapper>
+const ArticleCover = ({orientation, title, ...props}) => {
+  const t = useI18n();
 
-    {title && (
-      <Text.Muted
-        size='tiny'
-        align='right'
-        block
-      >
-        {title}
-      </Text.Muted>
-    )}
-  </>
-);
+  return (
+    <>
+      <ArticleImageWrapper orientation={orientation}>
+        <LayerImage
+          {...props}
+          title={title}
+        />
+      </ArticleImageWrapper>
+
+      {title && (
+        <Text.Muted
+          size='tiny'
+          align='right'
+          block
+        >
+          {t('website.titles.images.figcaption', [title])}
+        </Text.Muted>
+      )}
+    </>
+  );
+};
 
 ArticleCover.displayName = 'ArticleCover';
 

@@ -21,6 +21,7 @@ const GLOBAL_ALIASES = {
   '@jss': resolve(__dirname, '../src/shared/page-jss/src/'),
   '@utils': resolve(__dirname, '../src/shared/page-utils/src/'),
   '@constants': resolve(__dirname, '../src/shared/page-constants/src/'),
+  '@icons': resolve(__dirname, '../src/shared/page-icons/src/'),
 
   '@client/links': resolve(__dirname, '../src/client/packages/page-layout/src/containers/Links/'),
   '@client/core': resolve(__dirname, '../src/client/packages/page-core/src/'),

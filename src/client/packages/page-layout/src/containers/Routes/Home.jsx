@@ -1,9 +1,9 @@
 import React from 'react';
 
+import styled from '@jss';
 import {
   Container,
   Margin,
-  Grid,
   Header,
 } from '@utils/components';
 
@@ -13,7 +13,7 @@ const FAKE_ARTICLE = {
   id: 123,
 
   coverUrl: '//media.gettyimages.com/photos/lots-of-bad-news-picture-id185209990?s=612x612',
-  coverTitle: 'rys. randomowych gazet',
+  coverTitle: 'Random leaflets',
 
   title: 'José Mujica Was Every Liberals Dream President. He Was Too Good to Be True.',
   lead: 'The disappointing tenure of Uruguay’s great lefty hope.',
@@ -22,12 +22,26 @@ const FAKE_ARTICLE = {
   commentsCount: 100,
   readTime: 10,
 
+  bookmarked: true,
   tags: [
-    {id: 1, name: 'polityka'},
-    {id: 2, name: 'ludzie'},
-    {id: 3, name: 'zwierzęta'},
+    {id: 1, name: 'animals'},
+    {id: 2, name: 'monkeys'},
+    {id: 3, name: 'humans'},
   ],
 };
+
+const LeadArticleContainer = styled.div(
+  {
+    display: 'grid',
+    gridTemplateColumns: '30% 40% 30%',
+    gridTemplateRows: '150px 150px 150px',
+    gridTemplateAreas: `
+      "big medium medium"
+      "big small  tiny"
+      "big small  tiny"
+    `,
+  },
+);
 
 const HomeRoute = () => (
   <Container>
@@ -39,11 +53,14 @@ const HomeRoute = () => (
         Daily News
       </Header.H1>
 
-      <Grid>
-        <Grid.Column xs={4}>
-          <ArticleCard article={FAKE_ARTICLE} />
-        </Grid.Column>
-      </Grid>
+      <LeadArticleContainer>
+        <ArticleCard
+          article={FAKE_ARTICLE}
+          style={{
+            gridArea: 'big',
+          }}
+        />
+      </LeadArticleContainer>
     </Margin>
   </Container>
 );

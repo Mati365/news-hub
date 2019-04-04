@@ -23,6 +23,7 @@ const ARTICLE_CARD_FIELDS = {
   lead: PropTypes.string,
   commentsCount: PropTypes.number,
   readTime: PropTypes.number,
+  bookmarked: PropTypes.bool,
 };
 
 export const ARTICLE_CARD_SCHEMA = PropTypes.shape(ARTICLE_CARD_FIELDS);
