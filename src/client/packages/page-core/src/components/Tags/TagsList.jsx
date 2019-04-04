@@ -51,7 +51,7 @@ const TagsList = ({tags, itemProps, ...props}) => (
     {tags.map(
       tag => (
         <Tag
-          key={tag}
+          key={tag.id}
           tag={tag}
           {...itemProps}
         />
