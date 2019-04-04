@@ -6,6 +6,7 @@ import {LIGHT_GRAY} from '@constants/colorSchema';
 import {useI18n} from '@i18n';
 import styled from '@jss';
 
+import {ArticleLink} from '@client/links';
 import {
   Text,
   LayerImage,
@@ -18,55 +19,72 @@ const ArticleImageWrapper = styled.figure(
       width: '100%',
       margin: 0,
       padding: 0,
+      background: LIGHT_GRAY,
     },
 
-    rectangle: {
+    // it should be always square
+    horizontal: {
+      width: '100%',
+      paddingBottom: '100%',
+    },
+
+    vertical: {
       paddingBottom: '50%',
-      background: LIGHT_GRAY,
     },
   },
   {
-    omitProps: ['orientation'],
-    classSelector: (classes, {orientation}) => classes[orientation],
+    omitProps: ['vertical'],
+    classSelector: (classes, {vertical}) => (
+      vertical
+        ? classes.vertical
+        : classes.horizontal
+    ),
   },
 );
 
-const ArticleCover = ({orientation, title, ...props}) => {
+const ArticleCover = ({vertical, article, ...props}) => {
   const t = useI18n();
+  const {coverUrl, coverTitle} = article;
 
   return (
-    <>
-      <ArticleImageWrapper orientation={orientation}>
-        <LayerImage
-          {...props}
-          title={title}
-        />
+    <div {...props}>
+      <ArticleImageWrapper vertical={vertical}>
+        <ArticleLink article={article}>
+          <LayerImage
+            src={coverUrl}
+            title={coverTitle}
+          />
+        </ArticleLink>
       </ArticleImageWrapper>
 
-      {title && (
+      {coverTitle && (
         <Text.Muted
           size='tiny'
-          align='right'
+          align={
+            vertical
+              ? 'right'
+              : 'left'
+          }
           block
+          style={{
+            marginTop: 2,
+          }}
         >
-          {t('website.titles.images.figcaption', [title])}
+          {t('website.titles.images.figcaption', [coverTitle])}
         </Text.Muted>
       )}
-    </>
+    </div>
   );
 };
 
 ArticleCover.displayName = 'ArticleCover';
 
 ArticleCover.propTypes = {
-  orientation: PropTypes.oneOf([
-    'rectangle',
-    'square',
-  ]),
+  vertical: PropTypes.bool,
 };
 
 ArticleCover.defaultProps = {
-  orientation: 'rectangle',
+  vertical: true,
 };
 
 export default ArticleCover;

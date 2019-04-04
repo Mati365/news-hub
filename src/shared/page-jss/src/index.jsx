@@ -67,6 +67,7 @@ R.forEach(
     'table', 'tr', 'td',
     'img', 'main', 'input', 'header',
     'form', 'article', 'figure',
+    'section', 'button',
   ],
 );
 

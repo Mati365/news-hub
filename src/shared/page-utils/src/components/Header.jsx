@@ -1,3 +1,4 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
 
@@ -6,7 +7,14 @@ import provideProps from '../decorators/provideProps';
 
 const HEADER_TAGS = ['H1', 'H2', 'H3', 'H4', 'H5'];
 
-const Header = styled.div(
+const Header = styled(
+  ({tag, ...props}) => {
+    const Tag = R.toLower(tag);
+
+    return (
+      <Tag {...props} />
+    );
+  },
   {
     base: {
       marginBottom: '.5em',
@@ -23,7 +31,6 @@ const Header = styled.div(
     H5: {fontSize: '1.2em'},
   },
   {
-    omitProps: ['tag'],
     classSelector: (classes, {tag}) => classes[tag],
   },
 );

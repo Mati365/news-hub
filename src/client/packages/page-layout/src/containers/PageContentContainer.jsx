@@ -8,6 +8,10 @@ const PageContentContainer = styled.div(
       body: {
         fontFamily: 'Arial',
         fontSize: '13px',
+
+        '*': {
+          boxSizing: 'border-box',
+        },
       },
     },
   },

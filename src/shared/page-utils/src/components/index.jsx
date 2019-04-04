@@ -8,3 +8,4 @@ export {default as Image} from './Image';
 export {default as LayerImage} from './LayerImage';
 export {default as UnorderedList} from './UnorderedList';
 export {default as UndecoratedLink} from './UndecoratedLink';
+export {default as Divider} from './Divider';

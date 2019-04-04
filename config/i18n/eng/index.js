@@ -12,8 +12,18 @@ module.exports = {
     },
 
     article: {
-      read_time: '%{} min. to read',
+      read_time: '%{} min.',
       comments_count: '%{} comments',
+    },
+
+    buttons: {
+      create_article: 'Create article',
+    },
+
+    sections: {
+      popular: {
+        title: 'Popular articles',
+      },
     },
   },
 };

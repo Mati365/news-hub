@@ -1,12 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import styled from '@jss';
-
-import textEllipsisStyle from '@utils/styles/textEllipsis';
 import {truncateEllipsisString} from '@utils/helpers/truncateString';
-
-import BookmarkIcon from '@icons/BookmarkIcon';
+import provideProps from '@utils/decorators/provideProps';
 
 import {
   ArticleLink,
@@ -14,94 +10,73 @@ import {
 } from '@client/links';
 
 import {
-  Flex,
   Margin,
   Text,
 } from '@utils/components';
 
 import TagsList from '../../Tags/TagsList';
 
-import ArticleHolder from './ArticleHolder';
 import ArticleCover from './ArticleCover';
 import ArticleHeader from './ArticleHeader';
 import ArticleStatsToolbar from './ArticleStatsToolbar';
 
-const ArticleContent = styled(
-  Text,
-  {
-    extend: textEllipsisStyle,
-    flex: 1,
-  },
-  {
-    align: 'justify',
-  },
-);
-
-const ArticleToolbar = styled(
-  Flex,
-  {
-    marginTop: 5,
-  },
-  {
-    direction: 'row',
-  },
-);
-
-const ArticleBookmark = styled(
-  BookmarkIcon,
-  {
-    position: 'absolute',
-    right: 5,
-    top: 3,
-  },
-);
+import ArticleHolder, {
+  ArticleContent,
+  ArticleToolbar,
+  ArticleBookmark,
+} from './ArticleHolder';
 
 const ArticleCard = ({
-  article, withCover, headerTag,
-  vertical, maxDescriptionLength, ...props
+  article, headerTag,
+  vertical, maxDescriptionLength,
+  withCover, withTags,
+  ...props
 }) => (
   <ArticleHolder
     vertical={vertical}
     {...props}
   >
     {withCover && (
+      <ArticleCover
+        article={article}
+        vertical={vertical}
+      />
+    )}
+
+    <div>
+      {withTags && article.tags?.length > 0 && (
+        <Margin top={1}>
+          <TagsList tags={article.tags} />
+        </Margin>
+      )}
+
       <ArticleLink article={article}>
-        <ArticleCover
-          src={article.coverUrl}
-          title={article.coverTitle}
-        />
+        <ArticleHeader tag={headerTag}>
+          {article.title}
+        </ArticleHeader>
       </ArticleLink>
-    )}
 
-    {article.tags?.length > 0 && (
-      <Margin top={1}>
-        <TagsList tags={article.tags} />
-      </Margin>
-    )}
+      <ArticleContent>
+        {truncateEllipsisString(maxDescriptionLength, article.content)}
+      </ArticleContent>
 
-    <ArticleLink article={article}>
-      <ArticleHeader tag={headerTag}>
-        {article.title}
-      </ArticleHeader>
-    </ArticleLink>
+      <ArticleToolbar>
+        <Text.Muted>
+          <SeeMoreLink to='/' />
+        </Text.Muted>
 
-    <ArticleContent>
-      {truncateEllipsisString(maxDescriptionLength, article.content)}
-    </ArticleContent>
+        <Margin left='auto'>
+          <ArticleStatsToolbar article={article} />
+        </Margin>
+      </ArticleToolbar>
 
-    <ArticleToolbar>
-      <Text.Muted>
-        <SeeMoreLink to='/' />
-      </Text.Muted>
-
-      <Margin left='auto'>
-        <ArticleStatsToolbar article={article} />
-      </Margin>
-    </ArticleToolbar>
-
-    {article.bookmarked && (
-      <ArticleBookmark size='medium' />
-    )}
+      {withCover && article.bookmarked && (
+        <ArticleBookmark
+          size='medium'
+          left={!vertical}
+        />
+      )}
+    </div>
   </ArticleHolder>
 );
 
@@ -110,15 +85,28 @@ ArticleCard.displayName = 'ArticleCard';
 ArticleCard.propTypes = {
   maxDescriptionLength: PropTypes.number,
   headerTag: PropTypes.string,
-  withCover: PropTypes.bool,
   vertical: PropTypes.bool, // up-down if true
+
+  withCover: PropTypes.bool,
+  withTags: PropTypes.bool,
 };
 
 ArticleCard.defaultProps = {
-  maxDescriptionLength: 490,
+  maxDescriptionLength: 360,
   headerTag: 'H4',
-  withCover: true,
   vertical: true,
+
+  withCover: true,
+  withTags: true,
 };
 
-export default React.memo(ArticleCard);
+const MemoizedArticle = React.memo(ArticleCard);
+
+MemoizedArticle.Horizontal = provideProps(
+  {
+    vertical: false,
+    maxDescriptionLength: 250,
+  },
+)(MemoizedArticle);
+
+export default MemoizedArticle;

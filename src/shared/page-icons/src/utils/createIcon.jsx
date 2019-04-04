@@ -7,6 +7,7 @@ import provideProps from '@page/utils/src/decorators/provideProps';
 const SVG_ICON_SIZES = {
   tiny: [16, 16],
   small: [24, 24],
+  'small-medium': [28, 28],
   medium: [32, 32],
   big: [48, 48],
 };

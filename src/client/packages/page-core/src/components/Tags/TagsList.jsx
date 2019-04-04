@@ -30,6 +30,8 @@ const TagsListHolder = styled(
   UnorderedList,
   {
     '& > li': {
+      margin: 0,
+
       '&:not(:last-child):after': {
         content: '""',
         position: 'relative',
