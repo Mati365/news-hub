@@ -43,11 +43,21 @@ const rootRoute = (req, res) => {
     scripts: pickMainScripts(manifest),
   };
 
+  const context = {};
   const prerendered = ssrRenderStyledComponent(
-    <AppRoot hydrationData={hydrationData} />,
+    <AppRoot
+      hydrationData={hydrationData}
+      ssrRouterProps={{
+        location: req.url,
+        context,
+      }}
+    />,
   );
 
-  res.send(prerendered);
+  if (context.url)
+    res.redirect(302, context.url);
+  else
+    res.send(`<!doctype html>${prerendered}`);
 };
 
 export default (

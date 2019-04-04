@@ -9,39 +9,34 @@ import {
 import ArticleHolder from './ArticleHolder';
 import ArticleCover from './ArticleCover';
 import ArticleHeader from './ArticleHeader';
+import TagsList from '../../Tags/TagsList';
 
 const ArticleCard = ({
   article, withCover, headerTag,
   vertical,
 }) => (
-  <>
-    <ArticleHolder vertical={vertical}>
-      {withCover && (
-        <ArticleCover
-          src={article.coverUrl}
-          title={article.coverTitle}
-        />
-      )}
+  <ArticleHolder vertical={vertical}>
+    {withCover && (
+      <ArticleCover
+        src={article.coverUrl}
+        title={article.coverTitle}
+      />
+    )}
 
-      {/* Todo: Unoredered list */}
-      <Margin top={1} bottom={1}>
-        <Text.Muted
-          size='tiny'
-          uppercase
-        >
-          polityka
-        </Text.Muted>
+    {article.tags?.length > 0 && (
+      <Margin top={1}>
+        <TagsList tags={article.tags} />
       </Margin>
+    )}
 
-      <ArticleHeader tag={headerTag}>
-        {article.title}
-      </ArticleHeader>
-    </ArticleHolder>
+    <ArticleHeader tag={headerTag}>
+      {article.title}
+    </ArticleHeader>
 
     <Text align='justify'>
       {article.content}
     </Text>
-  </>
+  </ArticleHolder>
 );
 
 ArticleCard.displayName = 'ArticleCard';

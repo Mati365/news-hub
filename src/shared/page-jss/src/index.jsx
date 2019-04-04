@@ -9,7 +9,14 @@ const DEFAULT_JSS_INJECTOR_CONFIG = {
   inject: ['classes'],
 };
 
-const styled = (TagComponent, styles, {omitProps, classSelector, ...predefinedProps} = {}) => {
+const styled = (
+  TagComponent,
+  styles,
+  {
+    omitProps, classSelector,
+    index, ...predefinedProps
+  } = {},
+) => {
   const omitPropsFn = omitProps && R.omit(omitProps);
 
   const Component = ({classes, className, ...props}) => {
@@ -42,7 +49,12 @@ const styled = (TagComponent, styles, {omitProps, classSelector, ...predefinedPr
     styles.base
       ? styles
       : {base: styles},
-    DEFAULT_JSS_INJECTOR_CONFIG,
+    {
+      ...DEFAULT_JSS_INJECTOR_CONFIG,
+      ...index && {
+        index,
+      },
+    },
   )(Component);
 };
 

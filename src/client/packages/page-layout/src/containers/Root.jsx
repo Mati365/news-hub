@@ -9,12 +9,12 @@ import PageContentContainer from './PageContentContainer';
 
 const RootContainer = ({
   head, children, withSkeleton,
-  ssrRouteMeta,
+  ssrRouterProps,
   ...props
 }) => {
   const content = (
     <PageContentContainer>
-      <RouterContent ssrRouteMeta={ssrRouteMeta} />
+      <RouterContent ssrRouterProps={ssrRouterProps} />
       {children}
     </PageContentContainer>
   );
@@ -42,13 +42,13 @@ RootContainer.displayName = 'RootContainer';
 RootContainer.propTypes = {
   withSkeleton: PropTypes.bool,
   hydrationData: PropTypes.object, // HTMLSkeleton
-  ssrRouteMeta: PropTypes.bool,
+  ssrRouterProps: PropTypes.object,
 };
 
 RootContainer.defaultProps = {
   withSkeleton: true,
   hydrationData: null,
-  ssrRouteMeta: null,
+  ssrRouterProps: null,
 };
 
 export default RootContainer;

@@ -19,7 +19,7 @@ const ARTICLE_CARD_FIELDS = {
   coverUrl: PropTypes.string,
   coverTitle: PropTypes.string,
   title: PropTypes.string,
-  tags: PropTypes.arrayOf(PropTypes.string),
+  tags: PropTypes.arrayOf(KEY_ITEM_PAIR),
   lead: PropTypes.string,
   commentsCount: PropTypes.number,
   readTime: PropTypes.number,

@@ -7,7 +7,7 @@ import {
   Header,
 } from '@utils/components';
 
-import ArticleCard from '@client/core/components/cards/ArticleCard';
+import ArticleCard from '@client/core/components/Cards/ArticleCard';
 
 const FAKE_ARTICLE = {
   id: 123,
@@ -21,6 +21,12 @@ const FAKE_ARTICLE = {
   content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas dictum varius diam et fringilla. Praesent vel euismod massa. Quisque lacus ante, fringilla vel luctus nec, bibendum id lectus. Duis mattis lacus id egestas cursus. Nunc maximus, neque ac aliquam sollicitudin, tortor mi molestie est, et accumsan dolor ante ac ipsum. Etiam quis turpis placerat, semper velit in, elementum metus. Etiam tempor tortor nec dolor placerat, at tincidunt sapien elementum. Sed imperdiet felis et quam porttitor, id fringilla ante pulvinar. Curabitur imperdiet, nisl quis ullamcorper porttitor, neque urna...',
   commentsCount: 100,
   readTime: 10,
+
+  tags: [
+    {id: 1, name: 'polityka'},
+    {id: 2, name: 'ludzie'},
+    {id: 3, name: 'zwierzęta'},
+  ],
 };
 
 const HomeRoute = () => (
