@@ -14,8 +14,6 @@ require('dotenv').config({
 
 const OUTPUT_FOLDER = resolve(__dirname, '../dist');
 
-console.log(resolve(__dirname, '../../src/client/packages/page-layout/src/'));
-
 const GLOBAL_ALIASES = {
   '@i18n': resolve(__dirname, '../src/shared/page-i18n/src/'),
   '@jss': resolve(__dirname, '../src/shared/page-jss/src/'),

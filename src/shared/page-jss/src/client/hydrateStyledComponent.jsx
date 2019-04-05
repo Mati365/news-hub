@@ -7,6 +7,8 @@ const hydrateStyledComponent = (
   Component,
   props,
   {
+    postHydrationFn,
+
     // ... JSS flags
     serverStylesContainerId = MAGIC_JSS_HEAD_ID,
     containerId,
@@ -24,6 +26,9 @@ const hydrateStyledComponent = (
 
       if (styles)
         styles.parentNode.removeChild(styles);
+
+      if (postHydrationFn)
+        postHydrationFn();
     },
   );
 };

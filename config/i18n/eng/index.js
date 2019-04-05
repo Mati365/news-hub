@@ -1,6 +1,16 @@
+const WEBSITE_NAME = 'Izreal News';
+
 module.exports = {
   website: {
+    info: {
+      name: WEBSITE_NAME,
+      copyrights: `© 2019 ${WEBSITE_NAME}, LLC`,
+    },
+
     titles: {
+      search: 'Search',
+      see_also: 'See also...',
+
       images: {
         figcaption: 'fig. - %{}',
       },
@@ -14,6 +24,9 @@ module.exports = {
     article: {
       read_time: '%{} min.',
       comments_count: '%{} comments',
+      bookmark: 'Save',
+      likes: '%{} likes',
+      views: '%{} views',
     },
 
     buttons: {
@@ -21,8 +34,12 @@ module.exports = {
     },
 
     sections: {
-      popular: {
+      articles: {
         title: 'Popular articles',
+      },
+
+      tags: {
+        title: 'Popular tags',
       },
     },
   },

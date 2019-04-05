@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 
 const FAKE_ARTICLE = [
   {
@@ -9,7 +10,13 @@ const FAKE_ARTICLE = [
     title: 'José Mujica Was Every Liberals Dream President. He Was Too Good to Be True.',
     lead: 'The disappointing tenure of Uruguay’s great lefty hope.',
 
-    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas dictum varius diam et fringilla. Praesent vel euismod massa. Quisque lacus ante, fringilla vel luctus nec, bibendum id lectus. Duis mattis lacus id egestas cursus. Nunc maximus, neque ac aliquam sollicitudin, tortor mi molestie est, et accumsan dolor ante ac ipsum. Etiam quis turpis placerat, semper velit in, elementum metus. Etiam tempor tortor nec dolor placerat, at tincidunt sapien elementum. Sed imperdiet felis et quam porttitor, id fringilla ante pulvinar. Curabitur imperdiet, nisl quis ullamcorper porttitor, neque urna...',
+    content: R.compose(
+      R.join('\n'),
+      R.times(
+        R.always('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas dictum varius diam et fringilla. Praesent vel euismod massa. Quisque lacus ante, fringilla vel luctus nec, bibendum id lectus. Duis mattis lacus id egestas cursus. Nunc maximus, neque ac aliquam sollicitudin, tortor mi molestie est, et accumsan dolor ante ac ipsum. Etiam quis turpis placerat, semper velit in, elementum metus. Etiam tempor tortor nec dolor placerat, at tincidunt sapien elementum. Sed imperdiet felis et quam porttitor, id fringilla ante pulvinar. Curabitur imperdiet, nisl quis ullamcorper porttitor, neque urna'),
+      ),
+    )(10),
+
     commentsCount: 100,
     readTime: 10,
 

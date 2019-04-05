@@ -14,7 +14,7 @@ const PopularSectionGrid = styled.div(
     display: 'grid',
     gridGap: '20px 30px',
     gridTemplateColumns: '3.3fr 1px 3.3fr 1px 3.3fr',
-    gridTemplateRows: '400px',
+    gridTemplateRows: 'auto',
     gridTemplateAreas: `
       "big vspace bigB vspaceB bigC"
     `,
@@ -27,7 +27,7 @@ const PopularSection = () => {
   return (
     <TitledSection
       title={
-        t('website.sections.popular.title')
+        t('website.sections.articles.title')
       }
     >
       <PopularSectionGrid>

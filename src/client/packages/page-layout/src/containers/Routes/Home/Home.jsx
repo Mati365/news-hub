@@ -1,16 +1,26 @@
 import React from 'react';
 
-import {Container} from '@utils/components';
+import {
+  Container,
+  IdleRender,
+} from '@utils/components';
 
-import PageHeader from '../../Parts/PageHeader';
 import * as Sections from './Sections';
+import {
+  PageFooter,
+  PageHeader,
+} from '../../Parts';
 
 const HomeRoute = () => (
   <Container>
     <PageHeader />
-
     <Sections.Primary />
-    <Sections.Popular />
+
+    <IdleRender>
+      <Sections.Popular />
+      <Sections.Tags />
+      <PageFooter />
+    </IdleRender>
   </Container>
 );
 

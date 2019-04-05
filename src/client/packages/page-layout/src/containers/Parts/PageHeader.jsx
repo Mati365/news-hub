@@ -5,11 +5,15 @@ import styled from '@jss';
 
 import TagsList from '@client/core/components/Tags/TagsList';
 import Button from '@client/core/components/Controls/Button';
+import SearchIcon from '@icons/SearchIcon';
+
+import {HomeLink} from '@client/links';
 import {
   Margin,
   Header,
   Divider,
   Flex,
+  Text,
 } from '@utils/components';
 
 import TOP_TAGS from '../../mocks/topTags';
@@ -32,35 +36,64 @@ const CreateArticleButton = () => {
   );
 };
 
-const PageHeader = () => (
-  <>
+const SearchIconButton = () => {
+  const t = useI18n();
+
+  return (
     <Margin
-      top={4}
-      block
+      left={6}
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+      }}
     >
-      <Flex
-        direction='row'
-        align='center'
-      >
-        <span>
-          <HeaderTitle>
-            Daily Jews
-          </HeaderTitle>
+      <Margin right={2}>
+        <SearchIcon size='tiny' />
+      </Margin>
 
-          <Margin top={2}>
-            <TagsList tags={TOP_TAGS} />
-          </Margin>
-        </span>
-
-        <Margin left='auto'>
-          <CreateArticleButton />
-        </Margin>
-      </Flex>
+      <Text uppercase>
+        {t('website.titles.search')}
+      </Text>
     </Margin>
+  );
+};
 
-    <Divider spacing='big' />
-  </>
-);
+const PageHeader = () => {
+  const t = useI18n();
+
+  return (
+    <header>
+      <Margin
+        top={4}
+        block
+      >
+        <Flex
+          direction='row'
+          align='center'
+        >
+          <span>
+            <HomeLink>
+              <HeaderTitle>
+                {t('website.info.name')}
+              </HeaderTitle>
+            </HomeLink>
+
+            <Margin top={2}>
+              <TagsList tags={TOP_TAGS} />
+            </Margin>
+          </span>
+
+          <Margin left='auto'>
+            <CreateArticleButton />
+            <SearchIconButton />
+          </Margin>
+        </Flex>
+      </Margin>
+
+      <Divider spacing='big' />
+    </header>
+  );
+};
 
 PageHeader.displayName = 'PageHeader';
 

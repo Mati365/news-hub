@@ -18,7 +18,7 @@ const pickBreakpointsClasses = (classes, props) => {
 
   for (const key in BREAKPOINTS) {
     if (props[key])
-      output += classes[`${key}-${props[key]}`];
+      output += `${classes[`${key}-${props[key]}`]} `;
   }
 
   return output;

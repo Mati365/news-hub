@@ -16,6 +16,10 @@ const ArticleHolder = styled.article(
       display: 'flex',
       flexDirection: 'row',
       padding: [10, 0],
+
+      '& > *:only-child': {
+        width: '100% !important',
+      },
     },
 
     vertical: {

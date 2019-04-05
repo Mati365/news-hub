@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {ARTICLE_CARD_SCHEMA} from '@constants/typeSchema';
+
 import {truncateEllipsisString} from '@utils/helpers/truncateString';
 import provideProps from '@utils/decorators/provideProps';
 
@@ -29,7 +31,7 @@ import ArticleHolder, {
 const ArticleCard = ({
   article, headerTag,
   vertical, maxDescriptionLength,
-  withCover, withTags,
+  withCover, withTags, withContent,
   ...props
 }) => (
   <ArticleHolder
@@ -56,13 +58,18 @@ const ArticleCard = ({
         </ArticleHeader>
       </ArticleLink>
 
-      <ArticleContent>
-        {truncateEllipsisString(maxDescriptionLength, article.content)}
-      </ArticleContent>
+      {withContent && (
+        <ArticleContent>
+          {truncateEllipsisString(maxDescriptionLength, article.content)}
+        </ArticleContent>
+      )}
 
       <ArticleToolbar>
         <Text.Muted>
-          <SeeMoreLink to='/' />
+          <SeeMoreLink
+            linkComponent={ArticleLink}
+            article={article}
+          />
         </Text.Muted>
 
         <Margin left='auto'>
@@ -83,10 +90,13 @@ const ArticleCard = ({
 ArticleCard.displayName = 'ArticleCard';
 
 ArticleCard.propTypes = {
+  article: ARTICLE_CARD_SCHEMA.isRequired,
+
   maxDescriptionLength: PropTypes.number,
   headerTag: PropTypes.string,
   vertical: PropTypes.bool, // up-down if true
 
+  withContent: PropTypes.bool,
   withCover: PropTypes.bool,
   withTags: PropTypes.bool,
 };
@@ -96,6 +106,7 @@ ArticleCard.defaultProps = {
   headerTag: 'H4',
   vertical: true,
 
+  withContent: true,
   withCover: true,
   withTags: true,
 };

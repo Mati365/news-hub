@@ -9,3 +9,4 @@ export {default as LayerImage} from './LayerImage';
 export {default as UnorderedList} from './UnorderedList';
 export {default as UndecoratedLink} from './UndecoratedLink';
 export {default as Divider} from './Divider';
+export {default as IdleRender} from './IdleRender';

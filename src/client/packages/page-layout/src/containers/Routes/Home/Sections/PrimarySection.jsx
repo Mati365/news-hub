@@ -12,7 +12,7 @@ const PrimarySectionGrid = styled.div(
     display: 'grid',
     gridGap: '20px 30px',
     gridTemplateColumns: '3fr 1px 3.5fr 3.5fr',
-    gridTemplateRows: '190px 1px 190px',
+    gridTemplateRows: 'auto 1px auto',
     gridTemplateAreas: `
       "big vspace smallA smallB"
       "big vspace hspace  hspace"

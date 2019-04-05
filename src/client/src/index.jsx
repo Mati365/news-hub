@@ -15,5 +15,8 @@ hydrateStyledComponent(
   },
   {
     containerId: ROOT_HYDRATION_CONTAINER,
+    postHydrationFn: () => {
+      window.__hydrated = true;
+    },
   },
 );
