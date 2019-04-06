@@ -36,6 +36,19 @@ const CreateArticleButton = () => {
   );
 };
 
+const ReportCrimeButton = (props) => {
+  const t = useI18n();
+
+  return (
+    <Button
+      type='danger'
+      {...props}
+    >
+      {t('website.buttons.report_hate_crime')}
+    </Button>
+  );
+};
+
 const SearchIconButton = () => {
   const t = useI18n();
 
@@ -85,6 +98,7 @@ const PageHeader = () => {
 
           <Margin left='auto'>
             <CreateArticleButton />
+            <ReportCrimeButton style={{margin: '0 10px'}} />
             <SearchIconButton />
           </Margin>
         </Flex>

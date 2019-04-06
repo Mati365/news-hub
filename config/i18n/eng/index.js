@@ -1,4 +1,4 @@
-const WEBSITE_NAME = 'Izreal News';
+const WEBSITE_NAME = 'Daily Jews';
 
 module.exports = {
   website: {
@@ -31,6 +31,7 @@ module.exports = {
 
     buttons: {
       create_article: 'Create article',
+      report_hate_crime: 'Report hate crime',
     },
 
     sections: {

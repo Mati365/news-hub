@@ -1,3 +1,5 @@
+export const WHITE = '#ffffff';
+
 export const WATER_BLUE = '#247ba0';
 export const MINT_GREEN = '#70c1b3';
 export const JUNGLE_GREEN = '#2a9d8f'; // for buttons
@@ -20,3 +22,4 @@ export const TEXT_DANGER = MUTED_RED;
 export const TEXT_MUTED = MUTED_GRAY;
 
 export const BUTTON_PRIMARY = JUNGLE_GREEN;
+export const BUTTON_DANGER = MUTED_RED;
