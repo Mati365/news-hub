@@ -4,17 +4,17 @@ import crypto from 'crypto';
 const JWTFieldsMixin = ({
   refreshTokenField = 'jwtRefreshToken',
   defaultExpire = 60,
+  signFieldsFn,
   jwtEncoder,
+  tableName,
 }) => Model => class MixinWrappedModel extends Model {
+  static tableName = tableName;
+
   /**
    * @param {Number} expiresIn Seconds
    */
   async signJWT(expiresIn = defaultExpire) {
-    const payload = {
-      id: this.id,
-      permissionLevel: this.permissionLevel,
-    };
-
+    const payload = signFieldsFn(this);
     const token = jwtEncoder.sign(
       payload,
       {

@@ -7,7 +7,7 @@ import memoizeOne from '@utils/helpers/cache/memoizeOne';
 
 import AppRoot from '@client/layout';
 
-import authJWTUserMiddleware from '../api/middlewares/authJWTUserMiddleware';
+import {authJWTUserMiddleware} from '../api/middlewares';
 import {
   appAssetsManifestMiddleware,
   assignI18nPackMiddleware,

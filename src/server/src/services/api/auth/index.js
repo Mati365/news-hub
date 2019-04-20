@@ -1,16 +1,17 @@
 import express from 'express';
+import {authJWTGuard} from '../middlewares';
 
 const authRouter = express.Router();
 
 authRouter
-  .post('/register-guest', (req, res) => {
-    res
-      .status(200)
-      .json(
-        {
-          token: null,
-        },
-      );
-  });
+  .use(
+    authJWTGuard(
+      {
+        levels: [
+
+        ],
+      },
+    ),
+  );
 
 export default authRouter;

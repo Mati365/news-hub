@@ -36,6 +36,7 @@ module.exports = {
     'no-param-reassign': 0,
     'global-require': 0,
     'no-restricted-syntax': 0,
+    'no-bitwise': 0,
     curly: 0,
     'new-parens': 0
   },

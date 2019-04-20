@@ -1,21 +1,20 @@
-import {Model, mixin} from 'objection';
+import {Model} from 'objection';
 
 import * as USER_PERMISSIONS from './constants/userPermissions';
 import * as pageJWT from '../../helpers/pageJWT';
 import JWTFieldsMixin from './mixins/JWTFieldsMixin';
 
-export default class User extends mixin(
-  Model,
-  [
-    JWTFieldsMixin(
-      {
-        jwtEncoder: pageJWT,
-      },
-    ),
-  ],
-) {
-  static tableName = 'Users';
-
+export default
+class User extends JWTFieldsMixin(
+  {
+    tableName: 'Users',
+    jwtEncoder: pageJWT,
+    signFieldsFn: user => ({
+      id: user.id,
+      permissionLevel: user.permissionLevel,
+    }),
+  },
+)(Model) {
   static jsonSchema = {
     type: 'object',
     required: [],

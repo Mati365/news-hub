@@ -8,6 +8,15 @@ const {
   refresh_token_name: JWT_REFRESH_COOKIE_NAME,
 } = env.shared.cookies.jwt;
 
+export const getLocalUserInfo = res => res.locals.userMeta.info;
+
+/**
+ * Saves authorized JWT keys
+ *
+ * @param {*} res
+ * @param {Object} jwtData
+ * @param {Boolean} assignCookies
+ */
 const storeJWT = async (res, jwtData, assignCookies = true) => {
   if (!jwtData)
     return false;
