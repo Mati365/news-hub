@@ -16,7 +16,9 @@ const app = express();
     );
 
   // mount services
-  app.use('/', Services.react);
+  app
+    .use('/api', Services.api)
+    .use('*', Services.react);
 
   // start whole server
   const port = process.env.APP_PORT || 3000;
