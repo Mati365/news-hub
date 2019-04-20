@@ -1,5 +1,5 @@
 {
-  "name": "@page/constants",
+  "name": "@shared/constants",
   "main": "src/index.js",
   "version": "1.0.0"
 }

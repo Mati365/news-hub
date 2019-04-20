@@ -1,18 +1,14 @@
 import express from 'express';
 
+import authRouter from './auth';
+import articlesRouter from './articles';
+
 const apiRouter = express.Router();
 
 apiRouter
-  .get('/articles/popular', (req, res) => {
-    res
-      .json(
-        {
-          articles: [],
-        },
-      );
-  });
-
-apiRouter
+  .use(express.json())
+  .use('/auth', authRouter)
+  .use('/articles', articlesRouter)
   .get('*', (req, res) => {
     res.json(
       {

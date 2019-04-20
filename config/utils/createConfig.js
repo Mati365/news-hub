@@ -8,7 +8,9 @@ const createConfig = ({
   outputFile,
   plugins,
   alias,
+  ...params
 }) => ({
+  ...params,
   target,
   entry,
   externals,
@@ -47,7 +49,7 @@ const createConfig = ({
       },
       {
         test: /\.jsx?$/,
-        exclude: /node_modules(?:\/(?!@page.*))/,
+        exclude: /node_modules(?:\/(?!@shared.*|@page.*))/,
         use: {
           loader: 'babel-loader',
           options: {

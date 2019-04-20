@@ -40,6 +40,16 @@ exports.up = knex => (
     // USERS
     .createTable('users', (table) => {
       table.timestamps(true, true);
+
+      table
+        .integer('permission_level')
+        .notNullable()
+        .defaultTo(0);
+
+      table
+        .text('jwt_refresh_token')
+        .defaultTo(null);
+
       table
         .increments('id')
         .primary();
@@ -70,10 +80,10 @@ exports.up = knex => (
         .increments('id')
         .primary();
 
-      table.string('cover_image', 400);
+      table.string('cover_image', 500);
 
       table
-        .string('title', 400)
+        .string('title', 500)
         .notNullable();
 
       table

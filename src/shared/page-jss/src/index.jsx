@@ -3,7 +3,7 @@ import c from 'classnames';
 import * as R from 'ramda';
 import injectSheet from 'react-jss';
 
-import {getHOCName} from '@page/utils/src/helpers/getComponentName';
+import {getHOCName} from '@shared/utils/src/helpers/getComponentName';
 
 const DEFAULT_JSS_INJECTOR_CONFIG = {
   inject: ['classes'],

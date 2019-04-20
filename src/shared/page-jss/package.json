@@ -1,5 +1,5 @@
 {
-  "name": "@page/jss",
+  "name": "@shared/jss",
   "main": "src/index.js",
   "version": "1.0.0",
   "description": "Simply wrapper around jss-react to provide simple styled-components base syntax"

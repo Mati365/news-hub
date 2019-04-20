@@ -1,5 +1,5 @@
 {
-  "name": "@page/i18n",
+  "name": "@shared/i18n",
   "main": "src/index.js",
   "version": "1.0.0"
 }

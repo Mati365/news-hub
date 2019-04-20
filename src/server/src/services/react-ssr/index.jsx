@@ -7,6 +7,7 @@ import memoizeOne from '@utils/helpers/cache/memoizeOne';
 
 import AppRoot from '@client/layout';
 
+import authJWTUserMiddleware from '../api/middlewares/authJWTUserMiddleware';
 import {
   appAssetsManifestMiddleware,
   assignI18nPackMiddleware,
@@ -80,6 +81,9 @@ router
     },
     appAssetsManifestMiddleware,
     assignI18nPackMiddleware,
+
+    // DB/API middlewares
+    authJWTUserMiddleware,
   )
 
   .get('*', rootRoute);

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
 
-import provideProps from '@page/utils/src/decorators/provideProps';
+import provideProps from '@shared/utils/src/decorators/provideProps';
 
 const SVG_ICON_SIZES = {
   tiny: [16, 16],

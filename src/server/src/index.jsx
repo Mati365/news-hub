@@ -1,12 +1,36 @@
 import express from 'express';
 import path from 'path';
 import consola from 'consola';
+import cookieParser from 'cookie-parser';
 
 import * as Services from './services';
+import bootstrapKnexModels from './db/bootstrapKnexModels';
 
 const app = express();
 
+const errorHandler = (err, req, res, next) => {
+  if (err.stack) {
+    consola.error(err.stack);
+
+    res
+      .status(500)
+      .json(
+        {
+          error: (
+            process.env.NODE_ENV === 'development'
+              ? err.stack
+              : 'Error :('
+          ),
+        },
+      );
+  } else
+    next();
+};
+
 (async () => {
+  // Loads models
+  bootstrapKnexModels();
+
   // mount routes
   app
     // mount assets provider
@@ -17,8 +41,10 @@ const app = express();
 
   // mount services
   app
+    .use(cookieParser())
     .use('/api', Services.api)
-    .use('*', Services.react);
+    .use('*', Services.react)
+    .use(errorHandler);
 
   // start whole server
   const port = process.env.APP_PORT || 3000;

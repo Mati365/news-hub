@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 
-import format from '@page/utils/src/helpers/format';
+import format from '@shared/utils/src/helpers/format';
 
 const stringLens = R.compose(
   R.lensPath,
