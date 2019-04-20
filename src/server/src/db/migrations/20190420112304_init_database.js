@@ -144,7 +144,33 @@ exports.up = knex => (
         .inTable('reactions')
         .onDelete('CASCADE');
 
-      table.unique(['article_id', 'user_id', 'reaction_id']);
+      table.unique(['article_id', 'user_id']);
+    })
+
+    // Article Users Votes
+    .createTable('article_users_votes', (table) => {
+      table.timestamps(true, true);
+
+      table
+        .integer('article_id')
+        .unsigned()
+        .references('id')
+        .inTable('articles')
+        .onDelete('CASCADE');
+
+      table
+        .integer('user_id')
+        .unsigned()
+        .references('id')
+        .inTable('users')
+        .onDelete('CASCADE');
+
+      table
+        .float('vote_weight')
+        .notNullable()
+        .defaultTo(1.0);
+
+      table.unique(['article_id', 'user_id']);
     })
 
     // Article Users Visits
@@ -175,6 +201,7 @@ exports.down = knex => (
     .dropTableIfExists('article_users_reactions')
     .dropTableIfExists('article_tags')
     .dropTableIfExists('article_users_visits')
+    .dropTableIfExists('article_users_votes')
     .dropTableIfExists('articles')
     .dropTableIfExists('external_websites_meta_descriptors')
     .dropTableIfExists('users')
