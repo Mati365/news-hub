@@ -2,7 +2,11 @@ import React from 'react';
 import express from 'express';
 import * as R from 'ramda';
 
+import {MAGIC_ASYNC_DATA_CONTEXT} from '@async-resolver/wrapAsyncTree';
+
 import ssrRenderStyledComponent from '@jss/server/ssrRenderStyles';
+import ssrRenderAsyncTree, {createBlankAsyncContext} from '@async-resolver/ssrRenderAsyncTree';
+
 import memoizeOne from '@utils/helpers/cache/memoizeOne';
 
 import AppRoot from '@client/layout';
@@ -12,6 +16,11 @@ import {
   appAssetsManifestMiddleware,
   assignI18nPackMiddleware,
 } from './middlewares';
+
+const composedSsrRenderer = asyncContext => R.compose(
+  ssrRenderStyledComponent,
+  ssrRenderAsyncTree(asyncContext),
+);
 
 /**
  * Cached pick array of script from dynamic loaded manifest,
@@ -41,21 +50,33 @@ const rootRoute = (req, res) => {
     },
   };
 
-  const context = {};
-  const prerendered = ssrRenderStyledComponent(
-    <AppRoot
-      hydrationData={hydrationData}
-      ssrRouterProps={{
-        location: req.url,
-        context,
-      }}
-    />,
-  );
+  const asyncContext = createBlankAsyncContext();
 
-  if (context.url)
-    res.redirect(302, context.url);
-  else
-    res.send(`<!doctype html>${prerendered}`);
+  for (let i = 0; i < 3; ++i) {
+    const context = {};
+    const prerendered = composedSsrRenderer(asyncContext)(
+      <AppRoot
+        hydrationData={{
+          ...hydrationData,
+          [MAGIC_ASYNC_DATA_CONTEXT]: asyncContext.cache,
+        }}
+        ssrRouterProps={{
+          location: req.url,
+          context,
+        }}
+      />,
+    );
+
+    if (context.url) {
+      res.redirect(302, context.url);
+      break;
+    }
+
+    if (R.isEmpty(asyncContext.promises)) {
+      res.send(`<!doctype html>${prerendered}`);
+      break;
+    }
+  }
 };
 
 // Configure router

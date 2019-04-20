@@ -20,6 +20,7 @@ const GLOBAL_ALIASES = {
   '@utils': 'shared/page-utils/src/',
   '@constants': 'shared/page-constants/src/',
   '@icons': 'shared/page-icons/src/',
+  '@async-resolver': 'shared/page-async-resolver/src/',
 
   '@client/links': 'client/packages/page-layout/src/containers/Links/',
   '@client/core': 'client/packages/page-core/src/',

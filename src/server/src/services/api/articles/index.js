@@ -9,7 +9,9 @@ articlesRouter
       .status(200)
       .json(
         {
-          articles: [],
+          articles: [
+            {id: 1, name: 'AAA'},
+          ],
         },
       );
   });
