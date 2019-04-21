@@ -3,6 +3,9 @@ import path from 'path';
 import consola from 'consola';
 import cookieParser from 'cookie-parser';
 
+// polyfill
+import 'isomorphic-fetch';
+
 import * as Services from './services';
 import bootstrapKnexModels from './db/bootstrapKnexModels';
 

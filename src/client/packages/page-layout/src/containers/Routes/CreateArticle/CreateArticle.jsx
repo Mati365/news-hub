@@ -12,7 +12,6 @@ import {
 import {
   PageFooter,
   PageHeader,
-  PageContent,
 } from '../../Parts';
 
 import * as Forms from './Forms';
@@ -52,9 +51,7 @@ const CreateArticleRoute = () => (
         top={6}
         block
       >
-        <PageContent>
-          <AddArticleTabs />
-        </PageContent>
+        <AddArticleTabs />
         <PageFooter />
       </Margin>
     </IdleRender>

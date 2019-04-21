@@ -24,6 +24,7 @@ const useAsyncPromise = (
     allowSSR = true,
     keyValue = null,
     responseSelector,
+    skipIf,
     promiseFn,
   },
 ) => {
@@ -35,6 +36,13 @@ const useAsyncPromise = (
 
   const [state, setState] = useState(
     () => {
+      if (skipIf) {
+        return {
+          loading: false,
+          data: undefined,
+        };
+      }
+
       if (!allowSSR && ssr) {
         return {
           loading: true,
@@ -65,13 +73,18 @@ const useAsyncPromise = (
   );
 
   // ssr already attachedPromise
+  const initialRender = useRef(true);
   const prevKey = useRef(keyValue);
   useEffect(
     () => {
-      if ((state.loading && !state.data) || prevKey.current !== keyValue) {
+      if (skipIf)
+        return;
+
+      if ((initialRender.current && state.loading && !state.data) || prevKey.current !== keyValue) {
         setState(
           {
             loading: true,
+            error: undefined,
             data: undefined,
           },
         );
@@ -84,12 +97,22 @@ const useAsyncPromise = (
                 data: responseSelect(responseSelector, data),
               },
             );
+          })
+          .catch(() => {
+            setState(
+              {
+                loading: false,
+                error: true,
+              },
+            );
           });
       }
 
       prevKey.current = keyValue;
+      initialRender.current = false;
     },
     [
+      skipIf,
       state.loading,
       keyValue,
     ],

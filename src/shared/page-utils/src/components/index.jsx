@@ -12,3 +12,4 @@ export {default as Divider} from './Divider';
 export {default as IdleRender} from './IdleRender';
 export {default as Label} from './Label';
 export {default as Form} from './Form';
+export {default as Debounce} from './Debounce';

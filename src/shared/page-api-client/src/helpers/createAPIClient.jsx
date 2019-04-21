@@ -1,5 +1,3 @@
-import 'isomorphic-fetch';
-
 import ssr from '@shared/utils/src/helpers/ssr';
 import {buildURL} from '@utils/helpers/parsers/urlEncoder';
 import jwtDecoder from '@utils/helpers/parsers/jwtDecoder';
@@ -52,7 +50,12 @@ const createAPIClient = (
         },
       },
     )
-      .then(r => r.json())
+      .then((r) => {
+        if (r.status >= 400 && r.status < 600)
+          throw new Error('Bad response from server');
+
+        return r.json();
+      })
   );
 
   /**

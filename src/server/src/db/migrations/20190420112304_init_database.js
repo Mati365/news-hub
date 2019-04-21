@@ -65,12 +65,11 @@ exports.up = knex => (
 
       table
         .text('website_url', 'text')
-        .notNullable()
-        .unique();
+        .notNullable();
 
-      table.text('meta_title', 500);
-      table.text('meta_description', 500);
-      table.text('meta_keywords', 500);
+      table.text('meta_title');
+      table.text('meta_description');
+      table.text('meta_keywords');
     })
 
     // ARTICLES

@@ -45,7 +45,8 @@ const useInputLink = (
 
           if (onChange)
             onChange(newStateValue);
-          else
+
+          if (!forwardedValue || !onChange)
             setValue(newStateValue);
         },
       };

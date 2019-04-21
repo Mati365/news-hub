@@ -2,7 +2,16 @@ import * as R from 'ramda';
 
 export const decodeUrlParameters = R.compose(
   R.fromPairs,
-  R.map(R.split('=')),
+  R.map(
+    (str) => {
+      const [key, value] = R.split('=', str);
+
+      return [
+        key,
+        decodeURIComponent(value),
+      ];
+    },
+  ),
   R.split('&'),
 );
 
