@@ -19,12 +19,13 @@ const fetchURLArticleMeta = async (url) => {
     .then(page => page.text());
 
   const $ = cheerio.load(html);
-  const textKeywords = $('meta[name="keywords"]').attr('content') || '';
+  const textKeywords = $('meta[name="keywords"i]').attr('content') || '';
 
   return {
     url,
     title: $('title').text(),
-    description: $('meta[name="description"]').attr('content'),
+    description: $('meta[name="description"i]').attr('content'),
+    cover: $('meta[property="og:image"i]').attr('content'),
 
     // textKeywords is stored in DB for that URL
     textKeywords,

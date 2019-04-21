@@ -1,4 +1,5 @@
-import {useMemo} from 'react';
+import React, {useMemo} from 'react';
+import PropTypes from 'prop-types';
 
 import {encodeB64} from '@shared/utils/src/helpers/b64';
 
@@ -27,12 +28,28 @@ const useAPIQuery = ({responseSelector, skipIf, ...queryParams}) => {
   );
 };
 
-const APIQuery = ({children, ...props}) => {
+const APIQuery = ({
+  children,
+  errorComponent: ErrorComponent,
+  loadingComponent: LoadingComponent,
+  ...props
+}) => {
   const apiQuery = useAPIQuery(props);
+
+  if (apiQuery.loading && LoadingComponent)
+    return <LoadingComponent />;
+
+  if (apiQuery.error && ErrorComponent)
+    return <ErrorComponent />;
 
   return children(apiQuery);
 };
 
 APIQuery.displayName = 'APIQuery';
+
+APIQuery.propTypes = {
+  errorComponent: PropTypes.any,
+  loadingComponent: PropTypes.any,
+};
 
 export default APIQuery;

@@ -7,6 +7,10 @@ const Flex = styled.div(
       display: 'flex',
     },
 
+    expanded: {
+      width: '100%',
+    },
+
     centered: {
       alignItems: 'center',
       justifyContent: 'center',
@@ -24,23 +28,29 @@ const Flex = styled.div(
     'justify-flex-end': {justifyContent: 'flex-end'},
   },
   {
-    omitProps: ['direction', 'align', 'jusitfy', 'centered'],
+    omitProps: [
+      'direction', 'align', 'expanded',
+      'jusitfy', 'centered',
+    ],
     classSelector: (
       classes,
       {
         direction, align,
         justify, centered,
+        expanded,
       },
     ) => [
       direction && classes[`direction-${direction}`],
       align && classes[`align-${align}`],
       justify && classes[`justify-${justify}`],
+      expanded && classes.expanded,
       centered && classes.centered,
     ],
   },
 );
 
 Flex.propTypes = {
+  expanded: PropTypes.bool,
   direction: PropTypes.oneOf(['row', 'column']),
   align: PropTypes.oneOf(['center', 'flex-start', 'flex-end']),
   justify: PropTypes.oneOf(['center', 'flex-start', 'flex-end']),

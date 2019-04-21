@@ -8,6 +8,9 @@ module.exports = {
     },
 
     titles: {
+      loading: 'Wczytywanie...',
+      error: 'Nastąpił błąd podczas parsowania zapytania!',
+
       search: 'Wyszukaj',
       see_also: 'Zobacz też...',
 

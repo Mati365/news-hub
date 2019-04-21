@@ -70,6 +70,8 @@ exports.up = knex => (
       table.text('meta_title');
       table.text('meta_description');
       table.text('meta_keywords');
+
+      table.text('og_image');
     })
 
     // ARTICLES

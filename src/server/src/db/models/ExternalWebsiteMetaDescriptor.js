@@ -23,6 +23,9 @@ export default class ExternalWebsiteMetaDescriptor extends Model {
       metaKeywords: {
         type: 'string',
       },
+      ogImage: {
+        type: 'string',
+      },
     },
   };
 }

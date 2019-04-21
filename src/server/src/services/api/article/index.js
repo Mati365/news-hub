@@ -42,6 +42,7 @@ articleRouter
             description: cached.metaDescription,
             keywords: tokenizeKeywords(cached.metaKeywords),
             textKeywords: cached.metaKeywords,
+            cover: cached.ogImage,
           },
         );
 
@@ -69,6 +70,7 @@ articleRouter
           metaTitle: info.title,
           metaDescription: info.description,
           metaKeywords: info.textKeywords,
+          ogImage: info.cover,
         },
       );
 

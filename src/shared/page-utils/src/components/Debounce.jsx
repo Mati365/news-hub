@@ -9,11 +9,13 @@ export default class Debounce extends React.Component {
     delay: PropTypes.number.isRequired,
     initialInstant: PropTypes.bool,
     allowRerenders: PropTypes.bool,
+    loadingComponent: PropTypes.any,
   };
 
   static defaultProps = {
     initialInstant: false,
     allowRerenders: false,
+    loadingComponent: null,
   };
 
   state = {
@@ -57,9 +59,8 @@ export default class Debounce extends React.Component {
     if (nextState.lockUpdate)
       this.onUnlockRender();
 
-    return nextProps.allowRerenders || !nextState.lockUpdate;
+    return nextProps.loadingComponent || nextProps.allowRerenders || !nextState.lockUpdate;
   }
-
 
   componentWillUnmount() {
     this.unmounted = true;
@@ -68,8 +69,15 @@ export default class Debounce extends React.Component {
   render() {
     const {initialRender} = this;
     const {lockUpdate} = this.state;
-    const {children} = this.props;
+    const {
+      loadingComponent: LoadingComponent,
+      children,
+    } = this.props;
 
-    return children(!initialRender && lockUpdate);
+    const debounced = !initialRender && lockUpdate;
+    if (debounced && LoadingComponent)
+      return <LoadingComponent />;
+
+    return children(debounced);
   }
 }
