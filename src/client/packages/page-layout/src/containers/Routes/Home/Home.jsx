@@ -1,5 +1,6 @@
 import React from 'react';
 
+import {APIQuery} from '@api-client/components';
 import {
   Container,
   IdleRender,
@@ -15,6 +16,12 @@ const HomeRoute = () => (
   <Container>
     <PageHeader />
     <Sections.Primary />
+
+    <APIQuery path='articles'>
+      {() => (
+        <div>AA</div>
+      )}
+    </APIQuery>
 
     <IdleRender>
       <Sections.Popular />

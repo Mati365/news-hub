@@ -21,6 +21,7 @@ const GLOBAL_ALIASES = {
   '@constants': 'shared/page-constants/src/',
   '@icons': 'shared/page-icons/src/',
   '@async-resolver': 'shared/page-async-resolver/src/',
+  '@api-client': 'shared/page-api-client/src/',
 
   '@client/links': 'client/packages/page-layout/src/containers/Links/',
   '@client/core': 'client/packages/page-core/src/',

@@ -9,7 +9,12 @@ module.exports = {
       },
     },
 
-    server: {},
-    client: {},
+    server: {
+      apiUrl: 'http://localhost:3000/api',
+    },
+
+    client: {
+      apiUrl: '/api',
+    },
   },
 };

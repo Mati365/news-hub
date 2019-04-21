@@ -23,7 +23,7 @@ module.exports = {
 
     article: {
       read_time: '%{} min.',
-      comments_count: '%{} komentarzy',
+      comments_count: '%{} opinii',
       bookmark: 'Zapisz',
       likes: '%{} polubień',
       views: '%{} wyświetleń',

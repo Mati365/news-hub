@@ -3,10 +3,12 @@ import {ROOT_HYDRATION_CONTAINER} from '@constants/globalAccessors';
 import HYDRATION_DATA from '@constants/global/hydrationData';
 
 import hydrateStyledComponent from '@jss/client/hydrateStyledComponent';
+import {wrapHydratedAsyncTree} from '@async-resolver';
+
 import AppRoot from '@client/layout';
 
 hydrateStyledComponent(
-  AppRoot,
+  wrapHydratedAsyncTree(AppRoot),
   {
     withSkeleton: false,
     hydrationData: {

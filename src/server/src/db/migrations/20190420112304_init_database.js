@@ -82,6 +82,10 @@ exports.up = knex => (
 
       table.string('cover_image', 500);
 
+      table.string('cover_title', 250);
+
+      table.string('lead', 500);
+
       table
         .string('title', 500)
         .notNullable();

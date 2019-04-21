@@ -5,7 +5,7 @@ import AsyncContextProvider from './AsyncContextProvider';
 
 export const MAGIC_ASYNC_DATA_CONTEXT = 'resolvedPromises';
 
-const wrapAsyncTree = (Component) => {
+const wrapHydratedAsyncTree = (Component) => {
   const initialCacheStore = {
     cache: hydrationData[MAGIC_ASYNC_DATA_CONTEXT],
   };
@@ -21,4 +21,4 @@ const wrapAsyncTree = (Component) => {
   return Wrapped;
 };
 
-export default wrapAsyncTree;
+export default wrapHydratedAsyncTree;

@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import env from '@constants/global/env';
+
 import ProvideI18n from '@i18n/components/ProvideI18n';
 import MagicJSSHeadTag from '@jss/components/MagicJSSHeadTag';
+import {APIProvider} from '@api-client/components';
 
 import HTMLSkeleton from '../components/HTMLSkeleton';
 import RouterContent from './RouterContent';
@@ -16,9 +19,14 @@ const PageProviders = ({hydrationData, children}) => {
   } = hydrationData;
 
   return (
-    <ProvideI18n {...i18n}>
-      {children}
-    </ProvideI18n>
+    <APIProvider
+      apiUrl={env.current.apiUrl}
+      tokens={{}}
+    >
+      <ProvideI18n {...i18n}>
+        {children}
+      </ProvideI18n>
+    </APIProvider>
   );
 };
 

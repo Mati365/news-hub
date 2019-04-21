@@ -1,5 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import * as R from 'ramda';
+
+const createBlankCounter = () => ({
+  counter: 0,
+  generateUUID: function generateUUID() {
+    return this.counter++;
+  },
+});
 
 export const AsyncPromisesContext = React.createContext({
   promises: {},
@@ -8,12 +15,7 @@ export const AsyncPromisesContext = React.createContext({
   counter: 0,
 });
 
-const createBlankCounter = () => ({
-  counter: 0,
-  generateUUID: function generateUUID() {
-    return this.counter++;
-  },
-});
+export const useAsyncPromisesContext = () => useContext(AsyncPromisesContext);
 
 const AsyncContextProvider = ({value, children}) => (
   <AsyncPromisesContext.Provider

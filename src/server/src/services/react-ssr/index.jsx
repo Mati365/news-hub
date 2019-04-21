@@ -2,7 +2,8 @@ import React from 'react';
 import express from 'express';
 import * as R from 'ramda';
 
-import {MAGIC_ASYNC_DATA_CONTEXT} from '@async-resolver/wrapAsyncTree';
+import {MAGIC_ASYNC_DATA_CONTEXT} from '@async-resolver/wrapHydratedAsyncTree';
+import env from '@constants/global/env';
 
 import ssrRenderStyledComponent from '@jss/server/ssrRenderStyles';
 import ssrRenderAsyncTree, {createBlankAsyncContext} from '@async-resolver/ssrRenderAsyncTree';
@@ -46,6 +47,7 @@ const rootRoute = (req, res) => {
   const hydrationData = {
     scripts: pickMainScripts(manifest),
     data: {
+      env: env.client,
       i18n: res.locals.i18n,
     },
   };
@@ -58,7 +60,10 @@ const rootRoute = (req, res) => {
       <AppRoot
         hydrationData={{
           ...hydrationData,
-          [MAGIC_ASYNC_DATA_CONTEXT]: asyncContext.cache,
+          data: {
+            ...hydrationData.data,
+            [MAGIC_ASYNC_DATA_CONTEXT]: asyncContext.cache,
+          },
         }}
         ssrRouterProps={{
           location: req.url,
