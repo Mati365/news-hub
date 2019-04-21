@@ -25,6 +25,7 @@ const GLOBAL_ALIASES = {
   '@isomorphic-cookies': 'shared/page-isomorphic-cookies/src/',
 
   '@client/links': 'client/packages/page-layout/src/containers/Links/',
+  '@client/controls': 'client/packages/page-core/src/components/Controls/',
   '@client/core': 'client/packages/page-core/src/',
   '@client/layout': 'client/packages/page-layout/src/',
   '@client': 'client/',

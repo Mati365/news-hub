@@ -43,5 +43,15 @@ module.exports = {
         title: 'Popularne tagi',
       },
     },
+
+    routes: {
+      create_article: {
+        add_link: 'Dodaj link',
+        add_article: 'Napisz artykuł',
+
+        page_url_label: 'Link do strony:',
+        paste_url_placeholder: 'Wklej dodawany adres URL',
+      },
+    },
   },
 };

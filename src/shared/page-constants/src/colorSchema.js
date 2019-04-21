@@ -1,4 +1,5 @@
 export const WHITE = '#ffffff';
+export const DARK = '#000000';
 
 export const WATER_BLUE = '#247ba0';
 export const MINT_GREEN = '#70c1b3';
@@ -23,3 +24,8 @@ export const TEXT_MUTED = MUTED_GRAY;
 
 export const BUTTON_PRIMARY = JUNGLE_GREEN;
 export const BUTTON_DANGER = MUTED_RED;
+
+export const NAV_TAB_TEXT = DARK;
+export const NAV_TAB_INACTIVE_BORDER = LIGHT_GRAY;
+
+export const ACTIVE_INPUT = MINT_GREEN;

@@ -43,7 +43,7 @@ const errorHandler = (err, req, res, next) => {
   app
     .use(cookieParser())
     .use('/api', Services.api)
-    .use('*', Services.react)
+    .use('/', Services.react)
     .use(errorHandler);
 
   // start whole server

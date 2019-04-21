@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {useI18n} from '@i18n';
 import styled from '@jss';
@@ -7,7 +8,11 @@ import TagsList from '@client/core/components/Tags/TagsList';
 import Button from '@client/core/components/Controls/Button';
 import SearchIcon from '@icons/SearchIcon';
 
-import {HomeLink} from '@client/links';
+import {
+  CreateArticleLink,
+  HomeLink,
+} from '@client/links';
+
 import {
   Margin,
   Header,
@@ -30,9 +35,11 @@ const CreateArticleButton = () => {
   const t = useI18n();
 
   return (
-    <Button>
-      {t('website.buttons.create_article')}
-    </Button>
+    <CreateArticleLink>
+      <Button>
+        {t('website.buttons.create_article')}
+      </Button>
+    </CreateArticleLink>
   );
 };
 
@@ -71,7 +78,7 @@ const SearchIconButton = () => {
   );
 };
 
-const PageHeader = () => {
+const PageHeader = ({divider}) => {
   const t = useI18n();
 
   return (
@@ -104,11 +111,21 @@ const PageHeader = () => {
         </Flex>
       </Margin>
 
-      <Divider spacing='big' />
+      {divider && (
+        <Divider spacing='big' />
+      )}
     </header>
   );
 };
 
 PageHeader.displayName = 'PageHeader';
+
+PageHeader.propTypes = {
+  divider: PropTypes.bool,
+};
+
+PageHeader.defaultProps = {
+  divider: true,
+};
 
 export default React.memo(PageHeader);

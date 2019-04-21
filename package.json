@@ -69,6 +69,7 @@
     "react-dom": "^16.8.6",
     "react-jss": "^8.6.1",
     "react-router-dom": "^5.0.0",
-    "isomorphic-fetch": "^2.2.1"
+    "isomorphic-fetch": "^2.2.1",
+    "react-mde": "^7.3.2"
   }
 }
