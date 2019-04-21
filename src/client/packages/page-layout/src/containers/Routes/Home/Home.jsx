@@ -17,8 +17,11 @@ const HomeRoute = () => (
     <PageHeader />
     <Sections.Primary />
 
-    <APIQuery path='articles'>
-      {() => (
+    <APIQuery
+      path='articles'
+      responseSelector='articles'
+    >
+      {({data: articles}) => (
         <div>AA</div>
       )}
     </APIQuery>

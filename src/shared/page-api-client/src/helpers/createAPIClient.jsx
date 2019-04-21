@@ -1,5 +1,6 @@
 import 'isomorphic-fetch';
 
+import ssr from '@shared/utils/src/helpers/ssr';
 import {buildURL} from '@utils/helpers/parsers/urlEncoder';
 import jwtDecoder from '@utils/helpers/parsers/jwtDecoder';
 
@@ -20,6 +21,9 @@ const createAPIClient = (
       decoded: jwtDecoder(tokens.token)?.payload,
     },
   };
+
+  if (!ssr && process.env.NODE_ENV === 'development')
+    console.log(context.tokens?.decoded?.data);
 
   /**
    * Creates single apiCall, does not verify if token is OK
@@ -98,15 +102,16 @@ const createAPIClient = (
    * @param  {...any} params
    */
   const verifiedApiCall = async (...params) => {
-    if (context.tokens?.decoded?.exp * 1000 > Date.now() - MIN_TOKEN_DURATION) {
+    if (new Date(context.tokens?.decoded?.exp * 1000) < Date.now() + MIN_TOKEN_DURATION) {
       if (!tokenRefreshPromise) {
         const {refreshToken} = tokens;
         if (!refreshToken)
           throw new Error('Token already expired but there is no refresh token!');
 
         tokenRefreshPromise = refreshContextTokens();
-      } else
-        await tokenRefreshPromise;
+      }
+
+      await tokenRefreshPromise;
     }
 
     return apiCall(...params);

@@ -1,16 +1,29 @@
+import * as R from 'ramda';
 import {
   useState,
   useEffect,
   useMemo,
+  useRef,
 } from 'react';
 
 import ssr from '@shared/utils/src/helpers/ssr';
 import {useAsyncPromisesContext} from '../AsyncContextProvider';
 
+const responseSelect = (fn, data) => {
+  if (!fn)
+    return data;
+
+  if (R.is(String, fn))
+    return data[fn];
+
+  return fn(data);
+};
+
 const useAsyncPromise = (
   {
     allowSSR = true,
     keyValue = null,
+    responseSelector,
     promiseFn,
   },
 ) => {
@@ -33,7 +46,7 @@ const useAsyncPromise = (
       if (cacheData) {
         return {
           loading: false,
-          data: cacheData,
+          data: responseSelect(responseSelector, cacheData),
         };
       }
 
@@ -52,27 +65,29 @@ const useAsyncPromise = (
   );
 
   // ssr already attachedPromise
+  const prevKey = useRef(keyValue);
   useEffect(
     () => {
-      if (state.loading)
-        return;
+      if ((state.loading && !state.data) || prevKey.current !== keyValue) {
+        setState(
+          {
+            loading: true,
+            data: undefined,
+          },
+        );
 
-      setState(
-        {
-          loading: true,
-          data: undefined,
-        },
-      );
+        promiseFn()
+          .then((data) => {
+            setState(
+              {
+                loading: false,
+                data: responseSelect(responseSelector, data),
+              },
+            );
+          });
+      }
 
-      promiseFn()
-        .then((data) => {
-          setState(
-            {
-              loading: false,
-              data,
-            },
-          );
-        });
+      prevKey.current = keyValue;
     },
     [
       state.loading,

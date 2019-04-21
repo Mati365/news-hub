@@ -7,7 +7,7 @@ import useAsyncPromise from '../../../page-async-resolver/src/hooks/useAsyncProm
 
 const genQueryKey = ({path, urlParams}) => encodeB64(`${path}/${JSON.stringify(urlParams)}`);
 
-const useAPIQuery = (queryParams) => {
+const useAPIQuery = ({responseSelector, ...queryParams}) => {
   const client = useAPIContext();
   const key = useMemo(
     () => genQueryKey(queryParams),
@@ -21,6 +21,7 @@ const useAPIQuery = (queryParams) => {
     {
       promiseFn: () => client.get(queryParams),
       keyValue: key,
+      responseSelector,
     },
   );
 };

@@ -17,7 +17,7 @@ class UniversalCookiesAccessor {
     server: {
       get: name => this.req.cookies[name],
       set: (name, value, params) => {
-        this.res.cookies(
+        this.res.cookie(
           name,
           value,
           params,

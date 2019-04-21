@@ -18,9 +18,10 @@ authRouter
             error: 'Missing refreshToken body param!',
           },
         );
+      return;
     }
 
-    const data = await User.refreshJWT(req.body.refreshToken);
+    const data = await User.refreshJWT(refreshToken);
     if (!data) {
       res
         .status(401)
@@ -36,7 +37,7 @@ authRouter
       {
         token: {
           value: data.token,
-          maxAge: data.expriesIn * 1000,
+          maxAge: data.expiresIn * 1000,
         },
 
         refreshToken: {
