@@ -1,9 +1,28 @@
+import {useMemo} from 'react';
+
+import {encodeB64} from '@shared/utils/src/helpers/b64';
+
 import {useAPIContext} from './APIContext';
+import useAsyncPromise from '../../../page-async-resolver/src/hooks/useAsyncPromise';
+
+const genQueryKey = ({path, urlParams}) => encodeB64(`${path}/${JSON.stringify(urlParams)}`);
 
 const useAPIQuery = (queryParams) => {
   const client = useAPIContext();
+  const key = useMemo(
+    () => genQueryKey(queryParams),
+    [
+      queryParams.path,
+      queryParams.urlParams,
+    ],
+  );
 
-  return client.get(queryParams);
+  return useAsyncPromise(
+    {
+      promiseFn: () => client.get(queryParams),
+      keyValue: key,
+    },
+  );
 };
 
 const APIQuery = ({children, ...props}) => {

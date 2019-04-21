@@ -5,7 +5,7 @@ const authJWTGuard = ({
   levels = [],
   checkLevelFn,
 }) => (req, res, next) => {
-  const userInfo = getLocalUserInfo();
+  const userInfo = getLocalUserInfo(res);
 
   if (!userInfo
       || (checkLevelFn && !checkLevelFn(userInfo))

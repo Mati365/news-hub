@@ -4,11 +4,13 @@ import wrapAsyncRoute from '@services/shared/decorators/wrapAsyncRoute';
 import {User} from '@db/models';
 
 const {
-  token_name: JWT_COOKIE_NAME,
-  refresh_token_name: JWT_REFRESH_COOKIE_NAME,
+  tokenName: JWT_COOKIE_NAME,
+  refreshTokenName: JWT_REFRESH_COOKIE_NAME,
 } = env.shared.cookies.jwt;
 
-export const getLocalUserInfo = res => res.locals.userMeta.info;
+export const REFRESH_TOKEN_MAX_AGE = 315360000000;
+
+export const getLocalUserInfo = res => res.locals.userMeta?.info;
 
 /**
  * Saves authorized JWT keys
@@ -51,7 +53,7 @@ const storeJWT = async (req, res, jwtData, assignCookies = true) => {
       JWT_REFRESH_COOKIE_NAME,
       refreshToken,
       {
-        maxAge: 315360000000,
+        maxAge: REFRESH_TOKEN_MAX_AGE,
       },
     );
   }

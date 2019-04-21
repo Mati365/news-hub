@@ -55,12 +55,7 @@ const createAPIClient = (
    * Fetches new tokens and assigns them to context
    */
   const refreshContextTokens = async () => {
-    const {
-      tokens: {
-        refreshToken,
-        token,
-      },
-    } = await apiCall(
+    const data = await apiCall(
       {
         method: 'POST',
         path: 'auth/refresh-token',
@@ -69,6 +64,19 @@ const createAPIClient = (
         },
       },
     );
+
+    if (!data || !data.token)
+      throw new Error('Incorrect refresh token response!');
+
+    const {
+      refreshToken: {
+        value: refreshToken,
+      },
+
+      token: {
+        value: token,
+      },
+    } = data;
 
     if (!token)
       throw new Error('Refreshed token is null!');
@@ -81,7 +89,7 @@ const createAPIClient = (
 
     // save cookie etc
     if (onUpdateTokens)
-      onUpdateTokens(context.tokens);
+      onUpdateTokens(data);
   };
 
   /**
@@ -98,7 +106,7 @@ const createAPIClient = (
 
         tokenRefreshPromise = refreshContextTokens();
       } else
-        await tokenRefreshPromise();
+        await tokenRefreshPromise;
     }
 
     return apiCall(...params);

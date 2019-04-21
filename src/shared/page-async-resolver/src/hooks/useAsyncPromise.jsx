@@ -1,4 +1,8 @@
-import {useMemo} from 'react';
+import {
+  useState,
+  useEffect,
+  useMemo,
+} from 'react';
 
 import ssr from '@shared/utils/src/helpers/ssr';
 import {useAsyncPromisesContext} from '../AsyncContextProvider';
@@ -12,17 +16,71 @@ const useAsyncPromise = (
 ) => {
   const asyncContext = useAsyncPromisesContext();
   const uuid = useMemo(
-    asyncContext.generateUUID,
+    () => keyValue || asyncContext.generateUUID(),
     [keyValue],
   );
 
-  if (!allowSSR && ssr)
-    return;
+  const [state, setState] = useState(
+    () => {
+      if (!allowSSR && ssr) {
+        return {
+          loading: true,
+          data: undefined,
+        };
+      }
 
-  const cacheData = asyncContext.cache && asyncContext.cache[uuid];
-  asyncContext.attachPromise(uuid, promiseFn());
+      const cacheData = asyncContext.cache && asyncContext.cache[uuid];
+      if (cacheData) {
+        return {
+          loading: false,
+          data: cacheData,
+        };
+      }
 
-  console.log(cacheData);
+      const {attachPromise} = asyncContext;
+      if (ssr && attachPromise) {
+        attachPromise(
+          uuid,
+          promiseFn(),
+        );
+      }
+
+      return {
+        loading: true,
+      };
+    },
+  );
+
+  // ssr already attachedPromise
+  useEffect(
+    () => {
+      if (state.loading)
+        return;
+
+      setState(
+        {
+          loading: true,
+          data: undefined,
+        },
+      );
+
+      promiseFn()
+        .then((data) => {
+          setState(
+            {
+              loading: false,
+              data,
+            },
+          );
+        });
+    },
+    [
+      state.loading,
+      keyValue,
+    ],
+  );
+
+  return state;
 };
 
 export default useAsyncPromise;

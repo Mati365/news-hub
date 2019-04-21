@@ -24,9 +24,28 @@ const CookieAPIProvider = ({children}) => {
     <APIProvider
       apiUrl={env.current.apiUrl}
       tokens={{
-        token: cookies.get(JWT_COOKIES_ENV.token_name),
-        refreshToken: cookies.get(JWT_COOKIES_ENV.refresh_token_name),
+        token: cookies.get(JWT_COOKIES_ENV.tokenName),
+        refreshToken: cookies.get(JWT_COOKIES_ENV.refreshTokenName),
       }}
+      onUpdateTokens={
+        ({token, refreshToken}) => {
+          cookies.set(
+            JWT_COOKIES_ENV.tokenName,
+            token.value,
+            {
+              maxAge: token.maxAge,
+            },
+          );
+
+          cookies.set(
+            JWT_COOKIES_ENV.refreshTokenName,
+            refreshToken.value,
+            {
+              maxAge: refreshToken.maxAge,
+            },
+          );
+        }
+      }
     >
       {children}
     </APIProvider>

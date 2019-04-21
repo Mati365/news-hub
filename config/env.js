@@ -3,8 +3,8 @@ module.exports = {
     shared: {
       cookies: {
         jwt: {
-          token_name: 'jwt_user_token',
-          refresh_token_name: 'jwt_user_refresh_token',
+          tokenName: 'jwt_user_token',
+          refreshTokenName: 'jwt_user_refresh_token',
         },
       },
     },

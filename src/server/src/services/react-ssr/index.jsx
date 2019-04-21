@@ -8,7 +8,9 @@ import env from '@constants/global/env';
 import ssrRenderStyledComponent from '@jss/server/ssrRenderStyles';
 import ssrRenderAsyncTree, {createBlankAsyncContext} from '@async-resolver/ssrRenderAsyncTree';
 
+import wrapAsyncRoute from '@services/shared/decorators/wrapAsyncRoute';
 import memoizeOne from '@utils/helpers/cache/memoizeOne';
+import mapObjValuesToPromise from '@utils/helpers/async/mapObjValuesToPromise';
 
 import AppRoot from '@client/layout';
 
@@ -42,7 +44,7 @@ const pickMainScripts = pickManifestScripts(
   ],
 );
 
-const rootRoute = (req, res) => {
+const rootRoute = async (req, res) => {
   const {manifest} = res.locals;
   const hydrationData = {
     scripts: pickMainScripts(manifest),
@@ -55,9 +57,10 @@ const rootRoute = (req, res) => {
     },
   };
 
-  const asyncContext = createBlankAsyncContext();
-
-  for (let i = 0; i < 3; ++i) {
+  const renderAsync = async (
+    asyncContext = createBlankAsyncContext(),
+    iteration = 0,
+  ) => {
     const context = {};
     const prerendered = composedSsrRenderer(asyncContext)(
       <AppRoot
@@ -79,16 +82,26 @@ const rootRoute = (req, res) => {
       />,
     );
 
-    if (context.url) {
+    if (context.url)
       res.redirect(302, context.url);
-      break;
-    }
-
-    if (R.isEmpty(asyncContext.promises)) {
+    else if (R.isEmpty(asyncContext.promises) || iteration > 3)
       res.send(`<!doctype html>${prerendered}`);
-      break;
+    else {
+      const data = await mapObjValuesToPromise(R.identity, asyncContext.promises);
+      await renderAsync(
+        {
+          promises: {},
+          cache: {
+            ...asyncContext.cache,
+            ...data,
+          },
+        },
+        iteration + 1,
+      );
     }
-  }
+  };
+
+  await renderAsync();
 };
 
 // Configure router
@@ -119,6 +132,6 @@ router
     authJWTUserMiddleware,
   )
 
-  .get('*', rootRoute);
+  .get('*', wrapAsyncRoute(rootRoute));
 
 export default router;
