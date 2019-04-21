@@ -17,7 +17,7 @@ export const getLocalUserInfo = res => res.locals.userMeta.info;
  * @param {Object} jwtData
  * @param {Boolean} assignCookies
  */
-const storeJWT = async (res, jwtData, assignCookies = true) => {
+const storeJWT = async (req, res, jwtData, assignCookies = true) => {
   if (!jwtData)
     return false;
 
@@ -37,6 +37,7 @@ const storeJWT = async (res, jwtData, assignCookies = true) => {
   };
 
   if (assignCookies) {
+    req.cookies[JWT_COOKIE_NAME] = token;
     res.cookie(
       JWT_COOKIE_NAME,
       token,
@@ -45,6 +46,7 @@ const storeJWT = async (res, jwtData, assignCookies = true) => {
       },
     );
 
+    req.cookies[JWT_REFRESH_COOKIE_NAME] = refreshToken;
     res.cookie(
       JWT_REFRESH_COOKIE_NAME,
       refreshToken,
@@ -68,6 +70,7 @@ const createAnonymousUserMiddleware = async (req, res, next) => {
   const user = await User.insertAnonymousUser();
 
   await storeJWT(
+    req,
     res,
     await user.signJWT(),
   );
@@ -90,6 +93,7 @@ const authJWTUserMiddleware = async (req, res, next) => {
   // token should be fine
   if (token) {
     await storeJWT(
+      req,
       res,
       {
         payload: await User.decryptJWT(token),
@@ -104,6 +108,7 @@ const authJWTUserMiddleware = async (req, res, next) => {
   // try to refresh token
   if (refreshToken && !res.locals.userMeta?.info) {
     await storeJWT(
+      req,
       res,
       await User.refreshJWT(refreshToken),
     );

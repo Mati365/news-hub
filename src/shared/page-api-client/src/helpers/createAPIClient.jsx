@@ -1,3 +1,5 @@
+import 'isomorphic-fetch';
+
 import {buildURL} from '@utils/helpers/parsers/urlEncoder';
 import jwtDecoder from '@utils/helpers/parsers/jwtDecoder';
 
@@ -15,7 +17,7 @@ const createAPIClient = (
   const context = {
     tokens: {
       ...tokens,
-      decoded: jwtDecoder(tokens.token),
+      decoded: jwtDecoder(tokens.token)?.payload,
     },
   };
 
@@ -72,9 +74,9 @@ const createAPIClient = (
       throw new Error('Refreshed token is null!');
 
     context.tokens = {
+      decoded: jwtDecoder(token)?.payload,
       token,
       refreshToken,
-      decoded: jwtDecoder(token),
     };
 
     // save cookie etc
@@ -88,7 +90,7 @@ const createAPIClient = (
    * @param  {...any} params
    */
   const verifiedApiCall = async (...params) => {
-    if (context.tokens.decoded.exp > Date.now() - MIN_TOKEN_DURATION) {
+    if (context.tokens?.decoded?.exp * 1000 > Date.now() - MIN_TOKEN_DURATION) {
       if (!tokenRefreshPromise) {
         const {refreshToken} = tokens;
         if (!refreshToken)

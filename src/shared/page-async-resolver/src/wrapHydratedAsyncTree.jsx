@@ -7,7 +7,7 @@ export const MAGIC_ASYNC_DATA_CONTEXT = 'resolvedPromises';
 
 const wrapHydratedAsyncTree = (Component) => {
   const initialCacheStore = {
-    cache: hydrationData[MAGIC_ASYNC_DATA_CONTEXT],
+    cache: hydrationData[MAGIC_ASYNC_DATA_CONTEXT] || {},
   };
 
   const Wrapped = props => (

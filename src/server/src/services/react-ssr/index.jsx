@@ -47,8 +47,11 @@ const rootRoute = (req, res) => {
   const hydrationData = {
     scripts: pickMainScripts(manifest),
     data: {
-      env: env.client,
       i18n: res.locals.i18n,
+      env: {
+        ...env.shared,
+        ...env.client,
+      },
     },
   };
 
@@ -64,6 +67,10 @@ const rootRoute = (req, res) => {
             ...hydrationData.data,
             [MAGIC_ASYNC_DATA_CONTEXT]: asyncContext.cache,
           },
+        }}
+        ssrCookiesProps={{
+          req,
+          res,
         }}
         ssrRouterProps={{
           location: req.url,

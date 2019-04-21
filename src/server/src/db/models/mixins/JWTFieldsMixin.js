@@ -3,7 +3,7 @@ import crypto from 'crypto';
 
 const JWTFieldsMixin = ({
   refreshTokenField = 'jwtRefreshToken',
-  defaultExpire = 60,
+  defaultExpire = 300, // 5min
   signFieldsFn,
   jwtEncoder,
   tableName,

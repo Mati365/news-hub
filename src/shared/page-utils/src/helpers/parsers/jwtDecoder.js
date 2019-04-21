@@ -1,10 +1,5 @@
 import * as R from 'ramda';
-
-const decodeBase64 = str => (
-  typeof atob === 'undefined'
-    ? Buffer.from(str, 'base64').toString('binary')
-    : atob(str)
-);
+import {decodeB64} from '../b64';
 
 /**
  * Converts base64 string to javascript object
@@ -12,7 +7,7 @@ const decodeBase64 = str => (
  * @param {String} str
  */
 const parseBase64 = str => JSON.parse(
-  decodeBase64(
+  decodeB64(
     R.compose(
       R.replace('_', '/'),
       R.replace('-', '+'),
