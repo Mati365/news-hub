@@ -1,6 +1,10 @@
 import styled from '@jss';
 
-import {LIGHT_CARD_BORDER} from '@constants/colorSchema';
+import {
+  TEXT_DANGER,
+  LIGHT_CARD_BORDER,
+} from '@constants/colorSchema';
+
 import textEllipsisStyle from '@utils/styles/textEllipsis';
 
 import BookmarkIcon from '@icons/BookmarkIcon';
@@ -60,6 +64,18 @@ export const ArticleContent = styled(
     extend: textEllipsisStyle,
     flex: 1,
     lineHeight: '1.37em',
+
+    '& > p:first-child': {
+      marginTop: 0,
+    },
+
+    '& > p:last-child': {
+      marginBottom: 0,
+    },
+
+    '& a': {
+      color: TEXT_DANGER,
+    },
   },
   {
     align: 'justify',

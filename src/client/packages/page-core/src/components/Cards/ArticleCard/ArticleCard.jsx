@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import * as R from 'ramda';
 
 import {ARTICLE_CARD_SCHEMA} from '@constants/typeSchema';
-
-import {truncateEllipsisString} from '@utils/helpers/truncateString';
 import provideProps from '@utils/decorators/provideProps';
 
 import {
@@ -50,7 +48,12 @@ const ArticleCard = ({
 
     <div>
       {withTags && article.tags?.length > 0 && (
-        <Margin top={1}>
+        <Margin
+          bottom={1}
+          {...vertical && withCover && {
+            top: 1,
+          }}
+        >
           <TagsList
             tags={
               R.take(6, article.tags)
@@ -66,9 +69,11 @@ const ArticleCard = ({
       </LinkComponent>
 
       {withContent && (
-        <ArticleContent>
-          {truncateEllipsisString(maxDescriptionLength, article.lead || article.content)}
-        </ArticleContent>
+        <ArticleContent
+          dangerouslySetInnerHTML={{
+            __html: article.lead || article.content,
+          }}
+        />
       )}
 
       <ArticleToolbar>

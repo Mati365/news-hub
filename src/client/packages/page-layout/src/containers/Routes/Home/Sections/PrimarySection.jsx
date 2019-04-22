@@ -1,11 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import * as R from 'ramda';
+
+import {ARTICLE_SCHEMA} from '@constants/typeSchema';
 
 import styled from '@jss';
 
+import APIQuery from '@api-client/components/APIQuery';
+import {loaderComponents} from '@client/core/components/LoaderAsyncTitles';
+
 import {Divider} from '@utils/components';
 import ArticleCard from '@client/core/components/Cards/ArticleCard';
-
-import FAKE_ARTICLE from '../../../../mocks/articles';
 
 const PrimarySectionGrid = styled.div(
   {
@@ -14,71 +19,82 @@ const PrimarySectionGrid = styled.div(
     gridTemplateColumns: '3fr 1px 3.5fr 3.5fr',
     gridTemplateRows: 'auto 1px auto',
     gridTemplateAreas: `
-      "big vspace smallA smallB"
-      "big vspace hspace  hspace"
-      "big vspace smallC  smallD"
+      "article-0 vspace article-1 article-2"
+      "article-0 vspace hspace  hspace"
+      "article-0 vspace article-3  article-4"
     `,
   },
 );
 
-const PrimarySection = () => (
-  <PrimarySectionGrid>
-    <Divider
-      spacing='none'
-      vertical
-      style={{
-        gridArea: 'vspace',
-      }}
-    />
+const primaryArticleMapper = (article, index) => {
+  if (!index) {
+    return (
+      <ArticleCard
+        key={article.id}
+        article={article}
+        style={{
+          gridArea: `article-${index}`,
+        }}
+      />
+    );
+  }
 
-    <Divider
-      spacing='none'
-      style={{
-        gridArea: 'hspace',
-      }}
-    />
-
-    <ArticleCard
-      article={FAKE_ARTICLE[0]}
-      style={{
-        gridArea: 'big',
-      }}
-    />
-
+  return (
     <ArticleCard.Horizontal
-      article={FAKE_ARTICLE[1]}
-      maxDescriptionLength={220}
+      key={article.id}
+      article={article}
       style={{
-        gridArea: 'smallA',
+        gridArea: `article-${index}`,
       }}
     />
+  );
+};
 
-    <ArticleCard.Horizontal
-      article={FAKE_ARTICLE[3]}
-      maxDescriptionLength={180}
-      style={{
-        gridArea: 'smallB',
-      }}
-    />
+const PrimarySection = ({articles}) => {
+  if (R.isEmpty(articles))
+    return null;
 
-    <ArticleCard.Horizontal
-      article={FAKE_ARTICLE[2]}
-      maxDescriptionLength={180}
-      style={{
-        gridArea: 'smallC',
-      }}
-    />
+  return (
+    <PrimarySectionGrid>
+      <Divider
+        spacing='none'
+        vertical
+        style={{
+          gridArea: 'vspace',
+        }}
+      />
 
-    <ArticleCard.Horizontal
-      article={FAKE_ARTICLE[4]}
-      maxDescriptionLength={180}
-      style={{
-        gridArea: 'smallD',
-      }}
-    />
-  </PrimarySectionGrid>
-);
+      <Divider
+        spacing='none'
+        style={{
+          gridArea: 'hspace',
+        }}
+      />
+
+      {articles.map(primaryArticleMapper)}
+    </PrimarySectionGrid>
+  );
+};
 
 PrimarySection.displayName = 'PrimarySection';
 
-export default PrimarySection;
+PrimarySection.propTypes = {
+  articles: PropTypes.arrayOf(ARTICLE_SCHEMA),
+};
+
+PrimarySection.defaultProps = {
+  articles: [],
+};
+
+export default React.memo(
+  () => (
+    <APIQuery
+      path='/articles'
+      {...loaderComponents}
+    >
+      {({data: articles}) => (
+        <PrimarySection articles={articles} />
+      )}
+    </APIQuery>
+  ),
+);

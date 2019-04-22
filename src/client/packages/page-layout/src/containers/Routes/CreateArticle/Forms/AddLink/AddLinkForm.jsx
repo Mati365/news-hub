@@ -17,11 +17,8 @@ import {
   Input,
 } from '@client/controls';
 
+import {loaderComponents} from '@client/core/components/LoaderAsyncTitles';
 import PreviewArticleForm from '../BasicArticleForm/PreviewArticleForm';
-import {
-  CrawlerError,
-  CrawlerLoading,
-} from './CrawlerAsyncTitles';
 
 const AddLinkGroup = ({value, onChange}) => {
   const t = useI18n('website.routes.create_article');
@@ -65,7 +62,7 @@ const AddLinkForm = ({l, value}) => (
 
     <Debounce
       delay={500}
-      loadingComponent={CrawlerLoading}
+      loadingComponent={loaderComponents.loadingComponent}
     >
       {debounced => (
         <APIQuery
@@ -76,9 +73,7 @@ const AddLinkForm = ({l, value}) => (
           urlParams={{
             url: value.url,
           }}
-
-          loadingComponent={CrawlerLoading}
-          errorComponent={CrawlerError}
+          {...loaderComponents}
         >
           {({data}) => (
             !data

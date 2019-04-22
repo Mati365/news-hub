@@ -3,7 +3,7 @@ import React from 'react';
 import {useI18n} from '@i18n';
 import {Flex} from '@utils/components';
 
-export const CrawlerLoading = () => {
+export const LoadingRow = () => {
   const t = useI18n();
 
   return (
@@ -16,7 +16,7 @@ export const CrawlerLoading = () => {
   );
 };
 
-export const CrawlerError = () => {
+export const ErrorRow = () => {
   const t = useI18n();
 
   return (
@@ -27,4 +27,9 @@ export const CrawlerError = () => {
       {t('website.titles.error')}
     </Flex>
   );
+};
+
+export const loaderComponents = {
+  errorComponent: ErrorRow,
+  loadingComponent: LoadingRow,
 };

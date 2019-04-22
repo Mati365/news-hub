@@ -10,11 +10,10 @@ const apiRouter = express.Router();
 
 apiRouter
   .use(express.json())
-  .use(authJWTUserMiddleware)
 
   .use('/auth', authRouter)
-  .use('/article', articleRouter)
-  .use('/articles', articlesRouter)
+  .use('/article', authJWTUserMiddleware, articleRouter)
+  .use('/articles', authJWTUserMiddleware, articlesRouter)
   .get('*', (req, res) => {
     res.json(
       {

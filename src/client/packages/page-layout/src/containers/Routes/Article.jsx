@@ -2,8 +2,11 @@ import React from 'react';
 
 import {useI18n} from '@i18n';
 
+import APIQuery from '@api-client/components/APIQuery';
 import Article from '@client/core/components/Article';
 import {IdleRender} from '@utils/components';
+
+import {loaderComponents} from '@client/core/components/LoaderAsyncTitles';
 
 import * as Sections from './Home/Sections';
 import {
@@ -12,17 +15,23 @@ import {
   PageContainer,
 } from '../Parts';
 
-import FAKE_ARTICLE from '../../mocks/articles';
 import TitledSection from '../Parts/TitledSection';
 
-const ArticleRoute = () => {
+const ArticleRoute = ({match}) => {
   const t = useI18n();
 
   return (
     <PageContainer>
       <PageHeader />
 
-      <Article article={FAKE_ARTICLE[0]} />
+      <APIQuery
+        path={`article/${match.params.id}`}
+        {...loaderComponents}
+      >
+        {({data: article}) => (
+          <Article article={article} />
+        )}
+      </APIQuery>
 
       <TitledSection title={t('website.titles.see_also')}>
         <IdleRender>

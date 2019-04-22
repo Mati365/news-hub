@@ -37,7 +37,10 @@ const Article = ({article, withActionToolbar, ...props}) => {
   const content = (
     <>
       {article.tags?.length > 0 && (
-        <Margin top={1}>
+        <Margin
+          top={1}
+          bottom={2}
+        >
           <TagsList tags={article.tags} />
         </Margin>
       )}
@@ -50,9 +53,11 @@ const Article = ({article, withActionToolbar, ...props}) => {
 
       <Divider />
 
-      <ArticleFullContent>
-        {article.content || article.lead}
-      </ArticleFullContent>
+      <ArticleFullContent
+        dangerouslySetInnerHTML={{
+          __html: article.content || article.lead,
+        }}
+      />
 
       <ArticleToolbar>
         <Margin left='auto'>

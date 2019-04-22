@@ -1,13 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import * as R from 'ramda';
+
+import {ARTICLE_SCHEMA} from '@constants/typeSchema';
 
 import {useI18n} from '@i18n';
 import styled from '@jss';
+
+import APIQuery from '@api-client/components/APIQuery';
+import {loaderComponents} from '@client/core/components/LoaderAsyncTitles';
 
 import {Divider} from '@utils/components';
 import ArticleCard from '@client/core/components/Cards/ArticleCard';
 import TitledSection from '../../../Parts/TitledSection';
 
-import FAKE_ARTICLE from '../../../../mocks/articles';
 
 const PopularSectionGrid = styled.div(
   {
@@ -21,8 +27,11 @@ const PopularSectionGrid = styled.div(
   },
 );
 
-const PopularSection = () => {
+const PopularSection = ({articles}) => {
   const t = useI18n();
+
+  if (R.isEmpty(articles))
+    return null;
 
   return (
     <TitledSection
@@ -47,26 +56,32 @@ const PopularSection = () => {
           }}
         />
 
-        <ArticleCard
-          article={FAKE_ARTICLE[0]}
-          style={{
-            gridArea: 'big',
-          }}
-        />
+        {articles[0] && (
+          <ArticleCard
+            article={articles[0]}
+            style={{
+              gridArea: 'big',
+            }}
+          />
+        )}
 
-        <ArticleCard
-          article={FAKE_ARTICLE[1]}
-          style={{
-            gridArea: 'bigB',
-          }}
-        />
+        {articles[1] && (
+          <ArticleCard
+            article={articles[1]}
+            style={{
+              gridArea: 'bigB',
+            }}
+          />
+        )}
 
-        <ArticleCard
-          article={FAKE_ARTICLE[5]}
-          style={{
-            gridArea: 'bigC',
-          }}
-        />
+        {articles[2] && (
+          <ArticleCard
+            article={articles[2]}
+            style={{
+              gridArea: 'bigC',
+            }}
+          />
+        )}
       </PopularSectionGrid>
     </TitledSection>
   );
@@ -74,4 +89,26 @@ const PopularSection = () => {
 
 PopularSection.displayName = 'PopularSection';
 
-export default PopularSection;
+PopularSection.propTypes = {
+  articles: PropTypes.arrayOf(ARTICLE_SCHEMA),
+};
+
+PopularSection.defaultProps = {
+  articles: [],
+};
+
+export default React.memo(
+  () => (
+    <APIQuery
+      path='/articles'
+      urlParams={{
+        sortBy: 'popularity',
+      }}
+      {...loaderComponents}
+    >
+      {({data: articles}) => (
+        <PopularSection articles={articles} />
+      )}
+    </APIQuery>
+  ),
+);

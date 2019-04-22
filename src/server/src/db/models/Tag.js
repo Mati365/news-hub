@@ -17,4 +17,12 @@ export default class Tag extends Model {
       },
     },
   };
+
+  static get modifiers() {
+    return {
+      defaultSelects(builder) {
+        builder.select('tags.id', 'tags.name');
+      },
+    };
+  }
 }

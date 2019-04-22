@@ -4,7 +4,7 @@ import Header from '@utils/components/Header';
 const ArticleHeader = styled(
   Header,
   {
-    margin: [10, 0],
+    margin: [0, 0, 10, 0],
     fontWeight: 700,
     textAlign: 'justify',
   },

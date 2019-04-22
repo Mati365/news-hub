@@ -1,4 +1,5 @@
 import {Model} from 'objection';
+import getReadTime from '@utils/helpers/getReadTime';
 
 export default class Article extends Model {
   static tableName = 'articles';
@@ -56,5 +57,13 @@ export default class Article extends Model {
         },
       },
     };
+  }
+
+  static get virtualAttributes() {
+    return ['readTime'];
+  }
+
+  get readTime() {
+    return getReadTime(this.content || this.lead);
   }
 }
