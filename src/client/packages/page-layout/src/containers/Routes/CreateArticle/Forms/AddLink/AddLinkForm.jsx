@@ -5,14 +5,11 @@ import {useI18n} from '@i18n';
 import linkInputs from '@utils/decorators/linkInputs';
 
 import APIQuery from '@api-client/components/APIQuery';
-import ArticleCard from '@client/core/components/Cards/ArticleCard';
 
 import {
   Debounce,
   Margin,
-  Label,
   Divider,
-  Grid,
 } from '@utils/components';
 
 import {
@@ -20,8 +17,7 @@ import {
   Input,
 } from '@client/controls';
 
-import ArticleCrawlerInfo from './ArticleCrawlerInfo';
-import BasicArticleForm from '../BasicArticleForm';
+import PreviewArticleForm from '../BasicArticleForm/PreviewArticleForm';
 import {
   CrawlerError,
   CrawlerLoading,
@@ -53,52 +49,6 @@ const AddLinkGroup = ({value, onChange}) => {
     />
   );
 };
-
-const FilledFormEditor = linkInputs(
-  {
-    initialData: {},
-  },
-)(({l, metaData, value: article}) => {
-  const t = useI18n('website.routes.create_article');
-
-  return (
-    <Grid>
-      <Grid.Column xs={12} md={6} lg={4}>
-        <Label>
-          {t('card_preview')}
-        </Label>
-
-        <ArticleCard
-          article={article}
-          style={{
-            width: '100%',
-          }}
-          bordered
-          linkComponent={
-            ({children}) => children
-          }
-        />
-
-        <Divider />
-
-        <ArticleCrawlerInfo metaData={metaData} />
-      </Grid.Column>
-
-      <Grid.Column
-        xs={12}
-        md={6}
-        lg={8}
-        padding='big'
-      >
-        <Label>
-          {t('edit_article')}
-        </Label>
-
-        <BasicArticleForm {...l.input()} />
-      </Grid.Column>
-    </Grid>
-  );
-});
 
 const AddLinkForm = ({l, value}) => (
   <>
@@ -132,7 +82,7 @@ const AddLinkForm = ({l, value}) => (
             !article
               ? null
               : (
-                <FilledFormEditor
+                <PreviewArticleForm
                   initialData={article}
                   metaData={meta}
                 />

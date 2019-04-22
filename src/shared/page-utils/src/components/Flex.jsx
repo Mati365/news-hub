@@ -30,7 +30,7 @@ const Flex = styled.div(
   {
     omitProps: [
       'direction', 'align', 'expanded',
-      'jusitfy', 'centered',
+      'justify', 'centered',
     ],
     classSelector: (
       classes,

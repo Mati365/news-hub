@@ -75,6 +75,10 @@ module.exports = {
         cover_title: 'Tytuł okładki:',
         article_tags: 'Tagi artykułu:',
 
+        expand_preview: 'Rozwiń pełen podgląd',
+        collapse_preview: 'Zwiń pełen podgląd',
+        article_full_preview: 'Pełen podgląd artykułu:',
+
         crawler_info: {
           website_box_title: 'Informacje o pobranej stronie:',
           tags: 'Tagi strony:',

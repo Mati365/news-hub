@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {useI18n} from '@i18n';
 import linkInputs from '@utils/decorators/linkInputs';
@@ -33,7 +34,7 @@ const SubmitArticleButton = (props) => {
   );
 };
 
-const BasicArticleForm = ({l}) => {
+const BasicArticleForm = ({l, inputs}) => {
   const t = useI18n('website.routes.create_article');
 
   return (
@@ -96,6 +97,8 @@ const BasicArticleForm = ({l}) => {
         )}
       />
 
+      {inputs}
+
       <Margin
         top={5}
         block
@@ -109,6 +112,14 @@ const BasicArticleForm = ({l}) => {
 };
 
 BasicArticleForm.displayName = 'BasicArticleForm';
+
+BasicArticleForm.propTypes = {
+  inputs: PropTypes.node,
+};
+
+BasicArticleForm.defaultProps = {
+  inputs: null,
+};
 
 export default linkInputs(
   {

@@ -2,6 +2,7 @@ import cheerio from 'cheerio';
 import * as R from 'ramda';
 
 import getReadTime from '@utils/helpers/getReadTime';
+import decodeDomain from '@utils/helpers/decodeDomain';
 
 export const tokenizeKeywords = R.compose(
   R.map(
@@ -30,7 +31,7 @@ export const tokenizeFakeKeywords = R.compose(
 export const metaInfoToArticle = article => ({
   // @see ARTICLE_SCHEMA
   coverUrl: article.ogImage,
-  coverTitle: null,
+  coverTitle: decodeDomain(article.websiteUrl),
   title: article.metaTitle,
   lead: article.metaDescription,
   content: '',
