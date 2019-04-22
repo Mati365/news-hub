@@ -43,6 +43,18 @@ export default class Article extends Model {
           to: 'User.id',
         },
       },
+      tags: {
+        relation: Model.ManyToManyRelation,
+        modelClass: require('./Tag').default,
+        join: {
+          from: 'articles.id',
+          through: {
+            from: 'article_tags.article_id',
+            to: 'article_tags.tag_id',
+          },
+          to: 'tags.id',
+        },
+      },
     };
   }
 }

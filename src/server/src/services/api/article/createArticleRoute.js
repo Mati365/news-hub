@@ -1,12 +1,15 @@
 import * as R from 'ramda';
 
 import wrapAsyncRoute from '@services/shared/decorators/wrapAsyncRoute';
-import {Article} from '@db/models';
+import {
+  Tag,
+  Article,
+  ArticleTag,
+} from '@db/models';
 
 const createArticleRoute = wrapAsyncRoute(async (req, res) => {
-  const {body: article} = req;
-
-  await Article
+  // Insert main article
+  const article = await Article
     .query()
     .insert(
       {
@@ -17,10 +20,36 @@ const createArticleRoute = wrapAsyncRoute(async (req, res) => {
             'coverUrl', 'coverTitle', 'title',
             'lead', 'content', 'externalDescriptorId',
           ],
-          article,
+          req.body,
         ),
       },
     );
+
+  // Insert tags
+  for await (const {name: tagName} of req.body.tags) {
+    let tag = await Tag
+      .query()
+      .findOne('name', tagName);
+
+    if (!tag) {
+      tag = await Tag
+        .query()
+        .insert(
+          {
+            name: tagName,
+          },
+        );
+    }
+
+    await ArticleTag
+      .query()
+      .insert(
+        {
+          tagId: tag.id,
+          articleId: article.id,
+        },
+      );
+  }
 
   res
     .status(200)

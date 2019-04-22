@@ -116,6 +116,11 @@ exports.up = knex => (
     .createTable('article_tags', (table) => {
       table.timestamps();
 
+      // objection wants it
+      table
+        .increments('id')
+        .primary();
+
       table
         .integer('article_id')
         .unsigned()
