@@ -2,6 +2,10 @@ const WEBSITE_NAME = 'Codzienni Żydzi';
 
 module.exports = {
   website: {
+    placeholders: {
+      enter_tag: 'Wpisz tag...',
+    },
+
     markdown_editor: {
       write: 'Edytuj',
       preview: 'Podgląd',

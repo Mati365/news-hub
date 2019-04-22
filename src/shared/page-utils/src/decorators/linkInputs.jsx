@@ -30,9 +30,19 @@ const useInputLink = (
   if (forwardedValue !== undefined && value !== forwardedValue)
     setValue(forwardedValue);
 
+  const safeUpdateValue = (newValue) => {
+    if (onChange)
+      onChange(newValue);
+
+    if (!forwardedValue || !onChange)
+      setValue(newValue);
+  };
+
   return {
     initialData: initial,
     value,
+    setValue: safeUpdateValue,
+
     input(name, {defaultValue = '', relatedInputsFn} = {}) {
       const inputValue = name ? value[name] : value;
 
@@ -50,11 +60,7 @@ const useInputLink = (
               : newValue
           );
 
-          if (onChange)
-            onChange(newStateValue);
-
-          if (!forwardedValue || !onChange)
-            setValue(newStateValue);
+          safeUpdateValue(newStateValue);
         },
       };
     },

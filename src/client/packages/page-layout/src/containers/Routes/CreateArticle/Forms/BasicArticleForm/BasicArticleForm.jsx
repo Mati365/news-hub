@@ -11,6 +11,7 @@ import {
 
 import {
   Input,
+  TagInput,
   MarkdownEditor,
   FormGroup,
   AsyncForm,
@@ -34,7 +35,6 @@ const SubmitArticleButton = (props) => {
 
 const BasicArticleForm = ({l}) => {
   const t = useI18n('website.routes.create_article');
-  console.log(l.value);
 
   return (
     <AsyncForm>
@@ -92,7 +92,7 @@ const BasicArticleForm = ({l}) => {
       <FormGroup
         label={t('article_tags')}
         control={(
-          <Input {...l.input('tags')} />
+          <TagInput {...l.input('tags')} />
         )}
       />
 

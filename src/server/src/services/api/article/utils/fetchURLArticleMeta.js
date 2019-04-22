@@ -4,7 +4,16 @@ import * as R from 'ramda';
 import getReadTime from '@utils/helpers/getReadTime';
 
 export const tokenizeKeywords = R.compose(
-  R.map(R.trim),
+  R.map(
+    R.compose(
+      R.toLower,
+      R.when(
+        R.startsWith('#'),
+        R.tail,
+      ),
+      R.trim,
+    ),
+  ),
   R.split(','),
 );
 
@@ -26,7 +35,7 @@ export const metaInfoToArticle = article => ({
   lead: article.metaDescription,
   content: '',
   tags: tokenizeFakeKeywords(article.metaKeywords),
-  readTime: getReadTime(article.lead),
+  readTime: getReadTime(article.metaDescription),
   commentsCount: 0,
 });
 

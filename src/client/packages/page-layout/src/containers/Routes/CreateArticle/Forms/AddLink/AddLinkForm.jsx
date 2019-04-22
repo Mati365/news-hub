@@ -74,6 +74,9 @@ const FilledFormEditor = linkInputs(
             width: '100%',
           }}
           bordered
+          linkComponent={
+            ({children}) => children
+          }
         />
 
         <Divider />

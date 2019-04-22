@@ -1,4 +1,4 @@
-// import React from 'react';
+import PropTypes from 'prop-types';
 import styled from '@jss';
 
 import {
@@ -7,8 +7,8 @@ import {
   LIGHT_GRAY,
 } from '@constants/colorSchema';
 
-const InputHolder = styled.input(
-  {
+export const inputStyles = {
+  base: {
     margin: 0,
     padding: [9, 12],
     outline: 0,
@@ -22,6 +22,32 @@ const InputHolder = styled.input(
       borderColor: ACTIVE_INPUT,
     },
   },
+
+  small: {
+    padding: [4, 8],
+  },
+};
+
+export const InputBorderedHolder = styled.div(
+  {
+    extend: inputStyles.base,
+    position: 'relative',
+    padding: 0,
+  },
 );
+
+const InputHolder = styled.input(
+  inputStyles,
+  {
+    omitProps: ['small'],
+    classSelector: (classes, {small}) => small && classes.small,
+  },
+);
+
+InputHolder.displayName = 'InputHolder';
+
+InputHolder.propTypes = {
+  small: PropTypes.bool,
+};
 
 export default InputHolder;

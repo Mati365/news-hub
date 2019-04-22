@@ -33,6 +33,7 @@ const ArticleCard = ({
   article, headerTag, bordered,
   vertical, maxDescriptionLength,
   withCover, withTags, withContent,
+  linkComponent: LinkComponent,
   ...props
 }) => (
   <ArticleHolder
@@ -58,11 +59,11 @@ const ArticleCard = ({
         </Margin>
       )}
 
-      <ArticleLink article={article}>
+      <LinkComponent article={article}>
         <ArticleHeader tag={headerTag}>
           {article.title}
         </ArticleHeader>
-      </ArticleLink>
+      </LinkComponent>
 
       {withContent && (
         <ArticleContent>
@@ -73,8 +74,8 @@ const ArticleCard = ({
       <ArticleToolbar>
         <Text.Muted>
           <SeeMoreLink
-            linkComponent={ArticleLink}
             article={article}
+            linkComponent={LinkComponent}
           />
         </Text.Muted>
 
@@ -98,6 +99,7 @@ ArticleCard.displayName = 'ArticleCard';
 ArticleCard.propTypes = {
   article: ARTICLE_CARD_SCHEMA.isRequired,
 
+  linkComponent: PropTypes.any,
   maxDescriptionLength: PropTypes.number,
   headerTag: PropTypes.string,
   vertical: PropTypes.bool, // up-down if true
@@ -108,6 +110,8 @@ ArticleCard.propTypes = {
 };
 
 ArticleCard.defaultProps = {
+  linkComponent: ArticleLink,
+
   maxDescriptionLength: 360,
   headerTag: 'H4',
   vertical: true,
