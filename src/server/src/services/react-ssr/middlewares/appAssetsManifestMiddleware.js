@@ -10,7 +10,7 @@ import isDevMode from '@utils/helpers/isDevMode';
  */
 const fetchManifest = (() => {
   const accessor = () => {
-    const manifest = __non_webpack_require__('./manifest.json'); // eslint-disable-line
+    const manifest = __non_webpack_require__('./public/manifest.json'); // eslint-disable-line
     return manifest;
   };
 

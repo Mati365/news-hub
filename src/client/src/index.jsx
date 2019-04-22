@@ -1,3 +1,5 @@
+import 'react-mde/lib/styles/css/react-mde-all.css';
+
 import {ROOT_HYDRATION_CONTAINER} from '@constants/globalAccessors';
 
 import HYDRATION_DATA from '@constants/global/hydrationData';

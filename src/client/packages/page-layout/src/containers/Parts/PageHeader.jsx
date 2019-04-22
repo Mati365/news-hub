@@ -48,7 +48,7 @@ const ReportCrimeButton = (props) => {
 
   return (
     <Button
-      type='danger'
+      color='danger'
       {...props}
     >
       {t('website.buttons.report_hate_crime')}

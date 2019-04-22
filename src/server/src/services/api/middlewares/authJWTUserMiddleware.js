@@ -94,17 +94,21 @@ const authJWTUserMiddleware = async (req, res, next) => {
 
   // token should be fine
   if (token) {
-    await storeJWT(
-      req,
-      res,
-      {
-        payload: await User.decryptJWT(token),
-        token,
-        refreshToken,
-      },
-      // do not update cookies
-      false,
-    );
+    const decrypted = await User.decryptJWT(token);
+
+    if (decrypted) {
+      await storeJWT(
+        req,
+        res,
+        {
+          payload: decrypted,
+          token,
+          refreshToken,
+        },
+        // do not update cookies
+        false,
+      );
+    }
   }
 
   // try to refresh token

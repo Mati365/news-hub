@@ -29,3 +29,4 @@ export const NAV_TAB_TEXT = DARK;
 export const NAV_TAB_INACTIVE_BORDER = LIGHT_GRAY;
 
 export const ACTIVE_INPUT = MINT_GREEN;
+export const LIGHT_CARD_BORDER = 'rgba(0, 0, 0, 0.15)';

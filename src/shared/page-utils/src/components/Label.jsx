@@ -5,7 +5,7 @@ const Label = styled(
   {
     base: {
       display: 'inline-block',
-      margin: 0,
+      margin: [10, 0],
       padding: 0,
       fontWeight: 700,
     },

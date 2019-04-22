@@ -1,10 +1,34 @@
 import cheerio from 'cheerio';
 import * as R from 'ramda';
 
+import getReadTime from '@utils/helpers/getReadTime';
+
 export const tokenizeKeywords = R.compose(
   R.map(R.trim),
   R.split(','),
 );
+
+export const tokenizeFakeKeywords = R.compose(
+  R.map(
+    tagName => ({
+      id: tagName,
+      name: tagName,
+    }),
+  ),
+  tokenizeKeywords,
+);
+
+export const metaInfoToArticle = article => ({
+  // @see ARTICLE_SCHEMA
+  coverUrl: article.ogImage,
+  coverTitle: null,
+  title: article.metaTitle,
+  lead: article.metaDescription,
+  content: '',
+  tags: tokenizeFakeKeywords(article.metaKeywords),
+  readTime: getReadTime(article.lead),
+  commentsCount: 0,
+});
 
 const fetchURLArticleMeta = async (url) => {
   const html = await fetch(
@@ -19,17 +43,18 @@ const fetchURLArticleMeta = async (url) => {
     .then(page => page.text());
 
   const $ = cheerio.load(html);
-  const textKeywords = $('meta[name="keywords"i]').attr('content') || '';
+  const meta = {
+    websiteUrl: url,
+    metaTitle: $('title').text(),
+    metaDescription: $('meta[name="description"i]').attr('content'),
+    ogImage: $('meta[property="og:image"i]').attr('content'),
+    metaKeywords: $('meta[name="keywords"i]').attr('content') || '',
+  };
 
   return {
-    url,
-    title: $('title').text(),
-    description: $('meta[name="description"i]').attr('content'),
-    cover: $('meta[property="og:image"i]').attr('content'),
-
-    // textKeywords is stored in DB for that URL
-    textKeywords,
-    keywords: tokenizeKeywords(textKeywords),
+    empty: !meta.metaDescription && !meta.metaTitle,
+    meta,
+    article: metaInfoToArticle(meta),
   };
 };
 

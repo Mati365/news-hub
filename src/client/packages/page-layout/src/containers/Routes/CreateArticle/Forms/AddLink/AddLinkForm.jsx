@@ -4,79 +4,109 @@ import * as R from 'ramda';
 import {useI18n} from '@i18n';
 import linkInputs from '@utils/decorators/linkInputs';
 
+import APIQuery from '@api-client/components/APIQuery';
+import ArticleCard from '@client/core/components/Cards/ArticleCard';
+
 import {
   Debounce,
-  Flex,
   Margin,
+  Label,
+  Divider,
+  Grid,
 } from '@utils/components';
 
-import {Input} from '@client/controls';
-import {AsyncForm} from '@client/controls/Form';
-import {GroupLabel} from '@client/controls/Form/FormGroup';
-import APIQuery from '@api-client/components/APIQuery';
+import {
+  FormGroup,
+  Input,
+} from '@client/controls';
 
-const CrawlerLoading = () => {
-  const t = useI18n();
-
-  return (
-    <Flex
-      centered
-      expanded
-    >
-      {t('website.titles.loading')}
-    </Flex>
-  );
-};
-
-const CrawlerError = () => {
-  const t = useI18n();
-
-  return (
-    <Flex
-      centered
-      expanded
-    >
-      {t('website.titles.error')}
-    </Flex>
-  );
-};
+import ArticleCrawlerInfo from './ArticleCrawlerInfo';
+import BasicArticleForm from '../BasicArticleForm';
+import {
+  CrawlerError,
+  CrawlerLoading,
+} from './CrawlerAsyncTitles';
 
 const AddLinkGroup = ({value, onChange}) => {
   const t = useI18n('website.routes.create_article');
 
   return (
-    <Flex
-      direction='row'
-      align='center'
-    >
-      <GroupLabel>
-        {t('page_url_label')}
-      </GroupLabel>
-
-      <Input
-        placeholder={
-          t('paste_url_placeholder')
-        }
-        style={{
-          flex: 1,
-        }}
-        {...{
-          value,
-          onChange,
-        }}
-      />
-    </Flex>
+    <FormGroup
+      inline
+      label={
+        t('page_url_label')
+      }
+      control={(
+        <Input
+          placeholder={
+            t('paste_url_placeholder')
+          }
+          style={{
+            flex: 1,
+          }}
+          {...{
+            value,
+            onChange,
+          }}
+        />
+      )}
+    />
   );
 };
 
+const FilledFormEditor = linkInputs(
+  {
+    initialData: {},
+  },
+)(({l, metaData, value: article}) => {
+  const t = useI18n('website.routes.create_article');
+
+  return (
+    <Grid>
+      <Grid.Column xs={12} md={6} lg={4}>
+        <Label>
+          {t('card_preview')}
+        </Label>
+
+        <ArticleCard
+          article={article}
+          style={{
+            width: '100%',
+          }}
+          bordered
+        />
+
+        <Divider />
+
+        <ArticleCrawlerInfo metaData={metaData} />
+      </Grid.Column>
+
+      <Grid.Column
+        xs={12}
+        md={6}
+        lg={8}
+        padding='big'
+      >
+        <Label>
+          {t('edit_article')}
+        </Label>
+
+        <BasicArticleForm {...l.input()} />
+      </Grid.Column>
+    </Grid>
+  );
+});
+
 const AddLinkForm = ({l, value}) => (
-  <AsyncForm>
+  <>
     <Margin
-      bottom={4}
+      bottom={3}
       block
     >
       <AddLinkGroup {...l.input('url')} />
     </Margin>
+
+    <Divider />
 
     <Debounce
       delay={500}
@@ -95,25 +125,28 @@ const AddLinkForm = ({l, value}) => (
           loadingComponent={CrawlerLoading}
           errorComponent={CrawlerError}
         >
-          {({data}) => (
-            !data
+          {({data: {meta, article}}) => (
+            !article
               ? null
               : (
-                <div>
-                  {data.title}
-                </div>
+                <FilledFormEditor
+                  initialData={article}
+                  metaData={meta}
+                />
               )
           )}
         </APIQuery>
       )}
     </Debounce>
-  </AsyncForm>
+  </>
 );
 
 AddLinkForm.displayName = 'AddLinkForm';
 
 export default linkInputs(
   {
-    initialData: {url: ''},
+    initialData: {
+      url: 'https://wp.pl',
+    },
   },
 )(AddLinkForm);

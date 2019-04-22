@@ -42,8 +42,8 @@ module.exports = [
       alias: GLOBAL_ALIASES,
       target: 'web',
       entry: resolve(__dirname, '../src/client/src/index.jsx'),
-      outputFolder: OUTPUT_FOLDER,
-      outputFile: 'public/client-[hash].js',
+      outputFolder: `${OUTPUT_FOLDER}/public`,
+      outputFile: 'client-[hash].js',
       plugins: [
         new ManifestPlugin,
         new CleanWebpackPlugin(

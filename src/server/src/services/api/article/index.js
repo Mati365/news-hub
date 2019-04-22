@@ -4,7 +4,7 @@ import consola from 'consola';
 import {ExternalWebsiteMetaDescriptor} from '@db/models';
 
 import wrapAsyncRoute from '@services/shared/decorators/wrapAsyncRoute';
-import fetchURLArticleMeta, {tokenizeKeywords} from './utils/fetchURLArticleMeta';
+import fetchURLArticleMeta, {metaInfoToArticle} from './utils/fetchURLArticleMeta';
 
 const articleRouter = express.Router();
 
@@ -37,12 +37,8 @@ articleRouter
         .status(200)
         .json(
           {
-            url: cached.websiteUrl,
-            title: cached.metaTitle,
-            description: cached.metaDescription,
-            keywords: tokenizeKeywords(cached.metaKeywords),
-            textKeywords: cached.metaKeywords,
-            cover: cached.ogImage,
+            meta: cached,
+            article: metaInfoToArticle(cached),
           },
         );
 
@@ -51,12 +47,12 @@ articleRouter
 
     // fetching from external server
     const info = await fetchURLArticleMeta(url);
-    if (!info.title && !info.description) {
+    if (info.empty) {
       res
         .status(406)
         .json(
           {
-            error: 'Page without info!',
+            error: 'Page without basic info!',
           },
         );
       return;
@@ -64,15 +60,7 @@ articleRouter
 
     await ExternalWebsiteMetaDescriptor
       .query()
-      .insert(
-        {
-          websiteUrl: info.url,
-          metaTitle: info.title,
-          metaDescription: info.description,
-          metaKeywords: info.textKeywords,
-          ogImage: info.cover,
-        },
-      );
+      .insert(info.meta);
 
     res
       .status(200)

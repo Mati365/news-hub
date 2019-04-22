@@ -24,13 +24,16 @@ const useInputLink = (
     onChange,
   },
 ) => {
-  const [value, setValue] = useState(forwardedValue || initialData);
-  if (forwardedValue !== undefined)
+  const initial = forwardedValue || initialData;
+  const [value, setValue] = useState(initial);
+
+  if (forwardedValue !== undefined && value !== forwardedValue)
     setValue(forwardedValue);
 
   return {
+    initialData: initial,
     value,
-    input(name, defaultValue = '') {
+    input(name, {defaultValue = '', relatedInputsFn} = {}) {
       const inputValue = name ? value[name] : value;
 
       return {
@@ -39,7 +42,11 @@ const useInputLink = (
           const newValue = pickEventValue(e);
           const newStateValue = (
             name
-              ? {...value, [name]: newValue}
+              ? {
+                ...value,
+                [name]: newValue,
+                ...relatedInputsFn && relatedInputsFn(newValue, name, value),
+              }
               : newValue
           );
 
@@ -54,12 +61,17 @@ const useInputLink = (
   };
 };
 
-const linkInputs = ({initialData = null}) => (Component) => {
-  const Wrapped = ({value, onChange, ...props}) => {
+const linkInputs = ({
+  initialData: defaultInitialData = null,
+}) => (Component) => {
+  const Wrapped = ({
+    initialData, value, onChange,
+    ...props
+  }) => {
     const l = useInputLink(
       {
+        initialData: R.defaultTo(defaultInitialData, initialData),
         value,
-        initialData,
         onChange,
       },
     );

@@ -37,6 +37,7 @@
     "@babel/runtime": "^7.4.3",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
+    "babel-plugin-css-modules-transform": "^1.6.2",
     "clean-webpack-plugin": "^2.0.1",
     "consola": "^2.6.0",
     "dotenv": "^7.0.0",
@@ -58,7 +59,10 @@
     "pg": "^7.10.0",
     "cookie-parser": "^1.4.4",
     "jsonwebtoken": "^8.5.1",
-    "js-cookie": "^2.2.0"
+    "js-cookie": "^2.2.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "node-sass": "^4.11.0",
+    "style-loader": "^0.23.1"
   },
   "dependencies": {
     "classnames": "^2.2.6",
@@ -71,6 +75,10 @@
     "react-router-dom": "^5.0.0",
     "isomorphic-fetch": "^2.2.1",
     "react-mde": "^7.3.2",
-    "cheerio": "^0.22.0"
+    "cheerio": "^0.22.0",
+    "css-loader": "^2.1.1",
+    "sass-loader": "^7.1.0",
+    "file-loader": "^3.0.1",
+    "showdown": "^1.9.0"
   }
 }

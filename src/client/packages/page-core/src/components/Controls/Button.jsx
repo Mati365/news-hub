@@ -35,6 +35,17 @@ const Button = styled.button(
       },
     },
 
+    'filled-primary': {
+      background: BUTTON_PRIMARY,
+      color: WHITE,
+
+      '&:hover': {
+        background: 'initial',
+        borderColor: BUTTON_PRIMARY,
+        color: BUTTON_PRIMARY,
+      },
+    },
+
     danger: {
       borderColor: BUTTON_DANGER,
       color: BUTTON_DANGER,
@@ -44,24 +55,37 @@ const Button = styled.button(
         color: WHITE,
       },
     },
+
+    'filled-danger': {
+      background: BUTTON_DANGER,
+      color: WHITE,
+
+      '&:hover': {
+        background: 'initial',
+        borderColor: BUTTON_DANGER,
+        color: BUTTON_DANGER,
+      },
+    },
   },
   {
-    omitProps: ['type'],
-    classSelector: (classes, {type}) => classes[type],
+    omitProps: ['color', 'filled'],
+    classSelector: (classes, {filled, color}) => classes[`${filled ? 'filled-' : ''}${color}`],
   },
 );
 
 Button.displayName = 'Button';
 
 Button.propTypes = {
-  type: PropTypes.oneOf([
+  filled: PropTypes.bool,
+  color: PropTypes.oneOf([
     'primary',
     'danger',
   ]),
 };
 
 Button.defaultProps = {
-  type: 'primary',
+  filled: false,
+  color: 'primary',
 };
 
 export default Button;

@@ -9,7 +9,7 @@ const PageContentContainer = styled.div(
         fontFamily: 'Arial',
         fontSize: '13px',
 
-        '*': {
+        '&, & *': {
           boxSizing: 'border-box',
         },
       },

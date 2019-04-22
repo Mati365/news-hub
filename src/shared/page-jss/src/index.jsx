@@ -1,7 +1,7 @@
 import React from 'react';
 import c from 'classnames';
-import * as R from 'ramda';
 import injectSheet from 'react-jss';
+import * as R from 'ramda';
 
 import {getHOCName} from '@shared/utils/src/helpers/getComponentName';
 

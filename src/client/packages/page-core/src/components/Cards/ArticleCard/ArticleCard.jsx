@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import * as R from 'ramda';
 
 import {ARTICLE_CARD_SCHEMA} from '@constants/typeSchema';
 
@@ -29,13 +30,14 @@ import ArticleHolder, {
 } from './ArticleHolder';
 
 const ArticleCard = ({
-  article, headerTag,
+  article, headerTag, bordered,
   vertical, maxDescriptionLength,
   withCover, withTags, withContent,
   ...props
 }) => (
   <ArticleHolder
     vertical={vertical}
+    bordered={bordered}
     {...props}
   >
     {withCover && (
@@ -48,7 +50,11 @@ const ArticleCard = ({
     <div>
       {withTags && article.tags?.length > 0 && (
         <Margin top={1}>
-          <TagsList tags={article.tags} />
+          <TagsList
+            tags={
+              R.take(6, article.tags)
+            }
+          />
         </Margin>
       )}
 
@@ -60,7 +66,7 @@ const ArticleCard = ({
 
       {withContent && (
         <ArticleContent>
-          {truncateEllipsisString(maxDescriptionLength, article.content)}
+          {truncateEllipsisString(maxDescriptionLength, article.lead || article.content)}
         </ArticleContent>
       )}
 

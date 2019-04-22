@@ -14,7 +14,6 @@ const createConfig = ({
   target,
   entry,
   externals,
-  plugins,
   node: {
     constants: false,
     global: true,
@@ -26,7 +25,7 @@ const createConfig = ({
   output: {
     path: outputFolder,
     filename: outputFile,
-    publicPath: '/',
+    publicPath: '/public/',
   },
   resolve: {
     alias,
@@ -36,6 +35,7 @@ const createConfig = ({
       resolve(__dirname, '../../src'),
     ],
   },
+  plugins,
   module: {
     rules: [
       {
@@ -46,6 +46,19 @@ const createConfig = ({
         options: {
           emitError: false,
         },
+      },
+      {
+        test: /\.css/,
+        use: [
+          'style-loader/url',
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name]-[hash].[ext]',
+              emitFile: target !== 'node',
+            },
+          },
+        ],
       },
       {
         test: /\.jsx?$/,

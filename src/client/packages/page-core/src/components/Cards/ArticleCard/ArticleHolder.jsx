@@ -1,5 +1,6 @@
 import styled from '@jss';
 
+import {LIGHT_CARD_BORDER} from '@constants/colorSchema';
 import textEllipsisStyle from '@utils/styles/textEllipsis';
 
 import BookmarkIcon from '@icons/BookmarkIcon';
@@ -22,6 +23,12 @@ const ArticleHolder = styled.article(
       },
     },
 
+    bordered: {
+      padding: 20,
+      borderRadius: 8,
+      border: `1px solid ${LIGHT_CARD_BORDER}`,
+    },
+
     vertical: {
       flexDirection: 'column',
     },
@@ -39,10 +46,11 @@ const ArticleHolder = styled.article(
     },
   },
   {
-    omitProps: ['vertical'],
-    classSelector: (classes, {vertical}) => (
-      classes[vertical ? 'vertical' : 'horizontal']
-    ),
+    omitProps: ['vertical', 'bordered'],
+    classSelector: (classes, {bordered, vertical}) => [
+      classes[vertical ? 'vertical' : 'horizontal'],
+      bordered && classes.bordered,
+    ],
   },
 );
 
@@ -51,6 +59,7 @@ export const ArticleContent = styled(
   {
     extend: textEllipsisStyle,
     flex: 1,
+    lineHeight: '1.37em',
   },
   {
     align: 'justify',

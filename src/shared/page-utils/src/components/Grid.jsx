@@ -76,13 +76,26 @@ const Column = styled.div(
       flexGrow: 1,
     },
 
+    'padding-small': {
+      padding: [0, 10],
+    },
+
+    'padding-medium': {
+      padding: [0, 20],
+    },
+
+    'padding-big': {
+      padding: [0, 30],
+    },
+
     ...generateGridColumnStyles('all-%{}', null, MAX_COLUMNS_COUNT),
     ...mapBreakpoints(MAX_COLUMNS_COUNT, BREAKPOINTS),
   },
   {
-    omitProps: ['size', ...R.keys(BREAKPOINTS)],
+    omitProps: ['size', 'padding', ...R.keys(BREAKPOINTS)],
     classSelector: (classes, props) => [
       props.size && classes[`all-${props.size}`],
+      props.padding && classes[`padding-${props.padding}`],
       pickBreakpointsClasses(classes, props),
     ],
   },
@@ -92,6 +105,7 @@ Column.displayName = 'Column';
 
 Column.propTypes = {
   size: PropTypes.number,
+  padding: PropTypes.string,
   ...R.mapObjIndexed(R.always(PropTypes.number), BREAKPOINTS),
 };
 
