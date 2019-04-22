@@ -52,6 +52,9 @@ const useAsyncPromise = (
 
       const cacheData = asyncContext.cache && asyncContext.cache[uuid];
       if (cacheData) {
+        if (!ssr)
+          delete asyncContext.cache[uuid];
+
         return {
           loading: false,
           data: responseSelect(responseSelector, cacheData),

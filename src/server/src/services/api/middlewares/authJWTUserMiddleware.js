@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import env from '@constants/global/env';
 
 import wrapAsyncRoute from '@services/shared/decorators/wrapAsyncRoute';
@@ -88,9 +89,15 @@ const createAnonymousUserMiddleware = async (req, res, next) => {
  */
 const authJWTUserMiddleware = async (req, res, next) => {
   const {
-    [JWT_COOKIE_NAME]: token,
     [JWT_REFRESH_COOKIE_NAME]: refreshToken,
   } = req.cookies;
+
+  // pick token from authorization
+  let token = req.cookies[JWT_COOKIE_NAME];
+  const {authorization: authHeader} = req.headers;
+
+  if (authHeader && !token)
+    [, token] = R.match(/Bearer\s(.+)/, authHeader);
 
   // token should be fine
   if (token) {

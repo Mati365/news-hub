@@ -1,4 +1,8 @@
-import {Model} from 'objection';
+import {
+  Model,
+  QueryBuilder,
+} from 'objection';
+
 import getReadTime from '@utils/helpers/getReadTime';
 
 export default class Article extends Model {
@@ -58,6 +62,17 @@ export default class Article extends Model {
       },
     };
   }
+
+  static QueryBuilder = class extends QueryBuilder {
+    $withTags(tags) {
+      return this
+        .whereExists(
+          Article
+            .relatedQuery('tags')
+            .where('tags.id', 'in', tags),
+        );
+    }
+  };
 
   static get virtualAttributes() {
     return ['readTime'];

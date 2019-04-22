@@ -29,6 +29,7 @@ import ArticleActionToolbar from './ArticleActionToolbar';
 const ArticleFullContent = styled(
   ArticleContent,
   {
+    maxHeight: 'initial',
     fontSize: '1.05rem',
   },
 );

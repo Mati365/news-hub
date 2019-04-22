@@ -64,6 +64,7 @@ export const ArticleContent = styled(
     extend: textEllipsisStyle,
     flex: 1,
     lineHeight: '1.37em',
+    maxHeight: 140,
 
     '& > p:first-child': {
       marginTop: 0,
