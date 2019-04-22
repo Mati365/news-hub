@@ -66,10 +66,25 @@ const Button = styled.button(
         color: BUTTON_DANGER,
       },
     },
+
+    disabled: {
+      opacity: 0.5,
+      pointerEvents: 'none',
+      cursor: 'default',
+
+      '&:hover': {
+        background: 'initial',
+        borderColor: 'initial',
+        color: 'initial',
+      },
+    },
   },
   {
-    omitProps: ['color', 'filled'],
-    classSelector: (classes, {filled, color}) => classes[`${filled ? 'filled-' : ''}${color}`],
+    omitProps: ['color', 'filled', 'disabled'],
+    classSelector: (classes, {filled, color, disabled}) => [
+      classes[`${filled ? 'filled-' : ''}${color}`],
+      disabled && classes.disabled,
+    ],
   },
 );
 
@@ -77,6 +92,7 @@ Button.displayName = 'Button';
 
 Button.propTypes = {
   filled: PropTypes.bool,
+  disabled: PropTypes.bool,
   color: PropTypes.oneOf([
     'primary',
     'danger',
@@ -85,6 +101,7 @@ Button.propTypes = {
 
 Button.defaultProps = {
   filled: false,
+  disabled: false,
   color: 'primary',
 };
 

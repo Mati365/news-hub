@@ -3,15 +3,13 @@ import React from 'react';
 import {useI18n} from '@i18n';
 
 import Article from '@client/core/components/Article';
-import {
-  IdleRender,
-  Container,
-} from '@utils/components';
+import {IdleRender} from '@utils/components';
 
 import * as Sections from './Home/Sections';
 import {
   PageFooter,
   PageHeader,
+  PageContainer,
 } from '../Parts';
 
 import FAKE_ARTICLE from '../../mocks/articles';
@@ -21,7 +19,7 @@ const ArticleRoute = () => {
   const t = useI18n();
 
   return (
-    <Container>
+    <PageContainer>
       <PageHeader />
 
       <Article article={FAKE_ARTICLE[0]} />
@@ -37,7 +35,7 @@ const ArticleRoute = () => {
           <PageFooter />
         </IdleRender>
       </TitledSection>
-    </Container>
+    </PageContainer>
   );
 };
 

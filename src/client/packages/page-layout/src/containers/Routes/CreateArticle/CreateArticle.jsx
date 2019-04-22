@@ -5,13 +5,13 @@ import {useI18n} from '@i18n';
 import {Tabs} from '@client/controls';
 import {
   Margin,
-  Container,
   IdleRender,
 } from '@utils/components';
 
 import {
   PageFooter,
   PageHeader,
+  PageContainer,
 } from '../../Parts';
 
 import * as Forms from './Forms';
@@ -43,7 +43,7 @@ const AddArticleTabs = () => {
 };
 
 const CreateArticleRoute = () => (
-  <Container>
+  <PageContainer>
     <PageHeader divider={false} />
 
     <IdleRender>
@@ -55,7 +55,7 @@ const CreateArticleRoute = () => (
         <PageFooter />
       </Margin>
     </IdleRender>
-  </Container>
+  </PageContainer>
 );
 
 CreateArticleRoute.displayName = 'CreateArticleRoute';

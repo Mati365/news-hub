@@ -35,7 +35,10 @@ const crawlerRoute = wrapAsyncRoute(async (req, res) => {
       .json(
         {
           meta: cached,
-          article: metaInfoToArticle(cached),
+          article: {
+            ...metaInfoToArticle(cached),
+            externalDescriptorId: cached.id,
+          },
         },
       );
 
@@ -55,13 +58,21 @@ const crawlerRoute = wrapAsyncRoute(async (req, res) => {
     return;
   }
 
-  await ExternalWebsiteMetaDescriptor
+  const externalDescriptor = await ExternalWebsiteMetaDescriptor
     .query()
     .insert(info.meta);
 
   res
     .status(200)
-    .json(info);
+    .json(
+      {
+        ...info,
+        article: {
+          ...info.article,
+          externalDescriptorId: externalDescriptor.id,
+        },
+      },
+    );
 });
 
 export default crawlerRoute;

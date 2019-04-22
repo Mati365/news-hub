@@ -1,18 +1,16 @@
 import React from 'react';
 
-import {
-  Container,
-  IdleRender,
-} from '@utils/components';
+import {IdleRender} from '@utils/components';
 
 import * as Sections from './Sections';
 import {
   PageFooter,
   PageHeader,
+  PageContainer,
 } from '../../Parts';
 
 const HomeRoute = () => (
-  <Container>
+  <PageContainer>
     <PageHeader />
     <Sections.Primary />
 
@@ -21,7 +19,7 @@ const HomeRoute = () => (
       <Sections.Tags />
       <PageFooter />
     </IdleRender>
-  </Container>
+  </PageContainer>
 );
 
 HomeRoute.displayName = 'HomeRoute';

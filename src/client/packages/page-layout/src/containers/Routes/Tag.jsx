@@ -1,10 +1,10 @@
 import React from 'react';
-import {Container} from '@utils/components';
+import {PageContainer} from '../Parts';
 
 const TagRoute = () => (
-  <Container>
+  <PageContainer>
     Tag
-  </Container>
+  </PageContainer>
 );
 
 TagRoute.displayName = 'TagRoute';

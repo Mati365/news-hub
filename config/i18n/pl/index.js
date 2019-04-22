@@ -6,6 +6,10 @@ module.exports = {
       enter_tag: 'Wpisz tag...',
     },
 
+    toasts: {
+      website_has_been_added: 'Artykuł został dodany. Wkrótce pojawi się na stronie!',
+    },
+
     markdown_editor: {
       write: 'Edytuj',
       preview: 'Podgląd',
@@ -59,6 +63,7 @@ module.exports = {
     routes: {
       create_article: {
         submit: 'Dodaj artykuł!',
+        saving: 'Zapisywanie artykułu',
 
         add_link: 'Dodaj link',
         add_article: 'Napisz artykuł',
