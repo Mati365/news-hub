@@ -59,7 +59,9 @@ const AddLinkForm = ({l, value}) => (
       <AddLinkGroup {...l.input('url')} />
     </Margin>
 
-    <Divider />
+    {!R.isEmpty(value.url) && (
+      <Divider />
+    )}
 
     <Debounce
       delay={500}
@@ -78,13 +80,13 @@ const AddLinkForm = ({l, value}) => (
           loadingComponent={CrawlerLoading}
           errorComponent={CrawlerError}
         >
-          {({data: {meta, article}}) => (
-            !article
+          {({data}) => (
+            !data
               ? null
               : (
                 <PreviewArticleForm
-                  initialData={article}
-                  metaData={meta}
+                  initialData={data.article}
+                  metaData={data.meta}
                 />
               )
           )}

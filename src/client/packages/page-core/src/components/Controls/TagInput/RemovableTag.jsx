@@ -69,6 +69,12 @@ const ClickUpdateTitle = ({wrapperComponent: Component = 'span', value, onChange
     <Input
       small
       defaultValue={value}
+      innerRef={
+        (ref) => {
+          if (ref)
+            ref.focus();
+        }
+      }
       onKeyDown={
         (e) => {
           // enter

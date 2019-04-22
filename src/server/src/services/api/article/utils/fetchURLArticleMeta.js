@@ -5,6 +5,7 @@ import getReadTime from '@utils/helpers/getReadTime';
 import decodeDomain from '@utils/helpers/decodeDomain';
 
 export const tokenizeKeywords = R.compose(
+  R.reject(R.isEmpty),
   R.map(
     R.compose(
       R.toLower,
@@ -55,8 +56,12 @@ const fetchURLArticleMeta = async (url) => {
   const $ = cheerio.load(html);
   const meta = {
     websiteUrl: url,
-    metaTitle: $('title').text(),
-    metaDescription: $('meta[name="description"i]').attr('content'),
+    metaTitle: R.trim(
+      $('title').text() || '',
+    ),
+    metaDescription: R.trim(
+      $('meta[name="description"i]').attr('content') || '',
+    ),
     ogImage: $('meta[property="og:image"i]').attr('content'),
     metaKeywords: $('meta[name="keywords"i]').attr('content') || '',
   };

@@ -5,7 +5,7 @@ export default class Article extends Model {
 
   static jsonSchema = {
     type: 'object',
-    required: ['id', 'title', 'content'],
+    required: ['title', 'lead', 'userId', 'coverUrl'],
 
     properties: {
       id: {
@@ -16,14 +16,33 @@ export default class Article extends Model {
         minLength: 1,
         maxLength: 500,
       },
-      cover_image: {
+      coverTitle: {
+        type: 'string',
+      },
+      coverUrl: {
         type: 'string',
         format: 'uri',
       },
-      content: {
+      lead: {
         type: 'string',
         minLength: 1,
       },
+      content: {
+        type: 'string',
+      },
     },
   };
+
+  static get relationMappings() {
+    return {
+      owner: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: require('./User').default,
+        join: {
+          from: 'Article.userId',
+          to: 'User.id',
+        },
+      },
+    };
+  }
 }

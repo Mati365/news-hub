@@ -81,7 +81,7 @@ exports.up = knex => (
         .increments('id')
         .primary();
 
-      table.string('cover_image', 500);
+      table.string('cover_url', 500);
 
       table.string('cover_title', 250);
 
@@ -108,7 +108,6 @@ exports.up = knex => (
         .integer('external_descriptor_id')
         .unsigned()
         .index()
-        .notNullable()
         .references('id')
         .inTable('external_websites_meta_descriptors');
     })

@@ -19,7 +19,7 @@ const styled = (
 ) => {
   const omitPropsFn = omitProps && R.omit(omitProps);
 
-  const Component = ({classes, className, ...props}) => {
+  const Component = React.forwardRef(({classes, className, ...props}, ref) => {
     const mergedProps = {
       ...predefinedProps,
       ...(
@@ -32,6 +32,7 @@ const styled = (
     return (
       <TagComponent
         {...mergedProps}
+        ref={ref}
         className={c(
           classes.base,
           classSelector && c(
@@ -41,7 +42,7 @@ const styled = (
         )}
       />
     );
-  };
+  });
 
   Component.displayName = getHOCName('styled', Component);
 
