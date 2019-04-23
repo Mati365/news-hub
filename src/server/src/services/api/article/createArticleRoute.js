@@ -26,7 +26,7 @@ const createArticleRoute = wrapAsyncRoute(async (req, res) => {
     .insert(
       pickArticleReqData(req, res),
     )
-    .$insertTags(req.body.tags || []);
+    .$patchTags(req.body.tags || []);
 
   res
     .status(200)

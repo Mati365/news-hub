@@ -23,7 +23,10 @@ const NonBorderedTagInput = styled.input(
     padding: 0,
 
     margin: inputStyles.base.padding,
-    marginLeft: 0,
+
+    '&:not(:only-child)': {
+      marginLeft: '0 !important',
+    },
   },
 );
 
