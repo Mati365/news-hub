@@ -8,7 +8,6 @@ import styled from '@jss';
 import {ArticleLink} from '@client/links';
 import {
   Divider,
-  Grid,
   Margin,
 } from '@utils/components';
 
@@ -30,7 +29,7 @@ const ArticleFullContent = styled(
   ArticleContent,
   {
     maxHeight: 'initial',
-    fontSize: '1.05rem',
+    fontSize: '1.08rem',
   },
 );
 
@@ -85,15 +84,10 @@ const Article = ({article, withActionToolbar, ...props}) => {
       {(
         withActionToolbar
           ? (
-            <Grid>
-              <Grid.Column xs={12} md={2} lg={1}>
-                <ArticleActionToolbar article={article} />
-              </Grid.Column>
-
-              <Grid.Column xs={12} md={10} lg={11}>
-                {content}
-              </Grid.Column>
-            </Grid>
+            <>
+              <ArticleActionToolbar article={article} />
+              {content}
+            </>
           )
           : content
       )}

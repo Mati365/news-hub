@@ -12,7 +12,7 @@ import {loaderComponents} from '@client/core/components/LoaderAsyncTitles';
 
 import {Divider} from '@utils/components';
 import ArticleCard from '@client/core/components/Cards/ArticleCard';
-import TitledSection from '../../../Parts/TitledSection';
+import TitledSection from '../../Parts/TitledSection';
 
 const PrimarySectionGrid = styled.div(
   {

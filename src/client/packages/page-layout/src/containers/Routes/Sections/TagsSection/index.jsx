@@ -7,7 +7,7 @@ import APIQuery from '@api-client/components/APIQuery';
 import {loaderComponents} from '@client/core/components/LoaderAsyncTitles';
 
 import {Divider} from '@utils/components';
-import TitledSection from '../../../../Parts/TitledSection';
+import TitledSection from '../../../Parts/TitledSection';
 import TagColumnSection from './TagColumnSection';
 
 const TagsSectionGrid = styled.div(

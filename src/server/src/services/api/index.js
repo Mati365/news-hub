@@ -6,6 +6,7 @@ import authRouter from './auth';
 import articlesRouter from './articles';
 import articleRouter from './article';
 import tagsRouter from './tags';
+import tagRouter from './tag';
 
 const apiRouter = express.Router();
 
@@ -13,6 +14,7 @@ apiRouter
   .use(express.json())
 
   .use('/auth', authRouter)
+  .use('/tag', tagRouter)
   .use('/tags', tagsRouter)
   .use('/article', authJWTUserMiddleware, articleRouter)
   .use('/articles', authJWTUserMiddleware, articlesRouter)

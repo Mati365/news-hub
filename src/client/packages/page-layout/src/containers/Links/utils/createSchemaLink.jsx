@@ -4,7 +4,10 @@ import * as R from 'ramda';
 import {useI18n} from '@i18n';
 
 import parameterize from '@utils/helpers/parameterize';
-import {UndecoratedLink} from '@utils/components';
+import {
+  Text,
+  UndecoratedLink,
+} from '@utils/components';
 
 export const parameterizeKeyPair = ({id, name, title}) => `${parameterize(name || title)},${id}`;
 
@@ -27,6 +30,7 @@ const createSchemaLink = (
     [itemPropName]: item,
     linkComponent,
     to, children,
+    textProps,
     ...props
   }) => {
     const Link = linkComponent || defaultLinkComponent;
@@ -38,13 +42,27 @@ const createSchemaLink = (
         : to
     );
 
+    let content = (
+      <>
+        {translationPath && t(translationPath)}
+        {children}
+      </>
+    );
+
+    if (textProps) {
+      content = (
+        <Text {...textProps}>
+          {content}
+        </Text>
+      );
+    }
+
     return (
       <Link
         {...props}
         to={url}
       >
-        {translationPath && t(translationPath)}
-        {children}
+        {content}
       </Link>
     );
   };

@@ -37,15 +37,16 @@ const TitledIcon = ({
 const ArticleToolbarList = styled(
   UnorderedList,
   {
-    marginTop: 115,
+    marginTop: 20,
+    textAlign: 'right',
 
     '& > li': {
-      marginBottom: 20,
+      margin: [0, 10],
       cursor: 'pointer',
     },
   },
   {
-    inline: false,
+    inline: true,
   },
 );
 

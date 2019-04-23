@@ -31,6 +31,7 @@ export const inputStyles = {
 export const InputBorderedHolder = styled.div(
   {
     extend: inputStyles.base,
+    display: 'flex',
     position: 'relative',
     padding: 0,
   },

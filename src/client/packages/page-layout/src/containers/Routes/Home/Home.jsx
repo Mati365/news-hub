@@ -1,8 +1,12 @@
 import React from 'react';
 
-import {IdleRender} from '@utils/components';
+import {
+  Margin,
+  IdleRender,
+} from '@utils/components';
 
-import * as Sections from './Sections';
+import * as Sections from '../Sections';
+import {ArticlesLink} from '../../Links';
 import {
   PageFooter,
   PageHeader,
@@ -15,7 +19,23 @@ const HomeRoute = () => (
     <Sections.Primary />
 
     <IdleRender>
-      <Sections.Popular />
+      <Sections.Popular>
+        <Margin
+          style={{
+            textAlign: 'center',
+          }}
+          top={3}
+          block
+        >
+          <ArticlesLink
+            textProps={{
+              type: 'danger',
+              weight: 700,
+            }}
+          />
+        </Margin>
+      </Sections.Popular>
+
       <Sections.Tags />
       <PageFooter />
     </IdleRender>

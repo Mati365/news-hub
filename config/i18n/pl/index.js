@@ -25,15 +25,15 @@ module.exports = {
       error: 'Nastąpił błąd podczas parsowania zapytania!',
 
       search: 'Wyszukaj',
-      see_also: 'Zobacz też...',
+      see_also: 'Zobacz też »',
 
       images: {
         figcaption: 'rys. %{}',
       },
 
       links: {
-        see_more: 'Zobacz więcej...',
-        read_more: 'Czytaj więcej...',
+        see_more: 'Zobacz więcej »',
+        read_more: 'Czytaj więcej»',
       },
     },
 
@@ -68,6 +68,10 @@ module.exports = {
 
       editor: {
         title: 'Edycja artykułu',
+      },
+
+      tag_articles: {
+        title: 'Artykuły z tagiem %{}:',
       },
     },
 

@@ -4,6 +4,7 @@ import * as R from 'ramda';
 import styled from '@jss';
 import {useI18n} from '@i18n';
 
+import suppressEvent from '@utils/helpers/suppressEvent';
 import linkInputs from '@utils/decorators/linkInputs';
 
 import {UnorderedList} from '@utils/components';
@@ -15,11 +16,25 @@ const findIndexByName = findIndexBy('name');
 
 const NonBorderedTagInput = styled.input(
   {
+    display: 'inline-block',
     width: 200,
     border: 0,
     outline: 0,
     padding: 0,
+
     margin: inputStyles.base.padding,
+    marginLeft: 0,
+  },
+);
+
+const TagsList = styled(
+  UnorderedList,
+  {
+    display: 'flex',
+    maxWidth: '100%',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    flexDirection: 'row',
   },
 );
 
@@ -31,12 +46,13 @@ const TagInput = ({l, value}) => {
     if (e.keyCode !== 13)
       return;
 
+    suppressEvent(e);
+
     // Append new tag if not duplicated
     const name = R.trim(e.target.value || '');
-    if (value && findIndexByName(name)(value) >= 0)
+    if (!name.length || (value && findIndexByName(name)(value) >= 0))
       return;
 
-    e.preventDefault();
     l.setValue(
       [
         ...(value || []),
@@ -79,27 +95,27 @@ const TagInput = ({l, value}) => {
 
   return (
     <InputBorderedHolder>
-      {value && (
-        <UnorderedList>
-          {value.map(
-            tag => (
-              <RemovableTag
-                key={tag.name}
-                tag={tag}
-                onRemove={onRemoveTag}
-                onChange={onChangeTag}
-              />
-            ),
-          )}
-        </UnorderedList>
-      )}
+      <TagsList>
+        {(value || []).map(
+          tag => (
+            <RemovableTag
+              key={tag.name}
+              tag={tag}
+              onRemove={onRemoveTag}
+              onChange={onChangeTag}
+            />
+          ),
+        )}
 
-      <NonBorderedTagInput
-        placeholder={
-          t('website.placeholders.enter_tag')
-        }
-        onKeyDown={onKeyDown}
-      />
+        <li>
+          <NonBorderedTagInput
+            placeholder={
+              t('website.placeholders.enter_tag')
+            }
+            onKeyDown={onKeyDown}
+          />
+        </li>
+      </TagsList>
     </InputBorderedHolder>
   );
 };

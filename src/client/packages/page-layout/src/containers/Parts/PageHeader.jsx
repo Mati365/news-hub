@@ -103,6 +103,9 @@ const PageHeader = ({divider}) => {
             <Margin top={2}>
               <APIQuery
                 path='/tags/popular-tags'
+                urlParams={{
+                  limit: 7,
+                }}
                 {...loaderComponents}
               >
                 {({data: tags}) => (
