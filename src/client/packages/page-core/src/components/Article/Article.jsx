@@ -87,7 +87,7 @@ const Article = ({article, withActionToolbar, ...props}) => {
           ? (
             <Grid>
               <Grid.Column xs={12} md={2} lg={1}>
-                <ArticleActionToolbar />
+                <ArticleActionToolbar article={article} />
               </Grid.Column>
 
               <Grid.Column xs={12} md={10} lg={11}>

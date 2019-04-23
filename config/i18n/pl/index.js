@@ -40,17 +40,24 @@ module.exports = {
     article: {
       read_time: '%{} min.',
       comments_count: '%{} opinii',
-      bookmark: 'Zapisz',
-      likes: '%{} polubień',
-      views: '%{} wyświetleń',
+      bookmark: 'Zakładka',
+      edit: 'Edytuj',
+      likes: '%{} like',
+      views: '%{} wizyt',
     },
 
     buttons: {
       create_article: 'Dodaj artykuł',
+      edit_article: 'Edytuj artykuł',
+
       report_hate_crime: 'Zgłoś mowę nienawiści',
     },
 
     sections: {
+      recent: {
+        title: 'Ostatnio dodane',
+      },
+
       articles: {
         title: 'Popularne artykuły',
       },
@@ -58,12 +65,17 @@ module.exports = {
       tags: {
         title: 'Popularne tagi',
       },
+
+      editor: {
+        title: 'Edycja artykułu',
+      },
     },
 
     routes: {
       create_article: {
         submit: 'Dodaj artykuł!',
         saving: 'Zapisywanie artykułu',
+        editing: 'Zapisz zmiany w artykule!',
 
         add_link: 'Dodaj link',
         add_article: 'Napisz artykuł',

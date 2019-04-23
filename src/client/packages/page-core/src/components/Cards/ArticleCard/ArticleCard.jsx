@@ -32,6 +32,7 @@ const ArticleCard = ({
   vertical, maxDescriptionLength,
   withCover, withTags, withContent,
   linkComponent: LinkComponent,
+  coverType,
   ...props
 }) => (
   <ArticleHolder
@@ -41,8 +42,11 @@ const ArticleCard = ({
   >
     {withCover && (
       <ArticleCover
-        article={article}
-        vertical={vertical}
+        {...{
+          article,
+          vertical,
+          coverType,
+        }}
       />
     )}
 
@@ -108,6 +112,7 @@ ArticleCard.propTypes = {
   maxDescriptionLength: PropTypes.number,
   headerTag: PropTypes.string,
   vertical: PropTypes.bool, // up-down if true
+  coverType: PropTypes.string,
 
   withContent: PropTypes.bool,
   withCover: PropTypes.bool,
@@ -120,6 +125,7 @@ ArticleCard.defaultProps = {
   maxDescriptionLength: 360,
   headerTag: 'H4',
   vertical: true,
+  coverType: null,
 
   withContent: true,
   withCover: true,

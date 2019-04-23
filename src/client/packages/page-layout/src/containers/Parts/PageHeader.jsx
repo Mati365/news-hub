@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import * as R from 'ramda';
 
 import {useI18n} from '@i18n';
 import styled from '@jss';
+
+import APIQuery from '@api-client/components/APIQuery';
+import {loaderComponents} from '@client/core/components/LoaderAsyncTitles';
 
 import TagsList from '@client/core/components/Tags/TagsList';
 import Button from '@client/core/components/Controls/Button';
@@ -20,8 +24,6 @@ import {
   Flex,
   Text,
 } from '@utils/components';
-
-import TOP_TAGS from '../../mocks/topTags';
 
 const HeaderTitle = styled(
   Header.H1,
@@ -99,7 +101,18 @@ const PageHeader = ({divider}) => {
             </HomeLink>
 
             <Margin top={2}>
-              <TagsList tags={TOP_TAGS} />
+              <APIQuery
+                path='/tags/popular-tags'
+                {...loaderComponents}
+              >
+                {({data: tags}) => (
+                  <TagsList
+                    tags={
+                      R.pluck('tag', tags)
+                    }
+                  />
+                )}
+              </APIQuery>
             </Margin>
           </span>
 

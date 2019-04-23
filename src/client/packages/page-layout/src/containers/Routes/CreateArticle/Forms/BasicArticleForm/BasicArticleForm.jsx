@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import * as R from 'ramda';
 
 import {HOME_URL_SCHEMA} from '@client/links/HomeLink';
 
@@ -23,8 +24,16 @@ import {
   Button,
 } from '@client/controls';
 
-const SubmitArticleButton = ({loading, ...props}) => {
+const SubmitArticleButton = ({loading, editing, ...props}) => {
   const t = useI18n('website.routes.create_article');
+
+  let text = null;
+  if (loading)
+    text = 'saving';
+  else if (editing)
+    text = 'editing';
+  else
+    text = 'submit';
 
   return (
     <Button
@@ -34,16 +43,12 @@ const SubmitArticleButton = ({loading, ...props}) => {
       filled={!loading}
       {...props}
     >
-      {t(
-        loading
-          ? 'saving'
-          : 'submit',
-      )}
+      {t(text)}
     </Button>
   );
 };
 
-const BasicArticleForm = ({inputs, ...props}) => {
+const BasicArticleForm = ({inputs, method, ...props}) => {
   const t = useI18n('website.routes.create_article');
   const api = useAPIContext();
   const router = useReactRouter();
@@ -52,7 +57,7 @@ const BasicArticleForm = ({inputs, ...props}) => {
     <AsyncForm
       {...props}
       submitPromiseFn={
-        l => api.post(
+        l => (::api[l.value?.id ? 'patch' : 'post'])(
           {
             path: '/article',
             body: l.value,
@@ -142,7 +147,12 @@ const BasicArticleForm = ({inputs, ...props}) => {
             block
           >
             <Float right>
-              <SubmitArticleButton loading={loading} />
+              <SubmitArticleButton
+                loading={loading}
+                editing={
+                  !R.isNil(l.value?.id)
+                }
+              />
             </Float>
           </Margin>
         </>

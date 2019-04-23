@@ -60,4 +60,4 @@ const CreateArticleRoute = () => (
 
 CreateArticleRoute.displayName = 'CreateArticleRoute';
 
-export default CreateArticleRoute;
+export default React.memo(CreateArticleRoute);

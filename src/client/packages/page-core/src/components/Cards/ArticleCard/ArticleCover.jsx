@@ -23,32 +23,41 @@ const ArticleImageWrapper = styled.figure(
     },
 
     // it should be always square
-    horizontal: {
+    square: {
       width: '100%',
       paddingBottom: '100%',
     },
 
-    vertical: {
+    rectangle: {
       paddingBottom: '50%',
     },
   },
   {
-    omitProps: ['vertical'],
-    classSelector: (classes, {vertical}) => (
-      vertical
-        ? classes.vertical
-        : classes.horizontal
+    omitProps: ['square'],
+    classSelector: (classes, {type}) => (
+      classes[type]
     ),
   },
 );
 
-const ArticleCover = ({vertical, article, ...props}) => {
+const ArticleCover = ({
+  vertical, article, coverType,
+  ...props
+}) => {
   const t = useI18n();
   const {coverUrl, coverTitle} = article;
 
   return (
     <div {...props}>
-      <ArticleImageWrapper vertical={vertical}>
+      <ArticleImageWrapper
+        type={
+          coverType || (
+            vertical
+              ? 'rectangle'
+              : 'square'
+          )
+        }
+      >
         <ArticleLink article={article}>
           <LayerImage
             src={coverUrl}
@@ -81,10 +90,12 @@ ArticleCover.displayName = 'ArticleCover';
 
 ArticleCover.propTypes = {
   vertical: PropTypes.bool,
+  coverType: PropTypes.string,
 };
 
 ArticleCover.defaultProps = {
   vertical: true,
+  coverType: null,
 };
 
 export default ArticleCover;

@@ -5,6 +5,7 @@ import {useI18n} from '@i18n';
 import linkInputs from '@utils/decorators/linkInputs';
 
 import APIQuery from '@api-client/components/APIQuery';
+import {loaderComponents} from '@client/core/components/LoaderAsyncTitles';
 
 import {
   Debounce,
@@ -17,7 +18,6 @@ import {
   Input,
 } from '@client/controls';
 
-import {loaderComponents} from '@client/core/components/LoaderAsyncTitles';
 import PreviewArticleForm from '../BasicArticleForm/PreviewArticleForm';
 
 const AddLinkGroup = ({value, onChange}) => {

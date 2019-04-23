@@ -1,11 +1,20 @@
-import {
-  Model,
-  QueryBuilder,
-} from 'objection';
+import {Model} from 'objection';
 
 import getReadTime from '@utils/helpers/getReadTime';
+import TaggableMixin from './mixins/TaggableMixin';
 
-export default class Article extends Model {
+export default
+@TaggableMixin(
+  {
+    TagModel: require('./Tag').default,
+    RelationModel: require('./ArticleTag').default,
+    relation: {
+      modelIdField: 'articleId',
+      tagIdField: 'tagId',
+    },
+  },
+)
+class Article extends Model {
   static tableName = 'articles';
 
   static jsonSchema = {
@@ -48,6 +57,7 @@ export default class Article extends Model {
           to: 'User.id',
         },
       },
+
       tags: {
         relation: Model.ManyToManyRelation,
         modelClass: require('./Tag').default,
@@ -60,19 +70,17 @@ export default class Article extends Model {
           to: 'tags.id',
         },
       },
+
+      externalMetaDescriptor: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: require('./ExternalWebsiteMetaDescriptor').default,
+        join: {
+          from: 'articles.id',
+          to: 'external_websites_meta_descriptors.id',
+        },
+      },
     };
   }
-
-  static QueryBuilder = class extends QueryBuilder {
-    $withTags(tags) {
-      return this
-        .whereExists(
-          Article
-            .relatedQuery('tags')
-            .where('tags.id', 'in', tags),
-        );
-    }
-  };
 
   static get virtualAttributes() {
     return ['readTime'];

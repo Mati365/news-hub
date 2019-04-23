@@ -27,6 +27,10 @@ const TitledSection = styled(
   ),
   {
     margin: [45, 0],
+
+    '&:first-of-type': {
+      marginTop: 30,
+    },
   },
 );
 

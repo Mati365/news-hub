@@ -2,12 +2,12 @@ import express from 'express';
 import * as R from 'ramda';
 
 import wrapAsyncRoute from '@services/shared/decorators/wrapAsyncRoute';
+import convertArticleMarkdown from '@client/core/helpers/convertArticleMarkdown';
+
 import {
   ArticleTag,
   Article,
 } from '@db/models';
-
-import convertArticleMarkdown from '../article/utils/convertArticleMarkdown';
 
 const articlesRouter = express.Router();
 

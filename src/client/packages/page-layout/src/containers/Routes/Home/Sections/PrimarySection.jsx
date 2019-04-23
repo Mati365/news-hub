@@ -5,12 +5,14 @@ import * as R from 'ramda';
 import {ARTICLE_SCHEMA} from '@constants/typeSchema';
 
 import styled from '@jss';
+import {useI18n} from '@i18n';
 
 import APIQuery from '@api-client/components/APIQuery';
 import {loaderComponents} from '@client/core/components/LoaderAsyncTitles';
 
 import {Divider} from '@utils/components';
 import ArticleCard from '@client/core/components/Cards/ArticleCard';
+import TitledSection from '../../../Parts/TitledSection';
 
 const PrimarySectionGrid = styled.div(
   {
@@ -35,6 +37,7 @@ const primaryArticleMapper = (article, index) => {
         style={{
           gridArea: `article-${index}`,
         }}
+        coverType='square'
       />
     );
   }
@@ -51,28 +54,36 @@ const primaryArticleMapper = (article, index) => {
 };
 
 const PrimarySection = ({articles}) => {
+  const t = useI18n();
+
   if (R.isEmpty(articles))
     return null;
 
   return (
-    <PrimarySectionGrid>
-      <Divider
-        spacing='none'
-        vertical
-        style={{
-          gridArea: 'vspace',
-        }}
-      />
+    <TitledSection
+      title={
+        t('website.sections.recent.title')
+      }
+    >
+      <PrimarySectionGrid>
+        <Divider
+          spacing='none'
+          vertical
+          style={{
+            gridArea: 'vspace',
+          }}
+        />
 
-      <Divider
-        spacing='none'
-        style={{
-          gridArea: 'hspace',
-        }}
-      />
+        <Divider
+          spacing='none'
+          style={{
+            gridArea: 'hspace',
+          }}
+        />
 
-      {articles.map(primaryArticleMapper)}
-    </PrimarySectionGrid>
+        {articles.map(primaryArticleMapper)}
+      </PrimarySectionGrid>
+    </TitledSection>
   );
 };
 

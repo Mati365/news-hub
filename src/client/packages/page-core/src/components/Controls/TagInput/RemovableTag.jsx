@@ -85,7 +85,15 @@ const ClickUpdateTitle = ({wrapperComponent: Component = 'span', value, onChange
           onChange(e.target.value);
         }
       }
-      onBlur={() => setEditing(false)}
+      onBlur={
+        (e) => {
+          const {value: newValue} = e.target;
+
+          if (newValue !== value)
+            onChange(e.target.value);
+          setEditing(false);
+        }
+      }
     />
   );
 };
@@ -100,7 +108,7 @@ const RemovableTag = ({tag, onRemove, onChange}) => (
         value => onChange(
           tag,
           {
-            id: tag.id,
+            id: value, // remove old tag
             name: value,
           },
         )

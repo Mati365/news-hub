@@ -1,11 +1,16 @@
 import React from 'react';
 
+import {ARTICLE_SCHEMA} from '@constants/typeSchema';
+
 import {useI18n} from '@i18n';
 import styled from '@jss';
 
 import HeartIcon from '@icons/HeartIcon';
 import BookmarkIcon from '@icons/BookmarkIcon';
 import EyeIcon from '@icons/EyeIcon';
+import PencilIcon from '@icons/PencilIcon';
+
+import {EditArticleLink} from '@client/links';
 
 import {
   Flex,
@@ -44,7 +49,7 @@ const ArticleToolbarList = styled(
   },
 );
 
-const ArticleActionToolbar = () => {
+const ArticleActionToolbar = ({article}) => {
   const t = useI18n();
 
   return (
@@ -78,8 +83,26 @@ const ArticleActionToolbar = () => {
           }}
         />
       </li>
+
+      <li>
+        <EditArticleLink
+          article={article}
+          rel='nofollow'
+        >
+          <TitledIcon
+            icon={PencilIcon}
+            title={
+              t('website.article.edit')
+            }
+          />
+        </EditArticleLink>
+      </li>
     </ArticleToolbarList>
   );
+};
+
+ArticleActionToolbar.propTypes = {
+  article: ARTICLE_SCHEMA.isRequired,
 };
 
 export default ArticleActionToolbar;

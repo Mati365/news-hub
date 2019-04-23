@@ -120,24 +120,18 @@ const createAPIClient = (
     return apiCall(...params);
   };
 
-  return {
-    get(params) {
-      return verifiedApiCall(
-        {
-          method: 'GET',
-          ...params,
-        },
-      );
+  const bindMethodCaller = method => params => verifiedApiCall(
+    {
+      method,
+      ...params,
     },
+  );
 
-    post(params) {
-      return verifiedApiCall(
-        {
-          method: 'POST',
-          ...params,
-        },
-      );
-    },
+  return {
+    get: bindMethodCaller('GET'),
+    post: bindMethodCaller('POST'),
+    patch: bindMethodCaller('PATCH'),
+    put: bindMethodCaller('PUT'),
   };
 };
 

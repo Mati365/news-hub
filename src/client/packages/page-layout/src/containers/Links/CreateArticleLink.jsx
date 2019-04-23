@@ -2,7 +2,7 @@ import * as R from 'ramda';
 
 import createSchemaLink from './utils/createSchemaLink';
 
-export const CREATE_ARTICLE_URL_SCHEMA = '/create-article';
+export const CREATE_ARTICLE_URL_SCHEMA = '/article/create';
 
 export default createSchemaLink(
   {

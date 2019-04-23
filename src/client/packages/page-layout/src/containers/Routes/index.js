@@ -2,11 +2,13 @@ import {HOME_URL_SCHEMA} from '../Links/HomeLink';
 import {TAG_URL_SCHEMA} from '../Links/TagLink';
 import {ARTICLE_URL_SCHEMA} from '../Links/ArticleLink';
 import {CREATE_ARTICLE_URL_SCHEMA} from '../Links/CreateArticleLink';
+import {EDIT_ARTICLE_URL_SCHEMA} from '../Links/EditArticleLink';
 
 import HomeRoute from './Home';
 import TagRoute from './Tag';
 import ArticleRoute from './Article';
 import CreateArticleRoute from './CreateArticle';
+import EditArticle from './EditArticle';
 
 export default [
   {
@@ -23,6 +25,12 @@ export default [
   {
     path: ARTICLE_URL_SCHEMA,
     component: ArticleRoute,
+  },
+
+  {
+    path: EDIT_ARTICLE_URL_SCHEMA,
+    component: EditArticle,
+    exact: true,
   },
 
   {

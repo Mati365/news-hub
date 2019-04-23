@@ -3,6 +3,7 @@ import React from 'react';
 import {useI18n} from '@i18n';
 import linkInputs from '@utils/decorators/linkInputs';
 import suppressEvent from '@utils/helpers/suppressEvent';
+import convertArticleMarkdown from '@client/core/helpers/convertArticleMarkdown';
 
 import ArticleCard from '@client/core/components/Cards/ArticleCard';
 import Article from '@client/core/components/Article';
@@ -68,6 +69,7 @@ const ExpandableArticlePreview = ({article}) => {
 
 const PreviewArticleFormEditor = ({l, metaData, value: article}) => {
   const t = useI18n('website.routes.create_article');
+  const htmlArticle = convertArticleMarkdown(article || {});
 
   return (
     <Grid>
@@ -77,7 +79,7 @@ const PreviewArticleFormEditor = ({l, metaData, value: article}) => {
         </Label>
 
         <ArticleCard
-          article={article}
+          article={htmlArticle}
           style={{
             width: '100%',
           }}
@@ -108,7 +110,7 @@ const PreviewArticleFormEditor = ({l, metaData, value: article}) => {
         <BasicArticleForm
           {...l.input()}
           inputs={(
-            <ExpandableArticlePreview article={article} />
+            <ExpandableArticlePreview article={htmlArticle} />
           )}
         />
       </Grid.Column>
