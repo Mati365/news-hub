@@ -82,7 +82,11 @@ module.exports = [
         ),
       ],
       plugins: [
-        new NodemonPlugin,
+        ...(
+          process.env.NODE_ENV === 'development'
+            ? [new NodemonPlugin]
+            : []
+        ),
       ],
     },
   ),
