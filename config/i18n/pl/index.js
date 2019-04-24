@@ -50,7 +50,7 @@ module.exports = {
       create_article: 'Dodaj artykuł',
       edit_article: 'Edytuj artykuł',
 
-      report_hate_crime: 'Zgłoś mowę nienawiści',
+      report_hate_crime: 'Zgłoś incydent',
     },
 
     sections: {

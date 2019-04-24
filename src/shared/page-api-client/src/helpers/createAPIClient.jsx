@@ -16,7 +16,7 @@ const createAPIClient = (
   const context = {
     tokens: {
       ...tokens,
-      decoded: jwtDecoder(tokens.token)?.payload,
+      decoded: jwtDecoder(tokens.tokenGetter())?.payload,
     },
   };
 
@@ -40,7 +40,7 @@ const createAPIClient = (
         method,
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${context.tokens.token}`,
+          Authorization: `Bearer ${context.tokens.tokenGetter()}`,
           ...globalHeaders,
           ...headers,
         },
@@ -67,7 +67,7 @@ const createAPIClient = (
         method: 'POST',
         path: 'auth/refresh-token',
         body: {
-          refreshToken: tokens.refreshToken,
+          refreshToken: tokens.refreshTokenGetter(),
         },
       },
     );
@@ -76,10 +76,6 @@ const createAPIClient = (
       throw new Error('Incorrect refresh token response!');
 
     const {
-      refreshToken: {
-        value: refreshToken,
-      },
-
       token: {
         value: token,
       },
@@ -89,9 +85,8 @@ const createAPIClient = (
       throw new Error('Refreshed token is null!');
 
     context.tokens = {
+      ...context.tokens,
       decoded: jwtDecoder(token)?.payload,
-      token,
-      refreshToken,
     };
 
     // save cookie etc
@@ -107,8 +102,8 @@ const createAPIClient = (
   const verifiedApiCall = async (...params) => {
     if (new Date(context.tokens?.decoded?.exp * 1000) < Date.now() + MIN_TOKEN_DURATION) {
       if (!tokenRefreshPromise) {
-        const {refreshToken} = tokens;
-        if (!refreshToken)
+        const {refreshTokenGetter} = tokens;
+        if (!refreshTokenGetter)
           throw new Error('Token already expired but there is no refresh token!');
 
         tokenRefreshPromise = refreshContextTokens();

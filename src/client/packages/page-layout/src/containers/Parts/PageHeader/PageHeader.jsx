@@ -3,27 +3,24 @@ import PropTypes from 'prop-types';
 import * as R from 'ramda';
 
 import {useI18n} from '@i18n';
+import {useUA} from '@ua';
 import styled from '@jss';
 
 import APIQuery from '@api-client/components/APIQuery';
 import {loaderComponents} from '@client/core/components/LoaderAsyncTitles';
 
 import TagsList from '@client/core/components/Tags/TagsList';
-import Button from '@client/core/components/Controls/Button';
-import SearchIcon from '@icons/SearchIcon';
-
-import {
-  CreateArticleLink,
-  HomeLink,
-} from '@client/links';
-
+import {HomeLink} from '@client/links';
+import {WrappedUnorderedList} from '@utils/components/UnorderedList';
 import {
   Margin,
   Header,
   Divider,
   Flex,
-  Text,
 } from '@utils/components';
+
+import SearchIconButton from './SearchIconButton';
+import NavButtonToolbar from './NavButtonToolbar';
 
 const HeaderTitle = styled(
   Header.H1,
@@ -33,55 +30,26 @@ const HeaderTitle = styled(
   },
 );
 
-const CreateArticleButton = () => {
-  const t = useI18n();
-
-  return (
-    <CreateArticleLink>
-      <Button>
-        {t('website.buttons.create_article')}
-      </Button>
-    </CreateArticleLink>
-  );
-};
-
-const ReportCrimeButton = (props) => {
-  const t = useI18n();
-
-  return (
-    <Button
-      color='danger'
-      {...props}
-    >
-      {t('website.buttons.report_hate_crime')}
-    </Button>
-  );
-};
-
-const SearchIconButton = () => {
-  const t = useI18n();
-
-  return (
-    <Margin
-      left={6}
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-      }}
-    >
-      <Margin right={2}>
-        <SearchIcon size='tiny' />
-      </Margin>
-
-      <Text uppercase>
-        {t('website.titles.search')}
-      </Text>
-    </Margin>
-  );
-};
-
 const PageHeader = ({divider}) => {
   const t = useI18n();
+  const ua = useUA();
+
+  const toolbar = [
+    ua.mobile
+      ? (
+        <Margin
+          key='buttons'
+          top={3}
+        >
+          <NavButtonToolbar />
+        </Margin>
+      )
+      : (
+        <NavButtonToolbar key='buttons' />
+      ),
+
+    <SearchIconButton key='search' />,
+  ];
 
   return (
     <header>
@@ -90,8 +58,12 @@ const PageHeader = ({divider}) => {
         block
       >
         <Flex
-          direction='row'
           align='center'
+          direction={
+            ua.mobile
+              ? 'column'
+              : 'row'
+          }
         >
           <span>
             <HomeLink>
@@ -119,11 +91,25 @@ const PageHeader = ({divider}) => {
             </Margin>
           </span>
 
-          <Margin left='auto'>
-            <CreateArticleButton />
-            <ReportCrimeButton style={{margin: '0 10px'}} />
-            <SearchIconButton />
-          </Margin>
+          {(
+            ua.desktop
+              ? (
+                <WrappedUnorderedList
+                  inline
+                  flex
+                  style={{
+                    marginLeft: 'auto',
+                  }}
+                >
+                  {toolbar}
+                </WrappedUnorderedList>
+              )
+              : (
+                <WrappedUnorderedList inline={false}>
+                  {toolbar}
+                </WrappedUnorderedList>
+              )
+          )}
         </Flex>
       </Margin>
 

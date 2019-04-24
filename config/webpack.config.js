@@ -23,6 +23,7 @@ const GLOBAL_ALIASES = {
   '@async-resolver': 'shared/page-async-resolver/src/',
   '@api-client': 'shared/page-api-client/src/',
   '@isomorphic-cookies': 'shared/page-isomorphic-cookies/src/',
+  '@ua': 'shared/page-ua/src/',
 
   '@client/links': 'client/packages/page-layout/src/containers/Links/',
   '@client/controls': 'client/packages/page-core/src/components/Controls/',

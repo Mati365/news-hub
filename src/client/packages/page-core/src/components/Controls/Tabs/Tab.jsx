@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import styled from '@jss';
+import createBreakpoints from '@utils/styles/createBreakpoints';
 
 import {
   WHITE,
@@ -56,9 +57,17 @@ Tab.defaultProps = {
 };
 
 export const TabContent = styled.div(
-  {
-    padding: [20, 16],
-  },
+  createBreakpoints(
+    {
+      xs: {
+        paddingTop: 15,
+      },
+
+      md: {
+        padding: [20, 16],
+      },
+    },
+  ),
 );
 
 export default Tab;

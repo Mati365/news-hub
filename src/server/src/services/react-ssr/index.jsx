@@ -1,5 +1,6 @@
 import React from 'react';
 import express from 'express';
+import useragent from 'express-useragent';
 import * as R from 'ramda';
 
 import {MAGIC_ASYNC_DATA_CONTEXT} from '@async-resolver/wrapHydratedAsyncTree';
@@ -46,9 +47,15 @@ const pickMainScripts = pickManifestScripts(
 
 const rootRoute = async (req, res) => {
   const {manifest} = res.locals;
+  const {useragent: expressUA} = req;
+
   const hydrationData = {
     scripts: pickMainScripts(manifest),
     data: {
+      ua: {
+        mobile: expressUA.isMobile,
+        desktop: expressUA.isDesktop,
+      },
       i18n: res.locals.i18n,
       env: {
         ...env.shared,
@@ -125,8 +132,13 @@ router
       } else
         next();
     },
+
+    // Data providers
     appAssetsManifestMiddleware,
     assignI18nPackMiddleware,
+
+    // UA
+    useragent.express(),
 
     // DB/API middlewares
     authJWTUserMiddleware,

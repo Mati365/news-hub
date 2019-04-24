@@ -1,4 +1,6 @@
+import React from 'react';
 import PropTypes from 'prop-types';
+
 import styled from '@jss';
 
 const RESET_MARGINS_STYLE = {
@@ -16,6 +18,11 @@ const UnorderedList = styled.ul(
       },
     },
 
+    flex: {
+      display: 'flex',
+      alignItems: 'center',
+    },
+
     inline: {
       '& > li': {
         display: 'inline-block',
@@ -29,10 +36,29 @@ const UnorderedList = styled.ul(
         },
       },
     },
+
+    block: {
+      '& > li': {
+        display: 'block',
+        width: '100%',
+        margin: [8, 0],
+
+        '&:first-child': {
+          marginTop: 0,
+        },
+
+        '&:last-child': {
+          marginBottom: 0,
+        },
+      },
+    },
   },
   {
-    omitProps: ['inline'],
-    classSelector: (classes, {inline}) => inline && classes.inline,
+    omitProps: ['inline', 'flex'],
+    classSelector: (classes, {flex, inline}) => [
+      classes[inline ? 'inline' : 'block'],
+      flex && classes.flex,
+    ],
   },
 );
 
@@ -40,10 +66,27 @@ UnorderedList.displayName = 'UnorderedList';
 
 UnorderedList.propTypes = {
   inline: PropTypes.bool,
+  flex: PropTypes.bool,
 };
 
 UnorderedList.defaultProps = {
   inline: true,
+  flex: false,
 };
+
+export const WrappedUnorderedList = ({children, ...props}) => (
+  <UnorderedList {...props}>
+    {React.Children.map(
+      children,
+      child => (
+        <li>
+          {child}
+        </li>
+      ),
+    )}
+  </UnorderedList>
+);
+
+WrappedUnorderedList.displayName = 'WrappedUnorderedList';
 
 export default UnorderedList;

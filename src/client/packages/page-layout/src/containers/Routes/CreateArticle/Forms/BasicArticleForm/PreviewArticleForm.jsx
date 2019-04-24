@@ -1,6 +1,8 @@
 import React from 'react';
 
 import {useI18n} from '@i18n';
+import {useUA} from '@ua';
+
 import linkInputs from '@utils/decorators/linkInputs';
 import suppressEvent from '@utils/helpers/suppressEvent';
 import convertArticleMarkdown from '@client/core/helpers/convertArticleMarkdown';
@@ -68,12 +70,18 @@ const ExpandableArticlePreview = ({article}) => {
 };
 
 const PreviewArticleFormEditor = ({l, metaData, value: article}) => {
+  const ua = useUA();
+
   const t = useI18n('website.routes.create_article');
   const htmlArticle = convertArticleMarkdown(article || {});
 
   return (
     <Grid>
-      <Grid.Column xs={12} md={6} lg={4}>
+      <Grid.Column
+        xs={12}
+        md={6}
+        lg={4}
+      >
         <Label>
           {t('card_preview')}
         </Label>
@@ -101,7 +109,17 @@ const PreviewArticleFormEditor = ({l, metaData, value: article}) => {
         xs={12}
         md={6}
         lg={8}
-        padding='big'
+        {...(
+          ua.desktop
+            ? {
+              paddingDir: 'horizontal',
+              padding: 'big',
+            }
+            : {
+              paddingDir: 'vertical',
+              padding: 'medium',
+            }
+        )}
       >
         <Label>
           {t('edit_article')}

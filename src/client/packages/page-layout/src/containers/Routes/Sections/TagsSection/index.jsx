@@ -1,7 +1,6 @@
 import React from 'react';
 
 import {useI18n} from '@i18n';
-import styled from '@jss';
 
 import APIQuery from '@api-client/components/APIQuery';
 import {loaderComponents} from '@client/core/components/LoaderAsyncTitles';
@@ -10,15 +9,18 @@ import {Divider} from '@utils/components';
 import TitledSection from '../../../Parts/TitledSection';
 import TagColumnSection from './TagColumnSection';
 
-const TagsSectionGrid = styled.div(
+import createResponsiveCardsGrid from '../utils/createCardsGrid';
+
+const TagsSectionGrid = createResponsiveCardsGrid(
   {
-    display: 'grid',
-    gridGap: '20px 30px',
-    gridTemplateColumns: '3fr 1px 4fr 1px 3fr',
-    gridTemplateRows: 'auto',
-    gridTemplateAreas: `
-      "col-0 vspace-0 col-1 vspace-1 col-2"
-    `,
+    md: {
+      gridGap: '20px 30px',
+      gridTemplateColumns: '3fr 1px 4fr 1px 3fr',
+      gridTemplateRows: 'auto',
+      gridTemplateAreas: `
+        "col-0 vspace-0 col-1 vspace-1 col-2"
+      `,
+    },
   },
 );
 

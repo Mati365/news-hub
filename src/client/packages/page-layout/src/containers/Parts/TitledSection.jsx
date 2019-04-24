@@ -1,6 +1,8 @@
 import React from 'react';
 
 import styled from '@jss';
+import createBreakpoints from '@utils/styles/createBreakpoints';
+
 import {
   Margin,
   Header,
@@ -20,7 +22,7 @@ const TitledSection = styled(
         {title}
       </SectionHeader>
 
-      <Margin top={3}>
+      <Margin top={1}>
         {children}
       </Margin>
     </section>
@@ -28,9 +30,17 @@ const TitledSection = styled(
   {
     margin: [45, 0],
 
-    '&:first-of-type': {
-      marginTop: 30,
-    },
+    '&:first-of-type': createBreakpoints(
+      {
+        xs: {
+          marginTop: 20,
+        },
+
+        md: {
+          marginTop: 30,
+        },
+      },
+    ),
   },
 );
 

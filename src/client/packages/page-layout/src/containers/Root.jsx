@@ -10,6 +10,7 @@ import {
 import ProvideI18n from '@i18n/components/ProvideI18n';
 import MagicJSSHeadTag from '@jss/components/MagicJSSHeadTag';
 import {APIProvider} from '@api-client/components';
+import {UAProvider} from '@ua';
 
 import HTMLSkeleton from '../components/HTMLSkeleton';
 import RouterContent from './RouterContent';
@@ -24,8 +25,11 @@ const CookieAPIProvider = ({children}) => {
     <APIProvider
       apiUrl={env.current.apiUrl}
       tokens={{
-        token: cookies.get(JWT_COOKIES_ENV.tokenName),
-        refreshToken: cookies.get(JWT_COOKIES_ENV.refreshTokenName),
+        // prevent race conditions if user has multiple tabs
+        // opened at the same time, read token every requrest
+        // yes, it is slow, but works
+        tokenGetter: () => cookies.get(JWT_COOKIES_ENV.tokenName),
+        refreshTokenGetter: () => cookies.get(JWT_COOKIES_ENV.refreshTokenName),
       }}
       onUpdateTokens={
         ({token, refreshToken}) => {
@@ -56,15 +60,18 @@ const PageProviders = ({hydrationData, ssrCookiesProps, children}) => {
   const {
     data: {
       i18n,
+      ua,
     },
   } = hydrationData;
 
   return (
     <SSRCookiesProvider {...ssrCookiesProps}>
       <CookieAPIProvider>
-        <ProvideI18n {...i18n}>
-          {children}
-        </ProvideI18n>
+        <UAProvider value={ua}>
+          <ProvideI18n {...i18n}>
+            {children}
+          </ProvideI18n>
+        </UAProvider>
       </CookieAPIProvider>
     </SSRCookiesProvider>
   );

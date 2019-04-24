@@ -11,7 +11,6 @@ const Button = styled.button(
   {
     base: {
       margin: 0,
-      padding: [16, 24],
       outline: 0,
       fontWeight: 600,
       textAlign: 'center',
@@ -23,6 +22,14 @@ const Button = styled.button(
 
       transition: '250ms ease-in-out',
       transitionProperty: ['background', 'color'],
+    },
+
+    'size-small': {
+      padding: [8, 12],
+    },
+
+    'size-medium': {
+      padding: [16, 24],
     },
 
     primary: {
@@ -80,10 +87,23 @@ const Button = styled.button(
     },
   },
   {
-    omitProps: ['color', 'filled', 'disabled'],
-    classSelector: (classes, {filled, color, disabled}) => [
+    omitProps: [
+      'color', 'filled', 'disabled',
+      'size', 'small',
+    ],
+    classSelector: (
+      classes,
+      {
+        filled, color,
+        size, disabled,
+        small,
+      },
+    ) => [
       classes[`${filled ? 'filled-' : ''}${color}`],
       disabled && classes.disabled,
+      small
+        ? classes['size-small']
+        : (size && classes[`size-${size}`]),
     ],
   },
 );
@@ -93,6 +113,8 @@ Button.displayName = 'Button';
 Button.propTypes = {
   filled: PropTypes.bool,
   disabled: PropTypes.bool,
+  size: PropTypes.string,
+  small: PropTypes.bool,
   color: PropTypes.oneOf([
     'primary',
     'danger',
@@ -102,6 +124,7 @@ Button.propTypes = {
 Button.defaultProps = {
   filled: false,
   disabled: false,
+  size: 'medium',
   color: 'primary',
 };
 

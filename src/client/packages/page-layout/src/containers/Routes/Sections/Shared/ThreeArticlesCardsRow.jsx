@@ -2,23 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {ARTICLE_SCHEMA} from '@constants/typeSchema';
-import styled from '@jss';
 
 import {Divider} from '@utils/components';
 import ArticleCard from '@client/core/components/Cards/ArticleCard';
 
-const PopularSectionGrid = styled.div(
-  {
-    display: 'grid',
-    gridGap: '20px 30px',
-    gridTemplateColumns: '3.3fr 1px 3.3fr 1px 3.3fr',
-    gridTemplateRows: 'auto',
-    gridTemplateAreas: `
-      "big vspace bigB vspaceB bigC"
-    `,
+import createResponsiveCardsGrid from '../utils/createCardsGrid';
 
-    '&:not(:only-child)': {
-      marginBottom: 45,
+const PopularSectionGrid = createResponsiveCardsGrid(
+  {
+    md: {
+      gridGap: '20px 30px',
+      gridTemplateColumns: '3.3fr 1px 3.3fr 1px 3.3fr',
+      gridTemplateRows: 'auto',
+      gridTemplateAreas: `
+        "big vspace bigB vspaceB bigC"
+      `,
+
+      '&:not(:only-child)': {
+        marginBottom: 45,
+      },
     },
   },
 );

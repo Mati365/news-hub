@@ -6,7 +6,6 @@ const ArticleHeader = styled(
   {
     margin: [0, 0, 10, 0],
     fontWeight: 700,
-    textAlign: 'justify',
   },
   {
     tag: 'H4',

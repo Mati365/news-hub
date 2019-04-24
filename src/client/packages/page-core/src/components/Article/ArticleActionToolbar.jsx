@@ -3,7 +3,10 @@ import React from 'react';
 import {ARTICLE_SCHEMA} from '@constants/typeSchema';
 
 import {useI18n} from '@i18n';
+import {useUA} from '@ua';
+
 import styled from '@jss';
+import createBreakpoints from '@utils/styles/createBreakpoints';
 
 import HeartIcon from '@icons/HeartIcon';
 import BookmarkIcon from '@icons/BookmarkIcon';
@@ -11,7 +14,6 @@ import EyeIcon from '@icons/EyeIcon';
 import PencilIcon from '@icons/PencilIcon';
 
 import {EditArticleLink} from '@client/links';
-
 import {
   Flex,
   Margin,
@@ -44,6 +46,26 @@ const ArticleToolbarList = styled(
       margin: [0, 10],
       cursor: 'pointer',
     },
+
+    ...createBreakpoints(
+      {
+        'xs-md': {
+          margin: [10, 0],
+          fontSize: '0.9em',
+          textAlign: 'center',
+
+          '& > li': {
+            margin: [0, 6],
+            cursor: 'pointer',
+
+            '& svg': {
+              width: 20,
+              height: 20,
+            },
+          },
+        },
+      },
+    ),
   },
   {
     inline: true,
@@ -52,6 +74,7 @@ const ArticleToolbarList = styled(
 
 const ArticleActionToolbar = ({article}) => {
   const t = useI18n();
+  const ua = useUA();
 
   return (
     <ArticleToolbarList>
@@ -90,12 +113,18 @@ const ArticleActionToolbar = ({article}) => {
           article={article}
           rel='nofollow'
         >
-          <TitledIcon
-            icon={PencilIcon}
-            title={
-              t('website.article.edit')
-            }
-          />
+          {(
+            ua.mobile
+              ? <PencilIcon />
+              : (
+                <TitledIcon
+                  icon={PencilIcon}
+                  title={
+                    t('website.article.edit')
+                  }
+                />
+              )
+          )}
         </EditArticleLink>
       </li>
     </ArticleToolbarList>

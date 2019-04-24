@@ -4,7 +4,7 @@ import * as R from 'ramda';
 
 import {ARTICLE_SCHEMA} from '@constants/typeSchema';
 
-import styled from '@jss';
+import {useUA} from '@ua';
 import {useI18n} from '@i18n';
 
 import APIQuery from '@api-client/components/APIQuery';
@@ -14,21 +14,24 @@ import {Divider} from '@utils/components';
 import ArticleCard from '@client/core/components/Cards/ArticleCard';
 import TitledSection from '../../Parts/TitledSection';
 
-const PrimarySectionGrid = styled.div(
+import createResponsiveCardsGrid from './utils/createCardsGrid';
+
+const PrimarySectionGrid = createResponsiveCardsGrid(
   {
-    display: 'grid',
-    gridGap: '20px 30px',
-    gridTemplateColumns: '3fr 1px 3.5fr 3.5fr',
-    gridTemplateRows: 'auto 1px auto',
-    gridTemplateAreas: `
-      "article-0 vspace article-1 article-2"
-      "article-0 vspace hspace  hspace"
-      "article-0 vspace article-3  article-4"
-    `,
+    md: {
+      gridGap: '20px 30px',
+      gridTemplateColumns: '3fr 1px 3.5fr 3.5fr',
+      gridTemplateRows: 'auto 1px auto',
+      gridTemplateAreas: `
+        "article-0 vspace article-1 article-2"
+        "article-0 vspace hspace  hspace"
+        "article-0 vspace article-3  article-4"
+      `,
+    },
   },
 );
 
-const primaryArticleMapper = (article, index) => {
+const primaryArticleMapper = ua => (article, index) => {
   if (!index) {
     return (
       <ArticleCard
@@ -42,8 +45,14 @@ const primaryArticleMapper = (article, index) => {
     );
   }
 
+  const SmallCard = (
+    ua.mobile
+      ? ArticleCard
+      : ArticleCard.Horizontal
+  );
+
   return (
-    <ArticleCard.Horizontal
+    <SmallCard
       key={article.id}
       article={article}
       style={{
@@ -55,6 +64,7 @@ const primaryArticleMapper = (article, index) => {
 
 const PrimarySection = ({articles}) => {
   const t = useI18n();
+  const ua = useUA();
 
   if (R.isEmpty(articles))
     return null;
@@ -81,7 +91,9 @@ const PrimarySection = ({articles}) => {
           }}
         />
 
-        {articles.map(primaryArticleMapper)}
+        {articles.map(
+          primaryArticleMapper(ua),
+        )}
       </PrimarySectionGrid>
     </TitledSection>
   );

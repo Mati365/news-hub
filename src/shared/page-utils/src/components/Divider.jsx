@@ -1,39 +1,52 @@
 import PropTypes from 'prop-types';
 
+import {DIVIDER_COLOR} from '@constants/colorSchema';
+
 import styled from '@jss';
+import createBreakpoints from '@utils/styles/createBreakpoints';
+
+export const dividerStyles = {
+  base: {
+    padding: 0,
+    border: 0,
+    outline: 0,
+  },
+
+  none: {
+    margin: 0,
+  },
+
+  big: createBreakpoints(
+    {
+      xs: {
+        margin: 15,
+      },
+
+      md: {
+        margin: 25,
+      },
+    },
+  ),
+
+  horizontal: {
+    width: '100%',
+    marginLeft: 0,
+    marginRight: 0,
+    borderTop: `1px solid ${DIVIDER_COLOR}`,
+  },
+
+  vertical: {
+    width: 1,
+    height: '100%',
+    marginTop: 0,
+    marginBottom: 0,
+    borderLeft: `1px solid ${DIVIDER_COLOR}`,
+  },
+};
 
 const Divider = styled(
   'hr',
-  {
-    base: {
-      padding: 0,
-      border: 0,
-      outline: 0,
-    },
-
-    none: {
-      margin: 0,
-    },
-
-    big: {
-      margin: 25,
-    },
-
-    horizontal: {
-      width: '100%',
-      marginLeft: 0,
-      marginRight: 0,
-      borderTop: '1px solid rgba(0, 0, 0, 0.08)',
-    },
-
-    vertical: {
-      width: 1,
-      height: '100%',
-      marginTop: 0,
-      marginBottom: 0,
-      borderLeft: '1px solid rgba(0, 0, 0, 0.08)',
-    },
-  },
+  dividerStyles,
   {
     omitProps: ['vertical', 'spacing'],
     classSelector: (classes, {vertical, spacing}) => [

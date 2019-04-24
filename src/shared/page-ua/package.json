@@ -1,0 +1,5 @@
+{
+  "name": "@shared/ua",
+  "main": "src/index.js",
+  "version": "1.0.0"
+}
