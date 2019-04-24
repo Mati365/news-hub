@@ -9,7 +9,7 @@ const SHARED_CONF = {
   },
 
   server: {
-    apiUrl: 'http://localhost:3000/api',
+    apiUrl: `http://localhost:${process.env.PORT || process.env.APP_PORT || 3000}/api`,
   },
 
   client: {
