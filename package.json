@@ -12,7 +12,7 @@
     "start": "NODE_ENV=production node ./dist/server.js",
     "build": "rm -rf dist/ && env NODE_ENV=production npx webpack --config=config/webpack.config.js --mode=production",
     "develop": "env NODE_ENV=development npx webpack --config=config/webpack.config.js --mode=development --watch",
-    "heroku-postbuild": "npx knex migrate:latest"
+    "heroku-postbuild": "env NODE_ENV=production npx knex migrate:latest"
   },
   "bugs": {
     "url": "https://github.com/Mati365/news-hub/issues"
@@ -42,8 +42,6 @@
     "babel-loader": "^8.0.4",
     "babel-plugin-css-modules-transform": "^1.6.2",
     "clean-webpack-plugin": "^2.0.1",
-    "consola": "^2.6.0",
-    "dotenv": "^7.0.0",
     "eslint": "^5.7.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-import-resolver-webpack": "^0.11.1",
@@ -58,17 +56,19 @@
     "webpack-dev-server": "^3.3.1",
     "webpack-manifest-plugin": "^2.0.4",
     "webpack-node-externals": "^1.7.2",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "node-sass": "^4.11.0",
+    "style-loader": "^0.23.1"
+  },
+  "dependencies": {
+    "consola": "^2.6.0",
+    "dotenv": "^7.0.0",
     "knex": "^0.16.5",
     "pg": "^7.10.0",
     "cookie-parser": "^1.4.4",
+    "express-useragent": "^1.0.12",
     "jsonwebtoken": "^8.5.1",
     "js-cookie": "^2.2.0",
-    "optimize-css-assets-webpack-plugin": "^5.0.1",
-    "node-sass": "^4.11.0",
-    "style-loader": "^0.23.1",
-    "express-useragent": "^1.0.12"
-  },
-  "dependencies": {
     "classnames": "^2.2.6",
     "objection": "^1.6.8",
     "prop-types": "^15.7.2",
