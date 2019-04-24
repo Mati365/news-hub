@@ -9,7 +9,7 @@ const {
   JWT_PUBLIC_KEY_PATH,
 } = process.env;
 
-if (!JWT_PRIVATE_KEY_PATH || !JWT_PUBLIC_KEY_PATH)
+if ((!JWT_PRIVATE_KEY && !JWT_PRIVATE_KEY_PATH) || (!JWT_PUBLIC_KEY && !JWT_PUBLIC_KEY_PATH))
   throw new Error('Missing JWT keys! Provide JWT_PRIVATE_KEY_PATH and JWT_PUBLIC_KEY_PATH keys to .env');
 
 const PARSED_KEYS = {
