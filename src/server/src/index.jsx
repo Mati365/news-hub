@@ -50,7 +50,7 @@ const errorHandler = (err, req, res, next) => {
     .use(errorHandler);
 
   // start whole server
-  const port = process.env.APP_PORT || 3000;
+  const port = process.env.PORT || process.env.APP_PORT || 3000;
   consola.info(`Listen at port ${port}!`);
 
   app.listen(port);
