@@ -28,7 +28,7 @@ const usePromiseCallback = (
     rethrow = false,
     afterExecFn = R.F,
     errorSelectorFn,
-  },
+  } = {},
 ) => {
   const [promiseState, setPromiseState] = usePromiseState();
 

@@ -22,6 +22,7 @@ export const TEXT_WARN = MUTED_ORANGE;
 export const TEXT_DANGER = MUTED_RED;
 export const TEXT_MUTED = MUTED_GRAY;
 
+export const BUTTON_SECONDARY = MUTED_GRAY;
 export const BUTTON_PRIMARY = JUNGLE_GREEN;
 export const BUTTON_DANGER = MUTED_RED;
 

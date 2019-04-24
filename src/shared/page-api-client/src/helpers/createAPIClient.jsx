@@ -123,6 +123,7 @@ const createAPIClient = (
   );
 
   return {
+    verifiedApiCall,
     get: bindMethodCaller('GET'),
     post: bindMethodCaller('POST'),
     patch: bindMethodCaller('PATCH'),

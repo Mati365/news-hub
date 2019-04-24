@@ -88,6 +88,9 @@ module.exports = {
         paste_url_placeholder: 'Wklej dodawany adres URL',
         edit_article: 'Edytuj artykuł:',
 
+        delete: 'Usuń artykuł',
+        deleting: 'Usuwanie artykułu...',
+
         card_preview: 'Podgląd edytowanej karty:',
         card_lead: '* Opis karty:',
         modify_title: '* Nagłówek artykułu:',

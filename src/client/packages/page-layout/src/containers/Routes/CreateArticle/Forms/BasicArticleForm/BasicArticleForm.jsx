@@ -6,6 +6,7 @@ import {HOME_URL_SCHEMA} from '@client/links/HomeLink';
 
 import {useI18n} from '@i18n';
 import {useAPIContext} from '@api-client/components/APIContext';
+import {useAPIMutation} from '@api-client/components/APIQuery';
 import useReactRouter from '@client/layout/hooks/useReactRouter';
 
 import getReadTime from '@utils/helpers/getReadTime';
@@ -48,10 +49,59 @@ const SubmitArticleButton = ({loading, editing, ...props}) => {
   );
 };
 
+const DeleteArticleButton = ({articleId, onDeleted}) => {
+  const t = useI18n('website.routes.create_article');
+  const [apiCall, {loading}] = useAPIMutation();
+
+  let text = null;
+  if (loading)
+    text = 'deleting';
+  else
+    text = 'delete';
+
+  return (
+    <Button
+      color='secondary'
+      type='submit'
+      disabled={loading}
+      filled={loading}
+      onClick={
+        async () => {
+          await apiCall(
+            {
+              method: 'DELETE',
+              path: `/article/${articleId}`,
+            },
+          );
+
+          if (onDeleted)
+            onDeleted();
+        }
+      }
+    >
+      {t(text)}
+    </Button>
+  );
+};
+
 const BasicArticleForm = ({inputs, method, ...props}) => {
   const t = useI18n('website.routes.create_article');
   const api = useAPIContext();
   const router = useReactRouter();
+
+  const onSubmitDone = (toast = t('website.toasts.article_has_been_added')) => {
+    setTimeout(
+      () => {
+        router.history.push(
+          HOME_URL_SCHEMA,
+          {
+            toast,
+          },
+        );
+      },
+      50,
+    );
+  };
 
   return (
     <AsyncForm
@@ -64,99 +114,93 @@ const BasicArticleForm = ({inputs, method, ...props}) => {
           },
         )
       }
-      onSubmitDone={
-        () => {
-          setTimeout(
-            () => {
-              router.history.push(
-                HOME_URL_SCHEMA,
-                {
-                  toast: t('website.toasts.article_has_been_added'),
-                },
-              );
-            },
-            50,
-          );
-        }
-      }
+      onSubmitDone={onSubmitDone}
     >
-      {({l, loading}) => (
-        <>
-          <FormGroup
-            label={t('modify_title')}
-            control={(
-              <Input
-                {...l.input('title')}
-                required
-              />
-            )}
-          />
+      {({l, loading}) => {
+        const editing = !R.isNil(l.value?.id);
 
-          <FormGroup
-            label={t('cover_url')}
-            control={(
-              <Input
-                {...l.input('coverUrl')}
-                required
-              />
-            )}
-          />
+        return (
+          <>
+            <FormGroup
+              label={t('modify_title')}
+              control={(
+                <Input
+                  {...l.input('title')}
+                  required
+                />
+              )}
+            />
 
-          <FormGroup
-            label={t('cover_title')}
-            control={(
-              <Input {...l.input('coverTitle')} />
-            )}
-          />
+            <FormGroup
+              label={t('cover_url')}
+              control={(
+                <Input
+                  {...l.input('coverUrl')}
+                  required
+                />
+              )}
+            />
 
-          <FormGroup
-            label={t('card_lead')}
-            control={(
-              <MarkdownEditor
-                minEditorHeight={80}
-                required
-                {...l.input('lead')}
-              />
-            )}
-          />
+            <FormGroup
+              label={t('cover_title')}
+              control={(
+                <Input {...l.input('coverTitle')} />
+              )}
+            />
 
-          <FormGroup
-            label={t('modify_info')}
-            control={(
-              <MarkdownEditor
-                {...l.input('content', {
-                  relatedInputsFn: (newContent, name, {lead}) => ({
-                    readTime: getReadTime(newContent || lead),
-                  }),
-                })}
-              />
-            )}
-          />
+            <FormGroup
+              label={t('card_lead')}
+              control={(
+                <MarkdownEditor
+                  minEditorHeight={80}
+                  required
+                  {...l.input('lead')}
+                />
+              )}
+            />
 
-          <FormGroup
-            label={t('article_tags')}
-            control={(
-              <TagInput {...l.input('tags')} />
-            )}
-          />
+            <FormGroup
+              label={t('modify_info')}
+              control={(
+                <MarkdownEditor
+                  {...l.input('content', {
+                    relatedInputsFn: (newContent, name, {lead}) => ({
+                      readTime: getReadTime(newContent || lead),
+                    }),
+                  })}
+                />
+              )}
+            />
 
-          {inputs}
+            <FormGroup
+              label={t('article_tags')}
+              control={(
+                <TagInput {...l.input('tags')} />
+              )}
+            />
 
-          <Margin
-            top={5}
-            block
-          >
-            <Float right>
-              <SubmitArticleButton
-                loading={loading}
-                editing={
-                  !R.isNil(l.value?.id)
-                }
-              />
-            </Float>
-          </Margin>
-        </>
-      )}
+            {inputs}
+
+            <Margin
+              top={5}
+              block
+            >
+              {editing && (
+                <DeleteArticleButton
+                  articleId={l.value.id}
+                  onDeleted={onSubmitDone}
+                />
+              )}
+              <Float right>
+                <SubmitArticleButton
+                  loading={loading}
+                  editing={editing}
+                />
+              </Float>
+            </Margin>
+          </>
+        );
+      }}
     </AsyncForm>
   );
 };

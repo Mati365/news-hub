@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from '@jss';
 import {
   WHITE,
+  BUTTON_SECONDARY,
   BUTTON_PRIMARY,
   BUTTON_DANGER,
 } from '@constants/colorSchema';
@@ -30,6 +31,27 @@ const Button = styled.button(
 
     'size-medium': {
       padding: [16, 24],
+    },
+
+    secondary: {
+      borderColor: BUTTON_SECONDARY,
+      color: BUTTON_SECONDARY,
+
+      '&:hover': {
+        background: BUTTON_SECONDARY,
+        color: WHITE,
+      },
+    },
+
+    'filled-secondary': {
+      background: BUTTON_SECONDARY,
+      color: WHITE,
+
+      '&:hover': {
+        background: 'initial',
+        borderColor: BUTTON_SECONDARY,
+        color: BUTTON_SECONDARY,
+      },
     },
 
     primary: {
@@ -118,6 +140,7 @@ Button.propTypes = {
   color: PropTypes.oneOf([
     'primary',
     'danger',
+    'secondary',
   ]),
 };
 

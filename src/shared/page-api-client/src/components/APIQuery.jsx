@@ -2,9 +2,10 @@ import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
 
 import {encodeB64} from '@shared/utils/src/helpers/b64';
+import useAsyncPromise from '@shared/async-resolver/src/hooks/useAsyncPromise';
+import usePromiseCallback from '@shared/utils/src/hooks/usePromiseCallback';
 
 import {useAPIContext} from './APIContext';
-import useAsyncPromise from '../../../page-async-resolver/src/hooks/useAsyncPromise';
 
 const genQueryKey = ({path, urlParams}) => encodeB64(`${path}/${JSON.stringify(urlParams)}`);
 
@@ -26,6 +27,11 @@ const useAPIQuery = ({responseSelector, skipIf, ...queryParams}) => {
       skipIf,
     },
   );
+};
+
+export const useAPIMutation = () => {
+  const client = useAPIContext();
+  return usePromiseCallback(client.verifiedApiCall);
 };
 
 const APIQuery = ({

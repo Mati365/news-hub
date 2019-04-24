@@ -5,6 +5,26 @@ import {
 
 import ssr from '../helpers/ssr';
 
+export const idleCallback = {
+  create(fn) {
+    const {requestIdleCallback} = window;
+
+    if (requestIdleCallback)
+      return requestIdleCallback(fn);
+
+    return setTimeout(fn, 60);
+  },
+
+  cancel(handle) {
+    const {cancelIdleCallback} = window;
+
+    if (cancelIdleCallback)
+      return cancelIdleCallback(handle);
+
+    return clearTimeout(handle);
+  },
+};
+
 const IdleRender = ({children}) => {
   const [visible, setVisible] = useState(
     ssr
@@ -17,10 +37,10 @@ const IdleRender = ({children}) => {
       if (visible)
         return undefined;
 
-      const timer = window.requestIdleCallback(() => setVisible(true));
+      const timer = idleCallback.create(() => setVisible(true));
 
       return () => {
-        window.cancelIdleCallback(timer);
+        idleCallback.cancel(timer);
       };
     },
     [],

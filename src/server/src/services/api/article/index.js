@@ -9,6 +9,7 @@ import {Article} from '@db/models';
 import crawlerRoute from './crawlerRoute';
 import createArticleRoute from './createArticleRoute';
 import updateArticleRoute from './updateArticleRoute';
+import deleteArticleRoute from './deleteArticleRoute';
 
 /**
  * @params {Boolean}  markdown
@@ -45,4 +46,5 @@ export default express.Router()
   .post('/', createArticleRoute)
   .patch('/', updateArticleRoute)
   .get('/link-crawler', crawlerRoute)
+  .delete('/:id', deleteArticleRoute)
   .get('/:id', articleRoute);
