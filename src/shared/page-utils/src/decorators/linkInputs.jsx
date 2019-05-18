@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import * as R from 'ramda';
 
-const pickEventValue = R.unless(
+export const pickEventValue = R.unless(
   R.either(R.isNil, R.is(String)),
   R.ifElse(
     R.has('target'),

@@ -98,7 +98,7 @@ class Article extends Model {
     $search({phrase, limit}) {
       const lowPhrase = `%${R.toLower(phrase)}%`;
 
-      if (!phrase || phrase.length < 3)
+      if (!phrase || phrase.length <= 3)
         return [];
 
       return this

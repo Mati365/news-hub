@@ -24,8 +24,10 @@ module.exports = {
       loading: 'Wczytywanie...',
       error: 'Nastąpił błąd podczas parsowania zapytania!',
 
-      search: 'Wyszukaj',
+      search: 'Wyszukaj (min. 3 znaki)',
       see_also: 'Zobacz też »',
+      empty_results: 'Nic nie znaleziono :(',
+      loading_results: 'Wczytywanie... :D',
 
       images: {
         figcaption: 'rys. %{}',
