@@ -26,5 +26,6 @@ const tagRoute = wrapAsyncRoute(async (req, res) => {
   }
 });
 
-export default express.Router()
+export default express
+  .Router()
   .get('/:id', tagRoute);

@@ -6,18 +6,21 @@ import {useI18n} from '@i18n';
 import {useUA} from '@ua';
 
 import SearchIcon from '@icons/SearchIcon';
+import {Margin} from '@utils/components';
 import {
-  Margin,
-  Text,
-} from '@utils/components';
+  Input,
+  Autocomplete,
+} from '@client/controls';
 
 const SearchButtonHolder = styled(
   Margin,
   {
+    position: 'relative',
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
+    cursor: 'pointer',
   },
 );
 
@@ -26,21 +29,33 @@ const SearchIconButton = () => {
   const ua = useUA();
 
   return (
-    <SearchButtonHolder
-      {...(
-        ua.mobile
-          ? {top: 2}
-          : {left: 6}
-      )}
-    >
-      <Margin right={2}>
-        <SearchIcon size='tiny' />
-      </Margin>
+    <Autocomplete
+      inputRenderFn={({onFocus, onBlur, l}) => (
+        <SearchButtonHolder
+          {...(
+            ua.mobile
+              ? {top: 2}
+              : {left: 6}
+          )}
+          onClick={onFocus}
+        >
+          <Margin right={2}>
+            <SearchIcon size='tiny' />
+          </Margin>
 
-      <Text uppercase>
-        {t('website.titles.search')}
-      </Text>
-    </SearchButtonHolder>
+          <Input
+            small
+            placeholder={
+              t('website.titles.search')
+            }
+            type='text'
+            onFocus={onFocus}
+            onBlur={onBlur}
+            {...l.input()}
+          />
+        </SearchButtonHolder>
+      )}
+    />
   );
 };
 

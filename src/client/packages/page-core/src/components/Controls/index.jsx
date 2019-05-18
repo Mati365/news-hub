@@ -5,5 +5,6 @@ export {default as Input} from './Input';
 export {default as MarkdownEditor} from './MarkdownEditor';
 export {default as TagInput} from './TagInput';
 export {default as ExpandableContent} from './ExpandableContent';
+export {default as Autocomplete} from './Autocomplete';
 
 export * from './Form';

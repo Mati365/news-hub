@@ -1,4 +1,8 @@
-import {Model} from 'objection';
+import * as R from 'ramda';
+import {
+  QueryBuilder,
+  Model,
+} from 'objection';
 
 import getReadTime from '@utils/helpers/getReadTime';
 import TaggableMixin from './mixins/TaggableMixin';
@@ -89,4 +93,18 @@ class Article extends Model {
   get readTime() {
     return getReadTime(this.content || this.lead);
   }
+
+  static QueryBuilder = class extends QueryBuilder {
+    $search({phrase, limit}) {
+      const lowPhrase = `%${R.toLower(phrase)}%`;
+
+      if (!phrase || phrase.length < 3)
+        return [];
+
+      return this
+        .whereRaw('LOWER(title) LIKE ? OR LOWER(lead) LIKE ?', [lowPhrase, lowPhrase])
+        .limit(limit)
+        .orderBy('createdAt', 'ASC');
+    }
+  };
 }
