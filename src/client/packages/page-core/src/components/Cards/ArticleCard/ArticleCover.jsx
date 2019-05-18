@@ -29,7 +29,7 @@ const ArticleImageWrapper = styled.figure(
     },
 
     rectangle: {
-      paddingBottom: '50%',
+      paddingBottom: '30%',
     },
   },
   {
