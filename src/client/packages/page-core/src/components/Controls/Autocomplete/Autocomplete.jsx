@@ -40,7 +40,10 @@ const Autocomplete = ({
   const [active, setActive] = useState(false);
 
   const onFocus = () => setActive(true);
-  const onBlur = () => setActive(false);
+  const onBlur = () => {
+    setTimeout(() => setActive(false), 200);
+  };
+
   const onChange = (value) => {
     l.setValue(
       safeBlankValue(value),
