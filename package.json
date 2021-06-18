@@ -85,6 +85,6 @@
     "sass-loader": "^7.1.0",
     "file-loader": "^3.0.1",
     "showdown": "^1.9.0",
-    "striptags": "^3.1.1"
+    "striptags": "^3.2.0"
   }
 }
